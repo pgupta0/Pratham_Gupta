@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pratham-gupta-alpha.vercel.app/sitemap.xml
+Sitemap: https://prathamgupta-profile.vercel.app/sitemap.xml
