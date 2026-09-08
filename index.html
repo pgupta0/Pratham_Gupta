@@ -161,22 +161,22 @@ section,header{position:relative;z-index:1}
 /* ============ CREDENTIALS : photo + stack ============ */
 .cred{display:grid;grid-template-columns:.82fr 1.18fr;gap:38px;align-items:start}
 @media(max-width:900px){.cred{grid-template-columns:1fr;gap:28px}}
-.pframe{background:var(--paper);padding:11px 11px 0;box-shadow:0 34px 70px -30px #000000cc,0 0 0 1px #ffffff12;transform:rotate(.9deg);position:sticky;top:96px}
-@media(max-width:900px){.pframe{position:static;transform:none;max-width:420px}}
+.pframe{background:var(--paper);padding:11px 11px 0;box-shadow:0 34px 70px -30px #000000cc,0 0 0 1px #ffffff12;transform:rotate(.9deg)}
+@media(max-width:900px){.pframe{transform:none;max-width:420px}}
 .pframe .pimg{position:relative;overflow:hidden;background:#e4e1d6;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center}
 .pframe .pimg img{width:100%;height:100%;object-fit:cover;display:block}
 .pframe .pph{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:#a29b86;text-transform:uppercase;text-align:center;line-height:2.2;padding:24px}
 .pframe .pcap{padding:12px 4px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:#5C6A60;text-transform:uppercase;line-height:1.9}
 .stack{display:flex;flex-direction:column;gap:26px}
-.eduside{margin-top:26px}
+.eduside{margin-top:34px}
 @media(max-width:900px){.eduside{margin-top:22px}}
 .blk .bt{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:var(--hivis);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .blk .bt::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,#FF6A1340,transparent)}
 .rows{display:flex;flex-direction:column}
 .row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;padding:9px 0;border-bottom:1px solid #ffffff0d;transition:.2s}
 .row:hover{border-color:#ffffff20}
-.row .rn{font-size:15px;color:var(--frost);font-weight:400;line-height:1.35}
-.row .rn em{display:block;font-style:normal;font-size:13px;color:#94AB9F;font-weight:300;margin-top:2px}
+.row .rn{font-size:16px;color:var(--frost);font-weight:400;line-height:1.35}
+.row .rn em{display:block;font-style:normal;font-size:13.5px;color:#94AB9F;font-weight:300;margin-top:2px}
 .row .rval{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.11em;color:var(--chill);text-transform:uppercase;text-align:right;white-space:nowrap}
 .row .rval.gold{color:var(--tag)}
 .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
@@ -191,8 +191,9 @@ section,header{position:relative;z-index:1}
 .chap:first-of-type{border-top:0}
 .ctop{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:6px}
 .cno{font-family:'Oswald',sans-serif;font-size:clamp(40px,6vw,70px);font-weight:700;color:var(--c);opacity:.3;line-height:.9;letter-spacing:-.02em}
-.cmeta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--c);text-transform:uppercase;line-height:1.9}
-.cmeta b{color:var(--frost);font-weight:500}
+.cmeta{display:flex;flex-direction:column;gap:7px}
+.corg{font-family:'Oswald',sans-serif;font-size:clamp(21px,2.4vw,29px);font-weight:600;color:var(--frost);text-transform:uppercase;letter-spacing:.02em;line-height:1.05}
+.crole{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.15em;color:var(--c);text-transform:uppercase;line-height:1.5}
 .chap h2{font-size:clamp(26px,3.6vw,44px);max-width:24ch;margin-bottom:30px;line-height:1.06}
 .beats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
 @media(max-width:880px){.beats{grid-template-columns:1fr}}
@@ -351,7 +352,7 @@ body.brief .hero{padding-top:106px}
     <div class="chap rv" style="--c:var(--him)">
       <div class="ctop">
         <span class="cno">01</span>
-        <span class="cmeta"><b>Himanshu Travel Line</b><br>Growth &amp; Operations · 2023 to 2025</span>
+        <span class="cmeta"><b class="corg">Himanshu Travel Line</b><span class="crole">Growth &amp; Operations · 2023 to 2025</span></span>
       </div>
       <h2>A fleet losing drivers faster than it could replace them</h2>
       <div class="beats">
@@ -375,7 +376,7 @@ body.brief .hero{padding-top:106px}
     <div class="chap rv" id="ch02" style="--c:var(--bb)">
       <div class="ctop">
         <span class="cno">02</span>
-        <span class="cmeta"><b>BigBasket</b><br>HO4, T2 Operations · summer 2026</span>
+        <span class="cmeta"><b class="corg">BigBasket</b><span class="crole">HO4, T2 Operations · summer 2026</span></span>
       </div>
       <h2>Twenty-two cities were losing stock and nobody could say why</h2>
       <div class="beats">
@@ -403,7 +404,7 @@ body.brief .hero{padding-top:106px}
     <div class="chap rv" id="ch03" style="--c:var(--ik)">
       <div class="ctop">
         <span class="cno">03</span>
-        <span class="cmeta"><b>IKONA</b><br>Influencer &amp; Brand · 2024 to 2025</span>
+        <span class="cmeta"><b class="corg">IKONA</b><span class="crole">Influencer &amp; Brand · 2024 to 2025</span></span>
       </div>
       <h2>A client wanted creator reach and had no creators</h2>
       <div class="beats">
@@ -427,7 +428,7 @@ body.brief .hero{padding-top:106px}
     <div class="chap rv" id="ch04" style="--c:var(--roar)">
       <div class="ctop">
         <span class="cno">04</span>
-        <span class="cmeta"><b>BITS School of Management</b><br>MBA · 2025 to 2027</span>
+        <span class="cmeta"><b class="corg">BITS School of Management</b><span class="crole">MBA · 2025 to 2027</span></span>
       </div>
       <h2>Two years of talking about business, so I kept doing it</h2>
       <div class="beats">
