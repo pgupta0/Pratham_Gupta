@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart Food | Live Operations Command Center</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS & JS CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --fk-blue: #2874F0;
+            --fk-navy: #002B84;
+            --fk-yellow: #FFE500;
+            --tiffin-green: #10B981;
+            --market-sky: #0284C7;
+            --bites-amber: #F59E0B;
+            --relay-pink: #D946EF;
+            --bg-canvas: #F1F5F9;
+            --panel-bg: #FFFFFF;
+            --border-light: #E2E8F0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-canvas); color: #0F172A; overflow: hidden; height: 100vh; width: 100vw; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Master Grid */
+        #app-root { display: grid; grid-template-rows: 64px 1fr; height: 100vh; width: 100vw; }
+        #main-workspace { display: grid; grid-template-columns: 75% 25%; height: calc(100vh - 64px); width: 100vw; position: relative; }
+
+        /* Map Hero Canvas */
+        #map-viewport { position: relative; width: 100%; height: 100%; background: #E2E8F0; }
+        #map { width: 100%; height: 100%; z-index: 10; background: #F8FAFC; }
+        
+        .leaflet-control-attribution { display: none !important; }
+
+        /* Live Map Overlay UI */
+        .live-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 500;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #CBD5E1;
+            padding: 8px 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            animation: pulse-red 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        @keyframes pulse-red { to { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); } }
+
+        /* Tabs / Mode Pills */
+        .mode-pill {
+            background: transparent;
+            color: #475569;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 7px 14px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+        .mode-pill:hover { background: #F1F5F9; border-color: #CBD5E1; color: #0F172A; }
+        .mode-pill.active { background: var(--fk-blue); color: #FFFFFF; border-color: var(--fk-blue); box-shadow: 0 2px 10px rgba(40,116,240,0.3); }
+
+        /* Map Nodes (Clean, Simple, High Visibility) */
+        .sim-node {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .sim-node:hover { transform: scale(1.15); z-index: 999 !important; }
+        
+        .node-pin {
+            width: 30px; height: 30px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 2px solid #FFF;
+            font-size: 13px;
+        }
+        .pin-qsr { background: var(--bites-amber); }
+        .pin-mess { background: var(--tiffin-green); }
+        .pin-market { background: var(--market-sky); }
+        .pin-campus { background: var(--fk-blue); }
+        .pin-corp { background: var(--corp-purple); }
+        .pin-hub { background: var(--fk-navy); }
+        .pin-relay { background: var(--relay-pink); }
+
+        .node-label {
+            background: rgba(255,255,255,0.95); border: 1px solid #CBD5E1; color: #0F172A;
+            font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+            margin-top: 4px; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Animated Riders */
+        .rider-sprite {
+            width: 26px; height: 26px; background: #FFF; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2); border: 2px solid #2874F0;
+            font-size: 11px; z-index: 400; transition: transform 0.1s linear;
+        }
+        .rider-badge {
+            position: absolute; top: -6px; right: -12px; background: #0F172A; color: #FFF;
+            font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 4px; white-space: nowrap;
+        }
+        .rider-bites { border-color: var(--bites-amber); }
+        .rider-tiffin { border-color: var(--tiffin-green); }
+        .rider-market { border-color: var(--market-sky); }
+        .rider-relay { border-color: var(--relay-pink); }
+        .rider-hub { border-color: var(--fk-navy); }
+
+        /* Map Paths */
+        .route-path { stroke-dasharray: 6 6; animation: flow 1s linear infinite; }
+        .route-solid { stroke-dasharray: none; }
+        @keyframes flow { to { stroke-dashoffset: -12; } }
+
+        /* Speed Cells (Bites) */
+        .speed-cell { animation: cell-pulse 2.5s infinite alternate ease-in-out; }
+        @keyframes cell-pulse { 0% { fill-opacity: 0.08; } 100% { fill-opacity: 0.15; } }
+
+        /* Right Panel: Live Operations Hub */
+        #control-tower {
+            background: var(--panel-bg); border-left: 1px solid var(--border-light);
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.03);
+        }
+        
+        .hub-header { padding: 16px 20px; border-b: 1px solid var(--border-light); background: #F8FAFC; }
+        .hub-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 16px; }
+        
+        /* Metric Cards */
+        .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .metric-card {
+            background: #FFFFFF; border: 1px solid #E2E8F0; padding: 10px 12px;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .metric-title { font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;}
+        .metric-value { font-size: 16px; font-weight: 900; color: #0F172A; display: flex; align-items: baseline; gap: 4px;}
+        .metric-sub { font-size: 9px; font-weight: 600; }
+        .trend-up { color: #10B981; } .trend-down { color: #EF4444; } .trend-neu { color: #2874F0; }
+
+        /* Live Feed Terminal */
+        .live-feed-container {
+            flex: 1; display: flex; flex-direction: column; border: 1px solid #E2E8F0;
+            border-radius: 8px; overflow: hidden; background: #FFFFFF; min-height: 200px;
+        }
+        .live-feed-header {
+            background: #1E293B; padding: 8px 12px; font-size: 10px; font-weight: 800;
+            color: #FFFFFF; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between;
+        }
+        .feed-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; background: #0F172A; }
+        .feed-item {
+            font-size: 9px; padding: 6px 8px; border-radius: 4px; background: #1E293B;
+            border-left: 2px solid #334155; display: flex; gap: 8px; animation: slideIn 0.3s ease-out; color: #E2E8F0;
+        }
+        .feed-time { font-family: 'JetBrains Mono', monospace; color: #94A3B8; font-weight: 600; }
+        .feed-msg { color: #F8FAFC; font-weight: 500; }
+        
+        .feed-alert { border-left-color: #F59E0B; background: #451A03; }
+        .feed-success { border-left-color: #10B981; background: #064E3B; }
+        .feed-info { border-left-color: #2874F0; background: #1E3A8A; }
+        .feed-relay { border-left-color: #D946EF; background: #4A044E; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        
+        .mini-progress { height: 4px; background: #E2E8F0; border-radius: 2px; margin-top: 6px; overflow: hidden;}
+        .mini-progress-bar { height: 100%; background: var(--fk-blue); border-radius: 2px; transition: width 0.5s ease;}
+        .progress-relay { background: var(--relay-pink); }
+    </style>
+</head>
+<body>
+
+<div id="app-root">
+    <!-- 1. TOP COMPACT HEADER -->
+    <header class="bg-white border-b border-slate-200 px-6 flex items-center justify-between shadow-sm z-50">
+        <!-- Left Brand -->
+        <div class="flex items-center gap-3">
+            <div class="flex items-center bg-[#2874F0] text-white px-3 py-1.5 rounded shadow-sm">
+                <span class="font-extrabold tracking-tight text-sm">Flipkart</span>
+                <span class="font-black text-[#FFE500] ml-1 text-sm">CRAVE</span>
+            </div>
+            <div class="h-5 w-px bg-slate-200"></div>
+            <div class="text-[11px] font-black text-slate-800 uppercase tracking-wide">Live Operations Control</div>
+        </div>
+
+        <!-- Center TABS (5 Tabs including Relay Model) -->
+        <div class="flex items-center bg-slate-50 p-1 rounded-lg border border-slate-200 gap-1" id="mode-filters">
+            <button class="mode-pill active" data-mode="MARKETPLACE">🛍️ Marketplace</button>
+            <button class="mode-pill" data-mode="TIFFIN">🍱 CraveTiffin</button>
+            <button class="mode-pill" data-mode="BITES">⚡ Bites (20m)</button>
+            <button class="mode-pill" data-mode="RELAY">🔄 Relay Model</button>
+            <button class="mode-pill" data-mode="MINUTES">📦 Minutes Fleet</button>
+        </div>
+
+        <!-- Right Meta -->
+        <div class="text-right flex items-center gap-2">
+            <span class="pulse-dot"></span>
+            <div class="text-[10px] font-bold text-slate-600 uppercase">Expanded South Zone · Live</div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN WORKSPACE -->
+    <main id="main-workspace">
+        <!-- 2A. MAP VIEWPORT -->
+        <div id="map-viewport">
+            <div id="map"></div>
+            
+            <div class="live-badge">
+                <span class="pulse-dot"></span>
+                <div>
+                    <div class="text-[10px] font-black text-slate-800 uppercase tracking-wider" id="map-status-title">Network Active</div>
+                    <div class="text-[9px] text-slate-500 font-medium" id="map-status-desc">Monitoring real-time fulfilment</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2B. RIGHT MONITORING HUB -->
+        <aside id="control-tower">
+            <!-- Header -->
+            <div class="hub-header">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xs font-black uppercase text-slate-800 tracking-wider" id="hub-title">Marketplace Ops</h2>
+                    <span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded border border-blue-200 font-mono" id="hub-time">00:00:00 IST</span>
+                </div>
+            </div>
+
+            <!-- Body Dashboard -->
+            <div class="hub-body">
+                <!-- KPI Grid -->
+                <div class="metric-grid" id="kpi-grid">
+                    <!-- Injected dynamically -->
+                </div>
+
+                <!-- Live Progress/Status Block -->
+                <div class="bg-white border border-slate-200 p-3 rounded-lg shadow-sm" id="status-block">
+                    <!-- Injected dynamically -->
+                </div>
+
+                <!-- Live Event Terminal -->
+                <div class="live-feed-container">
+                    <div class="live-feed-header">
+                        <span>LIVE TERMINAL LOG</span>
+                        <span class="text-emerald-400">● Secure</span>
+                    </div>
+                    <div class="feed-list" id="live-feed">
+                        <!-- Logs injected here -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+</div>
+
+<script>
+    /* =========================================================================
+       1. MAP GEOMETRY & DATA ANCHORS (Expanded South Bengaluru)
+       ========================================================================= */
+    
+    // Expanded Nodes Array
+    const nodes = {
+        // Campuses & PGs
+        iimb: { id: 'iimb', lat: 12.8946, lng: 77.6006, type: 'campus', icon: '🎓', label: 'IIM Bangalore' },
+        christ: { id: 'christ', lat: 12.8727, lng: 77.5965, type: 'campus', icon: '🎓', label: 'CHRIST Univ' },
+        pg_arekere: { id: 'pg_arekere', lat: 12.8895, lng: 77.6075, type: 'campus', icon: '🏠', label: 'Arekere PGs' },
+        res_btm: { id: 'res_btm', lat: 12.9150, lng: 77.6100, type: 'campus', icon: '🏘️', label: 'BTM Layout' },
+        
+        // Corporate Hubs
+        ibc: { id: 'ibc', lat: 12.9377, lng: 77.6033, type: 'corp', icon: '🏢', label: 'IBC Tech Park' },
+        ecity: { id: 'ecity', lat: 12.8450, lng: 77.6600, type: 'corp', icon: '🏢', label: 'Electronic City' },
+        
+        // QSRs (Bites)
+        mcd: { id: 'mcd', lat: 12.9075, lng: 77.6005, type: 'qsr', icon: '🍔', label: 'McDonalds (Vega)' },
+        dominos: { id: 'dominos', lat: 12.8845, lng: 77.5970, type: 'qsr', icon: '🍕', label: 'Dominos (Arekere)' },
+        kfc_btm: { id: 'kfc_btm', lat: 12.9160, lng: 77.6050, type: 'qsr', icon: '🍗', label: 'KFC (BTM)' },
+        bk_jaya: { id: 'bk_jaya', lat: 12.9280, lng: 77.5830, type: 'qsr', icon: '🍔', label: 'Burger King (Jaya)' },
+        faasos: { id: 'faasos', lat: 12.8563, lng: 77.5855, type: 'qsr', icon: '🌯', label: 'Faasos (Gottigere)' },
+
+        // Marketplace Dines
+        truffles: { id: 'truffles', lat: 12.9350, lng: 77.6250, type: 'market', icon: '🍲', label: 'Truffles (Koramangala)' },
+        empire: { id: 'empire', lat: 12.9300, lng: 77.5800, type: 'market', icon: '🍛', label: 'Empire (Jayanagar)' },
+        paradise: { id: 'paradise', lat: 12.9165, lng: 77.6120, type: 'market', icon: '🥘', label: 'Paradise (BTM)' },
+        meghana: { id: 'meghana', lat: 12.9250, lng: 77.6200, type: 'market', icon: '🌶️', label: 'Meghana Foods' },
+
+        // Tiffin & Relay Hubs
+        tiffin_ban: { id: 'tiffin_ban', lat: 12.8770, lng: 77.5940, type: 'mess', icon: '🍱', label: 'Crave Mess (Bannerghatta)' },
+        tiffin_btm: { id: 'tiffin_btm', lat: 12.9120, lng: 77.6050, type: 'mess', icon: '🍱', label: 'Tiffin Hub (BTM)' },
+        relay_hub_btm: { id: 'relay_hub_btm', lat: 12.9165, lng: 77.6101, type: 'relay', icon: '🔄', label: 'BTM Relay Station' },
+        relay_hub_ecity: { id: 'relay_hub_ecity', lat: 12.8550, lng: 77.6400, type: 'relay', icon: '🔄', label: 'Hosa Rd Relay Hub' },
+        ekart_hub: { id: 'ekart_hub', lat: 12.8995, lng: 77.6105, type: 'hub', icon: '📦', label: 'Minutes eKart Depot' }
+    };
+
+    // Pre-defined polyline paths
+    const routes = {
+        // Bites Routes
+        mcd_iimb: [[12.9075, 77.6005], [12.9020, 77.6010], [12.8965, 77.6008], [12.8946, 77.6006]],
+        dominos_iimb: [[12.8845, 77.5970], [12.8880, 77.5975], [12.8946, 77.6006]],
+        kfc_res: [[12.9160, 77.6050], [12.9155, 77.6080], [12.9150, 77.6100]],
+        bk_ibc: [[12.9280, 77.5830], [12.9320, 77.5900], [12.9377, 77.6033]],
+
+        // Market Routes
+        truffles_res: [[12.9350, 77.6250], [12.9250, 77.6150], [12.9150, 77.6100]],
+        empire_pg: [[12.9300, 77.5800], [12.9100, 77.5900], [12.8895, 77.6075]],
+        paradise_iimb: [[12.9165, 77.6120], [12.9050, 77.6050], [12.8946, 77.6006]],
+        meghana_ibc: [[12.9250, 77.6200], [12.9300, 77.6150], [12.9377, 77.6033]],
+
+        // Tiffin Routes
+        tiffin_ibc: [[12.8770, 77.5940], [12.8900, 77.5990], [12.9100, 77.6015], [12.9377, 77.6033]],
+        tiffin_btm_ecity: [[12.9120, 77.6050], [12.8800, 77.6300], [12.8450, 77.6600]],
+        
+        // Relay Segments
+        relay_leg1_empire: [[12.9300, 77.5800], [12.9250, 77.5950], [12.9165, 77.6101]], // Empire to BTM Relay
+        relay_leg2_ecity: [[12.9165, 77.6101], [12.9000, 77.6200], [12.8700, 77.6400], [12.8450, 77.6600]], // BTM Relay to E-City
+        
+        relay_leg1_truffles: [[12.9350, 77.6250], [12.9250, 77.6350], [12.8550, 77.6400]], // Truffles to Hosa Rd Relay
+        relay_leg2_gottigere: [[12.8550, 77.6400], [12.8500, 77.6100], [12.8563, 77.5855]], // Hosa Rd to Gottigere
+
+        // Fleet Dispatch
+        hub_mcd: [[12.8995, 77.6105], [12.9040, 77.6060], [12.9075, 77.6005]],
+        hub_btm: [[12.8995, 77.6105], [12.9100, 77.6100], [12.9165, 77.6101]]
+    };
+
+    const isochrones = {
+        vega: [[12.918, 77.601], [12.915, 77.612], [12.905, 77.615], [12.898, 77.608], [12.897, 77.593], [12.908, 77.590]],
+        arekere: [[12.898, 77.596], [12.894, 77.607], [12.882, 77.609], [12.875, 77.599], [12.878, 77.588], [12.890, 77.586]],
+        btm: [[12.925, 77.600], [12.925, 77.620], [12.905, 77.620], [12.905, 77.600]]
+    };
+
+    /* =========================================================================
+       2. LEAFLET MAP ENGINE
+       ========================================================================= */
+    let map, layerStatic, layerDynamic, layerPaths;
+    let activeRiders = [];
+    let currentMode = 'MARKETPLACE';
+    
+    // Intervals
+    let clockInterval, dataInterval, spawnInterval;
+
+    function initMap() {
+        // Zoomed out to 12.4 to cover Jayanagar down to Electronic City
+        map = L.map('map', { zoomControl: false, attributionControl: false }).setView([12.8900, 77.6200], 12.4);
+        
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
+
+        layerStatic = L.layerGroup().addTo(map);
+        layerPaths = L.layerGroup().addTo(map);
+        layerDynamic = L.layerGroup().addTo(map);
+
+        setupClock();
+        switchMode('MARKETPLACE');
+    }
+
+    function createNodeMarker(n) {
+        let pinClass = 'pin-market';
+        if(n.type==='qsr') pinClass='pin-qsr';
+        if(n.type==='mess') pinClass='pin-mess';
+        if(n.type==='campus'||n.type==='corp') pinClass='pin-campus';
+        if(n.type==='corp') pinClass='pin-corp';
+        if(n.type==='hub') pinClass='pin-hub';
+        if(n.type==='relay') pinClass='pin-relay';
+
+        const html = `
+            <div class="sim-node">
+                <div class="node-pin ${pinClass}">${n.icon}</div>
+                <div class="node-label">${n.label}</div>
+            </div>
+        `;
+        return L.marker([n.lat, n.lng], {
+            icon: L.divIcon({ html: html, className: '', iconSize: [60, 50], iconAnchor: [30, 25] })
+        });
+    }
+
+    /* Core Animated Rider Spawner with callback for Relays */
+    function spawnRider(route, durationMs, styleClass, badgeText, onComplete) {
+        if(!route || route.length === 0) return;
+        
+        const html = `
+            <div class="rider-sprite ${styleClass}">🛵
+                <div class="rider-badge ${styleClass}">${badgeText}</div>
+            </div>
+        `;
+        const marker = L.marker(route[0], {
+            icon: L.divIcon({ html: html, className: '', iconSize: [26,26], iconAnchor: [13,13] })
+        }).addTo(layerDynamic);
+
+        // Distance calc for smooth constant speed
+        const dists = [0];
+        for (let i = 1; i < route.length; i++) {
+            dists.push(dists[i-1] + L.latLng(route[i-1]).distanceTo(L.latLng(route[i])));
+        }
+        const totalDist = dists[dists.length - 1];
+
+        let start = null;
+        function animate(timestamp) {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / durationMs, 1);
+            const curD = progress * totalDist;
+
+            let seg = 0; while (seg < dists.length - 1 && dists[seg+1] < curD) seg++;
+            
+            const p1 = route[seg], p2 = route[seg+1] || p1;
+            const segLen = dists[seg+1] - dists[seg];
+            const segProg = segLen === 0 ? 0 : (curD - dists[seg]) / segLen;
+
+            const lat = p1[0] + (p2[0]-p1[0])*segProg;
+            const lng = p1[1] + (p2[1]-p1[1])*segProg;
+            marker.setLatLng([lat, lng]);
+
+            if(progress < 1) {
+                const id = requestAnimationFrame(animate);
+                marker._animId = id; 
+            } else {
+                layerDynamic.removeLayer(marker);
+                if(onComplete) onComplete();
+            }
+        }
+        const id = requestAnimationFrame(animate);
+        marker._animId = id;
+        activeRiders.push(marker);
+    }
+
+    function clearDynamicLayer() {
+        activeRiders.forEach(r => cancelAnimationFrame(r._animId));
+        activeRiders = [];
+        layerDynamic.clearLayers();
+        layerPaths.clearLayers();
+        if(spawnInterval) clearInterval(spawnInterval);
+    }
+
+    /* =========================================================================
+       3. MODE CONTROLLER & LIVE BEHAVIORS
+       ========================================================================= */
+
+    const config = {
+        MARKETPLACE: {
+            title: "Marketplace Ops", desc: "Full-menu discovery across wider Bengaluru South.",
+            nodes: ['truffles', 'empire', 'paradise', 'meghana', 'iimb', 'pg_arekere', 'res_btm', 'ibc'],
+            paths: [
+                { r: routes.truffles_res, c: '#0284C7' }, { r: routes.empire_pg, c: '#0284C7' },
+                { r: routes.paradise_iimb, c: '#0284C7' }, { r: routes.meghana_ibc, c: '#0284C7' }
+            ],
+            kpis: [
+                { t: "Live Orders", v: "842", s: "Across 12 zones", tr: "up" },
+                { t: "Active Kitchens", v: "156", s: "Marketplace nodes", tr: "up" },
+                { t: "Avg Prep Time", v: "22m", s: "Variance ±4m", tr: "down" },
+                { t: "Active Fleet", v: "310", s: "Standard assignment", tr: "up" }
+            ],
+            status: { label: "Kitchen Load", pct: 75, text: "Standard prep queues stable.", color: "var(--market-sky)" },
+            logGen: () => {
+                const msgs = ["Truffles accepted Order #892.", "Rider arrived at Hotel Empire.", "Order delivered at Arekere PGs.", "Meghana Foods capacity tracking normal."];
+                return { msg: msgs[Math.floor(Math.random()*msgs.length)], type: 'info' };
+            },
+            spawnLogic: () => {
+                const r = Math.random();
+                if(r < 0.25) spawnRider(routes.truffles_res, 6000, 'rider-market', '🛍️ R-41');
+                else if(r < 0.5) spawnRider(routes.empire_pg, 7000, 'rider-market', '🛍️ R-12');
+                else if(r < 0.75) spawnRider(routes.paradise_iimb, 5500, 'rider-market', '🛍️ R-99');
+                else spawnRider(routes.meghana_ibc, 5000, 'rider-market', '🛍️ R-03');
+            }
+        },
+        TIFFIN: {
+            title: "CraveTiffin Hubs", desc: "Multi-node scheduled batch production & corporate corridors.",
+            nodes: ['tiffin_ban', 'tiffin_btm', 'ibc', 'ecity'],
+            paths: [
+                { r: routes.tiffin_ibc, c: '#10B981' }, { r: routes.tiffin_btm_ecity, c: '#10B981' }
+            ],
+            kpis: [
+                { t: "Scheduled Meals", v: "4,120", s: "Lunch daypart lock", tr: "up" },
+                { t: "Avg Batch Size", v: "12.4", s: "Drops per rider", tr: "up" },
+                { t: "Prep Status", v: "88%", s: "Batch cooking live", tr: "up" },
+                { t: "SLA Adherence", v: "99.4%", s: "Predictable routes", tr: "neu" }
+            ],
+            status: { label: "Dispatch Progress", pct: 88, text: "E-City & IBC batches en-route.", color: "var(--tiffin-green)" },
+            logGen: () => {
+                const msgs = ["Batch #101 (14 meals) departed for IBC.", "BTM Hub dispatched 20 meals to E-City.", "Packaging seals verified at Mess Hub."];
+                return { msg: msgs[Math.floor(Math.random()*msgs.length)], type: 'success' };
+            },
+            spawnLogic: () => {
+                spawnRider(routes.tiffin_ibc, 8000, 'rider-tiffin', '🍱 Batch x14');
+                setTimeout(()=> spawnRider(routes.tiffin_btm_ecity, 11000, 'rider-tiffin', '🍱 Batch x20'), 2500);
+            }
+        },
+        BITES: {
+            title: "Bites 20m Control", desc: "Live speed cells monitoring and automated micro-batching.",
+            nodes: ['mcd', 'dominos', 'kfc_btm', 'bk_jaya', 'iimb', 'res_btm', 'ibc'],
+            paths: [
+                { r: routes.mcd_iimb, c: '#F59E0B' }, { r: routes.dominos_iimb, c: '#F59E0B' },
+                { r: routes.kfc_res, c: '#F59E0B' }, { r: routes.bk_ibc, c: '#F59E0B' }
+            ],
+            kpis: [
+                { t: "SLA Compliance", v: "95.2%", s: "Sub-20m Target", tr: "up" },
+                { t: "Avg Delivery", v: "16.5m", s: "Warm dispatch active", tr: "down" },
+                { t: "Batched Ratio", v: "48%", s: "90s micro-batching", tr: "up" },
+                { t: "Gate Rejects", v: "1.0%", s: "Due to kitchen load", tr: "down" }
+            ],
+            status: { label: "Network Latency", pct: 12, text: "Optimal. Kitchen capacities green.", color: "var(--bites-amber)" },
+            logGen: () => {
+                const r = Math.random();
+                if(r < 0.15) return { msg: "WARNING: KFC BTM approaching token limit.", type: 'alert' };
+                else if(r < 0.4) return { msg: "Batch created: 2 orders for IIMB Gate.", type: 'success' };
+                else return { msg: "Burger King auto-accepted Order #B-402.", type: 'info' };
+            },
+            spawnLogic: () => {
+                const r = Math.random();
+                if(r < 0.25) spawnRider(routes.mcd_iimb, 4000, 'rider-bites', '⚡ Batched (2)');
+                else if(r < 0.50) spawnRider(routes.dominos_iimb, 4500, 'rider-bites', '⚡ B-89');
+                else if(r < 0.75) spawnRider(routes.kfc_res, 3500, 'rider-bites', '⚡ B-12');
+                else spawnRider(routes.bk_ibc, 5000, 'rider-bites', '⚡ B-99');
+            }
+        },
+        RELAY: {
+            title: "Relay Hub Operations", desc: "Long-haul order handovers maximizing rider unit boundaries.",
+            nodes: ['empire', 'truffles', 'relay_hub_btm', 'relay_hub_ecity', 'ecity', 'faasos'],
+            paths: [
+                { r: routes.relay_leg1_empire, c: '#D946EF' }, { r: routes.relay_leg2_ecity, c: '#D946EF' },
+                { r: routes.relay_leg1_truffles, c: '#D946EF' }, { r: routes.relay_leg2_gottigere, c: '#D946EF' }
+            ],
+            kpis: [
+                { t: "Active Relays", v: "184", s: "Long-haul routes", tr: "up" },
+                { t: "Avg Handover", v: "45s", s: "Dark store swap time", tr: "down" },
+                { t: "Distance Saved", v: "1,204km", s: "Rider overlap reduced", tr: "up" },
+                { t: "Hub Processing", v: "99%", s: "Bag scan success", tr: "neu" }
+            ],
+            status: { label: "Relay Efficiency", pct: 94, text: "Seamless bag handovers at BTM & Hosa Rd.", color: "var(--relay-pink)" },
+            logGen: () => {
+                const r = Math.random();
+                if(r < 0.33) return { msg: "Rider 1 approaching BTM Relay Hub.", type: 'info' };
+                else if(r < 0.66) return { msg: "Barcode scanned. Bag handed over successfully.", type: 'relay' };
+                else return { msg: "Rider 2 dispatched from Hosa Rd Hub to Gottigere.", type: 'success' };
+            },
+            spawnLogic: () => {
+                // Relay Logic 1: Jayanagar -> BTM Hub -> E-City
+                spawnRider(routes.relay_leg1_empire, 4500, 'rider-relay', '🔄 Leg 1', () => {
+                    if(currentMode !== 'RELAY') return;
+                    pushLog({ msg: "Handover complete at BTM Relay Hub. Leg 2 initiated.", type: 'relay' });
+                    spawnRider(routes.relay_leg2_ecity, 6000, 'rider-relay', '🔄 Leg 2');
+                });
+
+                // Relay Logic 2: Truffles -> Hosa Rd -> Gottigere (Delayed start)
+                setTimeout(() => {
+                    if(currentMode !== 'RELAY') return;
+                    spawnRider(routes.relay_leg1_truffles, 5000, 'rider-relay', '🔄 Leg 1', () => {
+                        if(currentMode !== 'RELAY') return;
+                        pushLog({ msg: "Handover complete at Hosa Rd Relay. Leg 2 initiated.", type: 'relay' });
+                        spawnRider(routes.relay_leg2_gottigere, 4000, 'rider-relay', '🔄 Leg 2');
+                    });
+                }, 2500);
+            }
+        },
+        MINUTES: {
+            title: "Minutes Fleet Backbone", desc: "Unified fleet utilization & repositioning across all zones.",
+            nodes: ['ekart_hub', 'relay_hub_btm', 'mcd', 'tiffin_ban', 'iimb', 'ibc'],
+            paths: [
+                { r: routes.hub_mcd, c: '#002B84' }, { r: routes.hub_btm, c: '#002B84' },
+                { r: routes.mcd_iimb, c: '#2874F0' }, { r: routes.tiffin_ibc, c: '#10B981' }
+            ],
+            kpis: [
+                { t: "Fleet Utilization", v: "91%", s: "Active riders", tr: "up" },
+                { t: "Cross-Mission", v: "68%", s: "Shared routing", tr: "up" },
+                { t: "Idle Staging", v: "9%", s: "Positioned at hubs", tr: "down" },
+                { t: "Avg Drops/Hr", v: "5.9", s: "Boosted by batching", tr: "up" }
+            ],
+            status: { label: "Fleet Load Balance", pct: 91, text: "Balancing peak multi-mission dayparts.", color: "var(--fk-navy)" },
+            logGen: () => {
+                const msgs = ["Rider #204 dynamically shifted from Tiffin to Bites.", "Staging pool reinforced at BTM Relay Hub.", "eKart Hub dispatching idle fleet to Crave Mess."];
+                return { msg: msgs[Math.floor(Math.random()*msgs.length)], type: 'info' };
+            },
+            spawnLogic: () => {
+                spawnRider(routes.hub_mcd, 3000, 'rider-hub', '📦 eKart');
+                setTimeout(()=>spawnRider(routes.hub_btm, 4000, 'rider-hub', '📦 Reposition'), 1500);
+                setTimeout(()=>spawnRider(routes.mcd_iimb, 4000, 'rider-bites', '🛵 Bites'), 3000);
+                spawnRider(routes.tiffin_ibc, 6000, 'rider-tiffin', '🍱 Tiffin');
+            }
+        }
+    };
+
+    function switchMode(mode) {
+        currentMode = mode;
+        const c = config[mode];
+
+        // UI Tabs
+        document.querySelectorAll('.mode-pill').forEach(el => el.classList.toggle('active', el.dataset.mode === mode));
+        document.getElementById('hub-title').innerText = c.title;
+        document.getElementById('map-status-title').innerText = c.title;
+        document.getElementById('map-status-desc').innerText = c.desc;
+
+        // Map Layers
+        layerStatic.clearLayers();
+        clearDynamicLayer();
+
+        // Draw Nodes
+        c.nodes.forEach(nId => {
+            if(nodes[nId]) layerStatic.addLayer(createNodeMarker(nodes[nId]));
+        });
+
+        // Draw Bites Isochrones if needed
+        if(mode === 'BITES') {
+            Object.values(isochrones).forEach(poly => {
+                L.polygon(poly, { color: '#F59E0B', weight: 2, fillOpacity: 0.1, className: 'speed-cell' }).addTo(layerStatic);
+            });
+        }
+
+        // Draw Paths (Solid for Relay, dashed for others)
+        c.paths.forEach(p => {
+            const className = mode === 'RELAY' ? 'route-solid' : 'route-path';
+            L.polyline(p.r, { color: p.c, weight: 3.5, opacity: 0.8, className: className }).addTo(layerPaths);
+        });
+
+        // Build Dashboard
+        buildDashboard(c);
+
+        // Start Live Simulator Loop
+        if(dataInterval) clearInterval(dataInterval);
+        c.spawnLogic(); // run once immediately
+        
+        // Relay has longer cycles, adjust spawn interval
+        const spawnDelay = mode === 'RELAY' ? 7000 : 3500;
+        spawnInterval = setInterval(c.spawnLogic, spawnDelay);
+        dataInterval = setInterval(() => tickDashboard(c), 2000);
+    }
+
+    /* =========================================================================
+       4. RIGHT PANEL: LIVE DASHBOARD RENDERER
+       ========================================================================= */
+
+    function buildDashboard(c) {
+        // Build KPIs
+        const kpiGrid = document.getElementById('kpi-grid');
+        kpiGrid.innerHTML = c.kpis.map(k => {
+            let arrow = '';
+            let colorCls = 'trend-neu';
+            if(k.tr==='up') { arrow = '▲'; colorCls = 'trend-up'; }
+            if(k.tr==='down') { arrow = '▼'; colorCls = 'trend-down'; }
+            return `
+            <div class="metric-card">
+                <div class="metric-title">${k.t}</div>
+                <div class="metric-value">
+                    ${k.v} <span class="${colorCls} text-[12px]">${arrow}</span>
+                </div>
+                <div class="metric-sub text-slate-500">${k.s}</div>
+            </div>`;
+        }).join('');
+
+        // Build Status Block
+        const statBlock = document.getElementById('status-block');
+        statBlock.innerHTML = `
+            <div class="flex justify-between text-[10px] font-bold text-slate-700 mb-1">
+                <span>${c.status.label}</span>
+                <span class="font-mono text-[10px]">${c.status.pct}%</span>
+            </div>
+            <div class="mini-progress"><div class="mini-progress-bar" style="width: ${c.status.pct}%; background: ${c.status.color}"></div></div>
+            <div class="text-[9px] text-slate-500 mt-2">${c.status.text}</div>
+        `;
+
+        // Reset Logs
+        document.getElementById('live-feed').innerHTML = '';
+        pushLog({ msg: `System switched to ${c.title} interface. Live tracking engaged.`, type: 'info' });
+    }
+
+    function tickDashboard(c) {
+        // Randomize a KPI slightly for "live" feel
+        const cards = document.querySelectorAll('.metric-value');
+        if(cards.length > 0 && Math.random() > 0.6) {
+            const el = cards[0];
+            const numMatch = el.innerText.match(/\d+/);
+            if(numMatch) {
+                const num = parseInt(numMatch[0]);
+                const newVal = num + (Math.random()>0.5?1:-1);
+                el.innerHTML = el.innerHTML.replace(num, newVal);
+            }
+        }
+
+        // Push new log
+        if(Math.random() > 0.3) pushLog(c.logGen());
+    }
+
+    function pushLog(log) {
+        const feed = document.getElementById('live-feed');
+        const d = new Date();
+        const time = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+        
+        let cls = 'feed-info';
+        if(log.type==='success') cls = 'feed-success';
+        if(log.type==='alert') cls = 'feed-alert';
+        if(log.type==='relay') cls = 'feed-relay';
+
+        const html = `
+            <div class="feed-item ${cls}">
+                <span class="feed-time">[${time}]</span>
+                <span class="feed-msg">${log.msg}</span>
+            </div>
+        `;
+        feed.insertAdjacentHTML('afterbegin', html);
+        
+        // Keep only last 25 logs
+        if(feed.children.length > 25) feed.removeChild(feed.lastChild);
+    }
+
+    function setupClock() {
+        setInterval(() => {
+            const d = new Date();
+            const timeStr = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')} IST`;
+            document.getElementById('hub-time').innerText = timeStr;
+        }, 1000);
+    }
+
+    /* =========================================================================
+       5. INITIALIZATION
+       ========================================================================= */
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initMap();
+
+        document.querySelectorAll('.mode-pill').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                switchMode(e.target.dataset.mode);
+            });
+        });
+    });
+
+</script>
+</body>
+</html>
