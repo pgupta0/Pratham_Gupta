@@ -113,88 +113,6 @@ section,header{position:relative;z-index:1}
 .proof .n{font-family:'Oswald',sans-serif;font-size:clamp(24px,2.6vw,30px);font-weight:600;color:var(--chill);line-height:1;white-space:nowrap}
 .proof .l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;line-height:1.5}
 
-/* ============ ledger ============ */
-.hud{display:flex;align-items:center;gap:20px;flex-wrap:wrap;border:1px solid #d8d5c9;background:#fffdf7;padding:14px 18px;margin-bottom:16px}
-.hud .tot{font-family:'Oswald',sans-serif;font-size:clamp(30px,4.4vw,46px);font-weight:700;color:#B4460C;line-height:1}
-.hud .totl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8a948c;text-transform:uppercase;margin-top:4px}
-.hud .prog{flex:1;min-width:170px}
-.hud .ptrack{height:8px;background:#e4e1d6;position:relative;overflow:hidden}
-.hud .pfill{position:absolute;left:0;top:0;bottom:0;width:0;background:#B4460C;transition:width .4s cubic-bezier(.2,.8,.3,1)}
-.hud .plab{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;color:#6b7369;text-transform:uppercase;margin-bottom:7px}
-.scanall{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:#151815;color:var(--paper);border:0;padding:11px 16px;cursor:pointer;transition:.2s;font-weight:700}
-.scanall:hover{background:#B4460C}
-.scanall[disabled]{opacity:.35;cursor:default}
-.crates{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media(max-width:820px){.crates{grid-template-columns:repeat(2,1fr)}}
-.crate{position:relative;border:1px dashed #bdb7a4;background:#ece9dd;cursor:pointer;padding:15px 14px;min-height:112px;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;justify-content:space-between;transition:transform .22s cubic-bezier(.2,.8,.3,1),box-shadow .22s,background .3s,border-color .3s}
-.crate:hover{transform:translateY(-3px);box-shadow:0 10px 24px -12px #0006}
-.crate .q{font-family:'Oswald',sans-serif;font-size:30px;color:#b3ac97;line-height:1}
-.crate .hintl{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.16em;color:#a29b86;text-transform:uppercase}
-.crate .body{display:none}
-.crate.open{border-style:solid;border-color:#d8d5c9;background:#fffdf7;cursor:default;animation:pop .4s cubic-bezier(.2,.9,.3,1)}
-.crate.open .locked{display:none}
-.crate.open .body{display:flex;flex-direction:column;justify-content:space-between;height:100%;gap:9px}
-@keyframes pop{0%{transform:scale(.94) translateY(4px)}60%{transform:scale(1.02)}100%{transform:none}}
-.crate .cv{font-family:'Oswald',sans-serif;font-size:29px;font-weight:700;color:#151815;line-height:1}
-.crate .ck{font-size:13px;color:#4a544c;font-weight:300;line-height:1.35}
-.crate .co{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;color:#8a948c;text-transform:uppercase;display:flex;align-items:center;gap:6px}
-.crate .co i{width:6px;height:6px;flex:none}
-.crate::after{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--c);transition:width .3s .1s}
-.crate.open::after{width:3px}
-
-/* ============ work bins ============ */
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#ffffff14;border:1px solid #ffffff14}
-@media(max-width:760px){.tabs{grid-template-columns:1fr 1fr}}
-.tab{background:#0A1410;border:0;cursor:pointer;text-align:left;padding:17px 16px;font-family:'JetBrains Mono',monospace;color:var(--muted);transition:.25s;display:flex;flex-direction:column;gap:6px}
-.tab:hover{background:var(--panel);color:var(--frost)}
-.tab .b{font-size:9.5px;letter-spacing:.18em;color:var(--hivis)}
-.tab .o{font-family:'Oswald',sans-serif;font-size:15.5px;text-transform:uppercase;color:var(--frost);letter-spacing:.02em;line-height:1.2}
-.tab .y{font-size:9px;letter-spacing:.13em}
-.tab[aria-selected="true"]{background:var(--hivis);color:#160A02}
-.tab[aria-selected="true"] .b,.tab[aria-selected="true"] .o,.tab[aria-selected="true"] .y{color:#160A02}
-.panel{border:1px solid #ffffff14;border-top:0;padding:30px;display:none;background:#0A1410CC;animation:fade .4s ease}
-.panel.on{display:grid;grid-template-columns:1fr 250px;gap:34px}
-@media(max-width:820px){.panel.on{grid-template-columns:1fr;gap:24px}}
-@keyframes fade{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
-.panel h3{font-size:clamp(20px,2.4vw,26px);margin-bottom:6px;letter-spacing:0}
-.panel .sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.15em;color:var(--hivis);text-transform:uppercase;margin-bottom:16px}
-.panel ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.panel li{position:relative;padding-left:20px;color:#B0C5BA;font-size:16px;font-weight:300}
-.panel li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:2px;background:var(--hivis)}
-.panel li b{color:var(--frost);font-weight:600}
-.pm{display:flex;flex-direction:column;gap:18px;border-left:1px solid #ffffff14;padding-left:22px}
-@media(max-width:820px){.pm{border-left:0;padding-left:0;flex-direction:row;flex-wrap:wrap;gap:24px}}
-.pm .n{font-family:'Oswald',sans-serif;font-size:31px;font-weight:600;color:var(--chill);line-height:1}
-.pm .l{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;color:var(--muted);margin-top:6px;text-transform:uppercase;max-width:20ch;line-height:1.7}
-
-/* ============ skills tiles ============ */
-.fams{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:#ffffff12;border:1px solid #ffffff12}
-@media(max-width:900px){.fams{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.fams{grid-template-columns:1fr}}
-.fam{background:#0A1410;border:0;cursor:pointer;text-align:left;padding:20px 18px;transition:.25s;display:flex;flex-direction:column;gap:8px;position:relative;font:inherit;color:inherit}
-.fam::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--c);opacity:.4;transition:opacity .25s}
-.fam:hover{background:var(--panel)}
-.fam:hover::before,.fam[aria-expanded="true"]::before{opacity:1}
-.fam[aria-expanded="true"]{background:var(--panel)}
-.fam .fn{font-family:'Oswald',sans-serif;font-size:17px;text-transform:uppercase;color:var(--frost);letter-spacing:.02em}
-.fam .fc{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--c);text-transform:uppercase}
-.fam .fx{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--muted);margin-top:2px;transition:transform .25s}
-.fam[aria-expanded="true"] .fx{transform:rotate(45deg);color:var(--c)}
-.fdrop{border:1px solid #ffffff12;border-top:0;background:#0A1410CC;padding:0 22px;max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.8,.3,1),padding .3s}
-.fdrop.on{max-height:640px;padding:20px 22px}
-.slist{display:grid;grid-template-columns:repeat(3,1fr);gap:9px 24px}
-@media(max-width:820px){.slist{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.slist{grid-template-columns:1fr}}
-.srow{display:flex;align-items:center;gap:11px;padding:7px 0;border-bottom:1px solid #ffffff0d}
-.srow .sn{font-size:14.5px;color:#C4D6CC;font-weight:300;flex:1}
-.srow .so{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.11em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
-.srow .sb{display:flex;gap:2px;flex:none}
-.srow .sb i{width:11px;height:3px;background:#ffffff18}
-.srow .sb i.on{background:var(--c)}
-.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.tool{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;border:1px solid #ffffff1f;padding:8px 13px;color:#BDD0C6;transition:.2s}
-.tool:hover{border-color:var(--chill);color:var(--chill)}
-
 /* ============ AI PROJECTS ============ */
 .why{border-left:2px solid var(--preql);padding:4px 0 4px 20px;margin-bottom:30px;max-width:60ch}
 .why p{font-size:17px;color:#C4D6CC;font-weight:300;line-height:1.6}
@@ -228,10 +146,12 @@ section,header{position:relative;z-index:1}
 .brow iframe{width:1100px;height:1180px;border:0;display:block;position:absolute;top:0;left:0;transform-origin:top left}
 
 /* click to launch cover */
-.cover{width:232px;height:452px;border:1px solid #ffffff1c;background:linear-gradient(160deg,#141a34,#0C1120);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:26px 20px;cursor:pointer;transition:.25s;font:inherit;color:inherit;border-radius:6px}
+.cover{text-decoration:none;width:232px;height:452px;border:1px solid #ffffff1c;background:linear-gradient(160deg,#141a34,#0C1120);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:26px 20px;cursor:pointer;transition:.25s;font:inherit;color:inherit;border-radius:6px}
 .cover:hover{border-color:var(--preql);background:linear-gradient(160deg,#1b2246,#0E1428)}
 .cover .cvi{width:44px;height:44px;border:1px solid var(--preql);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px}
 .cover .cvn{font-family:'Oswald',sans-serif;font-size:20px;text-transform:uppercase;color:var(--frost);letter-spacing:.03em;line-height:1.15}
+.cover .cvd{font-size:12.5px;color:#9AA5C4;font-weight:300;line-height:1.6}
+.cvstack{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.11em;color:var(--muted);text-transform:uppercase;line-height:1.9;border-top:1px solid #ffffff14;padding-top:12px;width:100%}
 .cover .cvd{font-size:12.5px;color:#9AA5C4;font-weight:300;line-height:1.6}
 .cover .cvb{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:var(--preql);color:#0A1410;padding:11px 16px;font-weight:700;margin-top:2px}
 .plink{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--preql);text-decoration:none;border-bottom:1px solid #B388FF55}
@@ -266,12 +186,45 @@ section,header{position:relative;z-index:1}
 .cert .ci{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:5px}
 .cert .cn{font-size:14px;color:var(--frost);font-weight:400;line-height:1.3}
 
-/* ============ OFF THE CLOCK ============ */
-.oc{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.ocit{display:flex;align-items:center;gap:11px;border:1px solid #ffffff18;padding:12px 18px;transition:.24s}
-.ocit:hover{border-color:var(--c);transform:translateY(-2px)}
-.ocit svg{width:19px;height:19px;stroke:var(--c);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.ocit span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#BDD0C6}
+/* ============ CHAPTERS ============ */
+.chap{padding:66px 0;border-top:1px solid #ffffff10}
+.chap:first-of-type{border-top:0}
+.ctop{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:6px}
+.cno{font-family:'Oswald',sans-serif;font-size:clamp(40px,6vw,70px);font-weight:700;color:var(--c);opacity:.3;line-height:.9;letter-spacing:-.02em}
+.cmeta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--c);text-transform:uppercase;line-height:1.9}
+.cmeta b{color:var(--frost);font-weight:500}
+.chap h2{font-size:clamp(26px,3.6vw,44px);max-width:24ch;margin-bottom:30px;line-height:1.06}
+.beats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+@media(max-width:880px){.beats{grid-template-columns:1fr}}
+.beat{padding:0 30px 0 0;position:relative}
+.beat+.beat{padding-left:30px;border-left:1px solid #ffffff12}
+@media(max-width:880px){
+  .beat{padding:0 0 26px}
+  .beat+.beat{padding-left:0;border-left:0;border-top:1px solid #ffffff12;padding-top:26px}
+}
+.beat+.beat::before{content:"→";position:absolute;left:-9px;top:2px;width:18px;height:18px;background:var(--ink);color:var(--c);font-size:12px;display:flex;align-items:center;justify-content:center;line-height:1}
+@media(max-width:880px){.beat+.beat::before{content:"↓";left:0;top:-9px}}
+.bl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.19em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;display:block}
+.beat p{font-size:15.5px;color:#AFC4B9;font-weight:300;line-height:1.66}
+.beat p b{color:var(--frost);font-weight:600}
+.bnum{font-family:'Oswald',sans-serif;font-size:clamp(30px,3.6vw,42px);font-weight:700;color:var(--c);line-height:1;margin-bottom:12px;display:block}
+.pq{border-left:2px solid var(--c);padding-left:22px;margin-top:34px;max-width:60ch}
+.pq p{font-size:17.5px;color:#D8E5DD;font-weight:300;font-style:italic;line-height:1.55}
+.pq cite{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;font-style:normal;display:block;margin-top:11px}
+
+/* ============ RECEIPTS ============ */
+.receipts{display:flex;flex-wrap:wrap;border:1px solid #ffffff14;background:#0A1410AA}
+.rc{flex:1 1 148px;padding:15px 17px;border-right:1px solid #ffffff10;border-bottom:1px solid #ffffff10}
+.rc .rn{font-family:'Oswald',sans-serif;font-size:23px;font-weight:600;color:var(--chill);line-height:1;display:block}
+.rc .rl{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;margin-top:7px;display:block;line-height:1.55}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tool{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;border:1px solid #ffffff1f;padding:8px 13px;color:#BDD0C6;transition:.2s}
+.tool:hover{border-color:var(--chill);color:var(--chill)}
+
+/* ============ OFF THE CLOCK, one line ============ */
+.oc1{display:flex;align-items:flex-start;gap:16px;border-left:2px solid var(--chill);padding-left:20px;max-width:70ch}
+.oc1 p{font-size:16.5px;color:#B6C8BE;font-weight:300;line-height:1.6}
+.oc1 p b{color:var(--frost);font-weight:600}
 
 /* ============ contact ============ */
 .contact{background:var(--hivis);color:#170A02;padding:76px 0 28px;z-index:2}
@@ -308,11 +261,6 @@ section,header{position:relative;z-index:1}
 
 /* ============ brief mode ============ */
 body.brief #living,body.brief .scan{display:none}
-body.brief .cover{cursor:default}
-body.brief .panel{display:grid!important;grid-template-columns:1fr 250px;border-top:1px solid #ffffff14;margin-top:-1px}
-@media(max-width:820px){body.brief .panel{grid-template-columns:1fr}}
-body.brief .tabs{display:none}
-body.brief .fdrop{max-height:none!important;padding:20px 22px!important}
 body.brief .rv{opacity:1!important;transform:none!important}
 body.brief .sec{padding:44px 0}
 body.brief .hero{padding-top:106px}
@@ -323,13 +271,11 @@ body.brief .hero{padding-top:106px}
   #living{display:none}
 }
 @media print{
-  .topbar,#living,.sbar,.cmdk,.toast,.scanall,.tabs,.phone,.kbtn,.slot{display:none!important}
+  .topbar,#living,.sbar,.cmdk,.toast,.phone,.brow,.kbtn{display:none!important}
   body{background:#fff;color:#111;font-size:11pt}
   .sec,.hero,.paper{background:#fff!important;color:#111!important;padding:12px 0!important}
-  .panel{display:grid!important;border-color:#ccc;background:#fff!important}
-  h1,h2,h3,h4,.panel li b,.row .rn{color:#111!important}
+  h1,h2,h3,h4,.beat p b,.row .rn{color:#111!important}
   .rv{opacity:1!important;transform:none!important}
-  .fdrop{max-height:none!important;padding:12px 0!important}
   a{text-decoration:none}
 }
 </style>
@@ -359,9 +305,9 @@ body.brief .hero{padding-top:106px}
 <div class="topbar">
   <div class="id"><b>PRATHAM GUPTA</b><span class="sku"> &nbsp;/&nbsp; SKU: PG-2027</span></div>
   <nav class="nav">
-    <a href="#ledger">Ledger</a>
-    <a href="#work">Work</a>
+    <a href="#story">Story</a>
     <a href="#projects">AI Projects</a>
+    <a href="#receipts">Receipts</a>
     <a href="#credentials">Credentials</a>
     <button class="kbtn" id="cmdopen" type="button" aria-label="Open command palette"><span class="klab">Jump</span> <kbd>⌘K</kbd></button>
     <a class="hire" href="#contact">Hire me</a>
@@ -375,10 +321,10 @@ body.brief .hero{padding-top:106px}
       <div>
         <div class="stock"><span class="pulse"></span> IN STOCK &nbsp;·&nbsp; MBA 2027, BITSoM &nbsp;·&nbsp; OPEN TO ROLES</div>
         <h1>I find the<br>leak before<span class="l2">it costs you.</span></h1>
-        <p class="kick">I've closed the deal, cut the cost, and audited the warehouse myself. <b>₹7.97Cr</b> moved across four organisations.</p>
+        <p class="kick">Four times now I have walked into something that was quietly losing money, found out why, and closed it. Here is each one, in order.</p>
         <div class="cta">
           <a class="btn solid" href="mailto:prathamg329@gmail.com">Get in touch</a>
-          <a class="btn" href="#work">See the work</a>
+          <a class="btn" href="#story">Start reading</a>
           <button class="btn modebtn" id="modebtn" type="button" aria-pressed="false">Brief mode</button>
         </div>
       </div>
@@ -394,133 +340,113 @@ body.brief .hero{padding-top:106px}
         <div class="barcode" id="bc"></div>
       </div>
     </div>
-
-    <div class="proof rv">
-      <div><span class="n" data-count="2">0</span><span class="l">Years owning<br>a P&amp;L</span></div>
-      <div><span class="n" data-count="22">0</span><span class="l">Cities of<br>supply chain</span></div>
-      <div><span class="n" data-count="50" data-post="+">0+</span><span class="l">Creators<br>onboarded</span></div>
-    </div>
   </div>
 </header>
 
-<!-- ============ LEDGER ============ -->
-<section class="paper" id="ledger">
+<!-- ============ STORY : FOUR CHAPTERS ============ -->
+<section class="sec" id="story" style="padding-top:26px">
   <div class="wrap">
-    <div class="zone pap rv">Ledger</div>
-    <div class="head rv">
-      <div><h2>Eight crates, one total</h2></div>
-      <p>Tap to scan. Every rupee I have moved lives here and nowhere else on this page.</p>
-    </div>
 
-    <div class="hud rv">
-      <div>
-        <div class="tot" id="totv">₹0</div>
-        <div class="totl">Value moved</div>
+    <!-- ---- 01 ---- -->
+    <div class="chap rv" style="--c:var(--him)">
+      <div class="ctop">
+        <span class="cno">01</span>
+        <span class="cmeta"><b>Himanshu Travel Line</b><br>Growth &amp; Operations · 2023 to 2025</span>
       </div>
-      <div class="prog">
-        <div class="plab"><span>Shelf</span><span id="pcount">0 / 8 scanned</span></div>
-        <div class="ptrack"><div class="pfill" id="pfill"></div></div>
-      </div>
-      <button class="scanall" id="scanall" type="button">Scan all</button>
-    </div>
-
-    <div class="crates rv" id="crates"></div>
-  </div>
-</section>
-
-<!-- ============ WORK ============ -->
-<section class="sec" id="work">
-  <div class="wrap">
-    <div class="zone rv">Work</div>
-    <div class="head rv">
-      <div><h2>Four roles</h2></div>
-      <p>Three lines each. Arrow keys move between bins.</p>
-    </div>
-
-    <div class="tabs rv" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1"><span class="b">BIN 01</span><span class="o">Growth &amp; Commercial</span><span class="y">HIMANSHU · 23-25</span></button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1"><span class="b">BIN 02</span><span class="o">Ops &amp; Supply Chain</span><span class="y">BIGBASKET · 2026</span></button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1"><span class="b">BIN 03</span><span class="o">Influencer &amp; Brand</span><span class="y">IKONA · 24-25</span></button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4" tabindex="-1"><span class="b">BIN 04</span><span class="o">Campus Commercial</span><span class="y">BITSoM · 25-27</span></button>
-    </div>
-
-    <div class="panel on" id="p1" role="tabpanel" aria-labelledby="t1">
-      <div>
-        <h3>Ran growth on a fleet business</h3>
-        <div class="sub">Himanshu Enterprises · two years · owned the number</div>
-        <ul>
-          <li>Negotiated <b>two new corporate accounts</b> end to end and expanded five existing fleets</li>
-          <li>Restructured corporate pricing and launched a B2C referral programme to fill idle capacity</li>
-          <li>Cut driver turnover and delivery delays, the two things behind almost every client complaint</li>
-        </ul>
-      </div>
-      <div class="pm">
-        <div><div class="n">−63%</div><div class="l">Driver turnover</div></div>
-        <div><div class="n">−47%</div><div class="l">Delivery delays</div></div>
+      <h2>A fleet losing drivers faster than it could replace them</h2>
+      <div class="beats">
+        <div class="beat">
+          <span class="bl">The situation</span>
+          <p>A transport operator with corporate contracts it could not grow. Drivers kept leaving, so runs went late, so clients complained. Pricing had not been revisited in years, and nobody was measuring what fuel, repairs and paperwork were actually costing.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What I did</span>
+          <p>Took the commercial side end to end. Rebuilt corporate pricing, negotiated two new accounts myself and expanded five existing fleets. Raised financing against the signed contracts so we could actually add vehicles, then built a premium tier on the upgraded fleet. After that I went at the cost base line by line, and fixed retention, because <b>every complaint traced back to a driver who had just quit</b>.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What changed</span>
+          <span class="bnum">₹2.5Cr</span>
+          <p>closed in contracts, with <b>₹4Cr</b> financed behind them. Driver turnover fell <b>63%</b> and late deliveries <b>47%</b>. I took <b>₹18.2L a year</b> out of the cost base while doing it.</p>
+        </div>
       </div>
     </div>
 
-    <div class="panel" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
-      <div>
-        <h3>Two months inside a 22 city supply chain</h3>
-        <div class="sub">BigBasket · HO4 T2 Operations · summer internship</div>
-        <ul>
-          <li>Traced <b>12 root causes</b> of write-off, the sharpest being a reorder loop that quietly re-triggered purchase orders after liquidation</li>
-          <li>Built the live Looker dashboard that replaced manual file pulls for head office and every city</li>
-          <li>Audited the floor myself at a dark store and a distribution centre, including one unannounced visit</li>
-        </ul>
+    <!-- ---- 02 ---- -->
+    <div class="chap rv" id="ch02" style="--c:var(--bb)">
+      <div class="ctop">
+        <span class="cno">02</span>
+        <span class="cmeta"><b>BigBasket</b><br>HO4, T2 Operations · summer 2026</span>
       </div>
-      <div class="pm">
-        <div><div class="n">0.99→0.93%</div><div class="l">Cluster write-off, share of sales</div></div>
-        <div><div class="n">7→15</div><div class="l">Cities under target</div></div>
+      <h2>Twenty-two cities were losing stock and nobody could say why</h2>
+      <div class="beats">
+        <div class="beat">
+          <span class="bl">The situation</span>
+          <p>Tier-2 cities reported write-off once a month, so by the time a number moved the loss was already months old. I was responsible for all twenty-two of them from a spreadsheet, for cities I had never set foot in.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What I did</span>
+          <p>Went city by city, two or three calls a week with the worst ten, asking questions at SKU level until the causes came apart. Built the daily reporting the cities now run on. Then I flew down and walked the floor myself, a dark store and a distribution centre, <b>including one visit nobody was expecting</b>.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What changed</span>
+          <span class="bnum">12</span>
+          <p>root causes traced. The sharpest was a loop nobody had spotted: writing stock off without correcting the minimum quantity silently re-triggered the same purchase order, so cities kept losing the same item. Cluster write-off went <b>0.99% to 0.93%</b> of sales, and cities holding target went <b>7 to 15</b>.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="panel" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
-      <div>
-        <h3>Built an influencer engine from zero</h3>
-        <div class="sub">IKONA · influencer marketing and brand</div>
-        <ul>
-          <li>Sourced, vetted and onboarded the creator roster from nothing, then scripted for <b>10+ creators</b></li>
-          <li>Built a campus ambassador programme across <b>8 colleges</b></li>
-          <li>Standardised the brief so output stopped depending on who wrote it</li>
-        </ul>
-      </div>
-      <div class="pm">
-        <div><div class="n">+40%</div><div class="l">Client social reach</div></div>
-        <div><div class="n">200+</div><div class="l">Student interactions</div></div>
+      <div class="pq">
+        <p>"Before this, managing Tier-2 cities from head office felt like casting darts into a blind space."</p>
+        <cite>From my own field report, after the first store visit</cite>
       </div>
     </div>
 
-    <div class="panel" id="p4" role="tabpanel" aria-labelledby="t4" hidden>
-      <div>
-        <h3>Selling and running things on campus</h3>
-        <div class="sub">BITS School of Management · MBA 2027</div>
-        <ul>
-          <li>Won <b>SBI as title sponsor</b> for Roar and now head the junior sponsorship team</li>
-          <li>Prototyped an AI campaign tracker for <b>Raymond Realty</b> as a senior at PreQL</li>
-          <li>Led five people at Consortico to diagnose 60% volunteer attrition and write the fix</li>
-        </ul>
+    <!-- ---- 03 ---- -->
+    <div class="chap rv" id="ch03" style="--c:var(--ik)">
+      <div class="ctop">
+        <span class="cno">03</span>
+        <span class="cmeta"><b>IKONA</b><br>Influencer &amp; Brand · 2024 to 2025</span>
       </div>
-      <div class="pm">
-        <div><div class="n">SBI</div><div class="l">Title sponsor won</div></div>
-        <div><div class="n">5</div><div class="l">Person team led</div></div>
+      <h2>A client wanted creator reach and had no creators</h2>
+      <div class="beats">
+        <div class="beat">
+          <span class="bl">The situation</span>
+          <p>No roster, no briefing process, and no way to tell whether any of it was working. The whole function existed as an intention and nothing else.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What I did</span>
+          <p>Sourced and vetted creators one at a time until there were fifty. Built a campus ambassador layer across eight colleges to reach students directly rather than through a feed. Then wrote a standard brief, because <b>output was swinging wildly depending on who happened to write it</b>.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What changed</span>
+          <span class="bnum">+40%</span>
+          <p>client social reach, <b>50+</b> creators onboarded from zero, and over <b>200</b> direct student interactions through the ambassador network.</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ============ SKILLS ============ -->
-<section class="sec tight" id="skills">
-  <div class="wrap">
-    <div class="zone rv">Skills</div>
-    <div class="head rv">
-      <div><h2>Five families</h2></div>
-      <p>Click a family to open it. Nothing to read unless you want to.</p>
+    <!-- ---- 04 ---- -->
+    <div class="chap rv" id="ch04" style="--c:var(--roar)">
+      <div class="ctop">
+        <span class="cno">04</span>
+        <span class="cmeta"><b>BITS School of Management</b><br>MBA · 2025 to 2027</span>
+      </div>
+      <h2>Two years of talking about business, so I kept doing it</h2>
+      <div class="beats">
+        <div class="beat">
+          <span class="bl">The situation</span>
+          <p>Roar, the campus festival, was funded the way most are: a long list of small logos, each one its own negotiation, none of them worth much.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What I did</span>
+          <p>Went after a title sponsor instead of a longer list. Alongside it I prototyped an AI campaign tracker for Raymond Realty at PreQL, and led five people at Consortico to work out why volunteers kept leaving.</p>
+        </div>
+        <div class="beat">
+          <span class="bl">What changed</span>
+          <span class="bnum">SBI</span>
+          <p>signed as title sponsor, with <b>₹12L</b> raised in total. I now head the junior sponsorship team. At Consortico we traced <b>60%</b> volunteer attrition to its cause and wrote the six month fix.</p>
+        </div>
+      </div>
     </div>
-    <div class="fams rv" id="fams"></div>
-    <div class="fdrop" id="fdrop"></div>
-    <div class="tools rv" id="tools"></div>
+
   </div>
 </section>
 
@@ -566,15 +492,15 @@ body.brief .hero{padding-top:106px}
           <span class="pst team">Live</span>
         </div>
         <div class="pmedia">
-          <button class="cover" type="button" id="launchfb">
+          <a class="cover" href="https://myai6-private.vercel.app" target="_blank" rel="noopener">
             <span class="cvi">₹</span>
             <span class="cvn">FinBuddy</span>
             <span class="cvd">An AI portfolio assistant for first-time Indian investors. Scores your risk through a short quiz, then allocates against real, cited fund data instead of a model's guess.</span>
-            <span class="cvb">Launch the app</span>
-          </button>
-          <a class="plink" href="https://myai6-private.vercel.app" target="_blank" rel="noopener">Open full screen ↗</a>
+            <span class="cvstack">Next.js · Vercel AI SDK · Pinecone · Claude</span>
+            <span class="cvb">Open the live app ↗</span>
+          </a>
         </div>
-        <div class="pnote">Next.js, Vercel AI SDK and Pinecone, grounded on a curated fund set. Built with <b>Mihira Navva, Mahak Kalani and Mudita Agarwal</b> for AI in Business at BITSoM, on an <b>80 respondent</b> survey.</div>
+        <div class="pnote">Built with <b>Mihira Navva, Mahak Kalani and Mudita Agarwal</b> for AI in Business at BITSoM, on an <b>80 respondent</b> survey. Opens in a new tab, since it saves your chat locally and browsers block that inside an embed.</div>
       </div>
 
       <div class="proj">
@@ -601,6 +527,37 @@ body.brief .hero{padding-top:106px}
   </div>
 </section>
 
+<!-- ============ RECEIPTS ============ -->
+<section class="sec tight" id="receipts">
+  <div class="wrap">
+    <div class="zone rv">Receipts</div>
+    <div class="head rv">
+      <div><h2>Every number in one place</h2></div>
+      <p>The same figures from the four chapters, if you would rather just scan them.</p>
+    </div>
+    <div class="receipts rv">
+      <div class="rc"><span class="rn">₹4Cr</span><span class="rl">Fleet financing<br>secured</span></div>
+      <div class="rc"><span class="rn">₹2.5Cr</span><span class="rl">B2B contracts<br>closed</span></div>
+      <div class="rc"><span class="rn">₹76L</span><span class="rl">Revenue<br>generated</span></div>
+      <div class="rc"><span class="rn">₹20L</span><span class="rl">Premium tier<br>revenue</span></div>
+      <div class="rc"><span class="rn">₹18.2L</span><span class="rl">Annual cost<br>removed</span></div>
+      <div class="rc"><span class="rn">₹20L</span><span class="rl">Write-off savings<br>BigBasket</span></div>
+      <div class="rc"><span class="rn">₹12L</span><span class="rl">Sponsorship<br>raised</span></div>
+      <div class="rc"><span class="rn">₹1L</span><span class="rl">Stall contracts<br>closed</span></div>
+      <div class="rc"><span class="rn">22</span><span class="rl">Cities of<br>supply chain</span></div>
+      <div class="rc"><span class="rn">50+</span><span class="rl">Creators<br>onboarded</span></div>
+      <div class="rc"><span class="rn">−63%</span><span class="rl">Driver<br>turnover</span></div>
+      <div class="rc"><span class="rn">−47%</span><span class="rl">Delivery<br>delays</span></div>
+    </div>
+    <div class="tools rv">
+      <span class="tool">Looker Studio</span><span class="tool">Advanced Excel</span>
+      <span class="tool">Google Analytics</span><span class="tool">Meta Ads Manager</span>
+      <span class="tool">Six Sigma DMAIC</span><span class="tool">Econometrics</span>
+      <span class="tool">A/B testing</span><span class="tool">Business Model Canvas</span>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CREDENTIALS ============ -->
 <section class="sec" id="credentials">
   <div class="wrap">
@@ -614,20 +571,20 @@ body.brief .hero{padding-top:106px}
       <div class="rv">
         <div class="pframe">
           <div class="pimg">
-            <!-- PG: drop roar-event.jpg next to index.html and this fills in automatically -->
-            <img src="roar-event.jpg" alt="Pratham Gupta at BITSoM Roar" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <!-- PG: roar-event.jpg sits beside index.html -->
+            <img src="roar-event.jpg" alt="Pratham Gupta on stage at BITSoM Roar" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <div class="pph" style="display:none">Add<br>roar-event.jpg<br>beside index.html</div>
           </div>
           <div class="pcap">BITSoM ROAR<br>SPONSORSHIP · SBI TITLE SPONSOR</div>
         </div>
         <div class="eduside">
-        <div class="blk">
-          <div class="bt">Education</div>
-          <div class="rows">
-            <div class="row"><div class="rn">MBA<em>BITS School of Management</em></div><div class="rval">2027 · Pursuing</div></div>
-            <div class="row"><div class="rn">BA (Hons) Economics<em>Delhi Technological University</em></div><div class="rval">2023 · 84.6%</div></div>
+          <div class="blk">
+            <div class="bt">Education</div>
+            <div class="rows">
+              <div class="row"><div class="rn">MBA<em>BITS School of Management</em></div><div class="rval">2027 · Pursuing</div></div>
+              <div class="row"><div class="rn">BA (Hons) Economics<em>Delhi Technological University</em></div><div class="rval">2023 · 84.6%</div></div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
 
@@ -664,29 +621,11 @@ body.brief .hero{padding-top:106px}
           </div>
         </div>
 
-
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ============ OFF THE CLOCK ============ -->
-<section class="sec tight" id="offclock">
-  <div class="wrap">
-    <div class="zone rv">Off the clock</div>
-    <div class="oc rv">
-      <div class="ocit" style="--c:var(--chill)">
-        <svg viewBox="0 0 24 24"><path d="M14.5 3.2a4 4 0 0 1 6.3 6.3L9.4 20.5a2.6 2.6 0 0 1-3.7-3.7z"/><path d="M15 4.5 19.5 9"/><path d="M12.5 7 17 11.5M10 9.5 14.5 14"/></svg>
-        <span>Badminton</span>
-      </div>
-      <div class="ocit" style="--c:var(--tag)">
-        <svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><circle cx="9" cy="12" r="2.1"/><circle cx="15.5" cy="9.5" r="1.6"/><circle cx="15" cy="15" r="1.6"/></svg>
-        <span>Pool</span>
-      </div>
-      <div class="ocit" style="--c:var(--hivis)">
-        <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M8 17h4l3-7 3.5 7"/><path d="M9.5 10H14"/><path d="m12 10-1.5 7"/></svg>
-        <span>Cycling</span>
-      </div>
+    <div class="oc1 rv" style="margin-top:38px">
+      <p><b>Off the clock:</b> badminton, pool and cycling. All three reward reading the angle early and not overhitting, which is roughly how I approach the rest of it too.</p>
     </div>
   </div>
 </section>
@@ -743,15 +682,12 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     W=r.width; H=r.height;
     cv.width=Math.floor(W*DPR); cv.height=Math.floor(H*DPR);
     ctx.setTransform(DPR,0,0,DPR,0,0);
-
     rails=[];
     const n=Math.max(4,Math.round(H/130));
     for(let i=0;i<n;i++) rails.push({y:(i+0.5)*(H/n), sp:14+((i*37)%22), dir:i%2?1:-1});
-
     crates=[];
     const cn=Math.max(9,Math.round(W/118));
     for(let i=0;i<cn;i++) crates.push(newCrate(true));
-
     sparks=[];
     for(let i=0;i<18;i++) sparks.push({x:Math.random()*W,y:Math.random()*H,
       vx:(Math.random()-.5)*10,vy:(Math.random()-.5)*10,r:.8+Math.random()*1.3,a:.10+Math.random()*.22});
@@ -762,7 +698,6 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
             v:16+Math.random()*30, rot:(Math.random()-.5)*.3, o:.07+Math.random()*.11,
             spin:(Math.random()-.5)*.16};
   }
-
   seed();
   let rz=null;
   addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(seed,150)},{passive:true});
@@ -774,10 +709,8 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     const t=ts/1000, dt=Math.min(.05,t-last||.016); last=t;
     scrollY+=(targetY-scrollY)*.07;
     const oy=-scrollY;
-
     ctx.clearRect(0,0,W,H);
 
-    /* drifting grid */
     const gs=76, gx=(t*7)%gs, gy=((t*4)%gs)+oy%gs;
     ctx.lineWidth=1; ctx.strokeStyle='rgba(233,241,236,0.030)';
     ctx.beginPath();
@@ -785,7 +718,6 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     for(let y=-gs+gy;y<H+gs;y+=gs){ ctx.moveTo(0,y); ctx.lineTo(W,y); }
     ctx.stroke();
 
-    /* conveyor rails with travelling cleats */
     rails.forEach((rl,i)=>{
       const y=((rl.y+oy*(1+i*.12))%(H+160)+H+160)%(H+160)-80;
       ctx.strokeStyle='rgba(127,216,208,0.075)';
@@ -797,7 +729,6 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
       ctx.stroke();
     });
 
-    /* crates riding across */
     crates.forEach((k,i)=>{
       k.x-=k.v*dt; k.rot+=k.spin*dt;
       if(k.x<-k.s*1.8){ crates[i]=newCrate(false); return; }
@@ -815,7 +746,6 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
       ctx.restore();
     });
 
-    /* floating motes */
     sparks.forEach(p=>{
       p.x+=p.vx*dt; p.y+=p.vy*dt;
       if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
@@ -824,7 +754,6 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
       ctx.beginPath(); ctx.arc(p.x,y,p.r,0,6.284); ctx.fill();
     });
 
-    /* slow scan sweep */
     const sx=((t*.075)%1.5-.25)*W;
     const g=ctx.createLinearGradient(sx-140,0,sx+140,0);
     g.addColorStop(0,'rgba(255,106,19,0)');
@@ -859,127 +788,26 @@ function copy(v){ (navigator.clipboard?navigator.clipboard.writeText(v):Promise.
   .then(()=>toast('Copied '+v)).catch(()=>toast(v)); }
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-copy]'); if(b)copy(b.dataset.copy); });
 
-/* ============ LEDGER : 8 crates ============ */
-const ORG={him:'Himanshu',bb:'BigBasket',roar:'BITSoM'};
-const SHELF=[
-  {k:'Fleet financing secured', v:'₹4Cr',   n:400,  o:'him'},
-  {k:'B2B contracts closed',    v:'₹2.5Cr', n:250,  o:'him'},
-  {k:'Revenue generated',       v:'₹76L',   n:76,   o:'him'},
-  {k:'Premium tier revenue',    v:'₹20L',   n:20,   o:'him'},
-  {k:'Write-off savings',       v:'₹20L',   n:20,   o:'bb'},
-  {k:'Annual cost removed',     v:'₹18.2L', n:18.2, o:'him'},
-  {k:'Sponsorship raised',      v:'₹12L',   n:12,   o:'roar'},
-  {k:'Stall contracts',         v:'₹1L',    n:1,    o:'roar'}
-];
-const cratesEl=$('#crates');
-let scanned=0, running=0, autoT=null;
-const fmt=l=> l>=100 ? '₹'+(l/100).toFixed(2)+'Cr' : '₹'+l.toFixed(1).replace(/\.0$/,'')+'L';
-
-SHELF.forEach((it,i)=>{
-  const b=document.createElement('button');
-  b.type='button'; b.className='crate'; b.style.setProperty('--c','var(--'+it.o+')');
-  b.setAttribute('aria-label','Scan '+it.k);
-  b.innerHTML='<div class="locked"><div class="q">?</div></div>'+
-    '<div class="locked hintl">Crate '+String(i+1).padStart(2,'0')+'</div>'+
-    '<div class="body"><div class="cv">'+it.v+'</div><div>'+
-      '<div class="ck">'+it.k+'</div>'+
-      '<div class="co" style="margin-top:6px"><i style="background:var(--'+it.o+')"></i>'+ORG[it.o]+'</div>'+
-    '</div></div>';
-  b.addEventListener('click',()=>openCrate(i));
-  cratesEl.appendChild(b);
-});
-function openCrate(i){
-  const el=cratesEl.children[i];
-  if(el.classList.contains('open'))return;
-  el.classList.add('open');
-  scanned++; running+=SHELF[i].n;
-  $('#totv').textContent=fmt(running);
-  $('#pcount').textContent=scanned+' / '+SHELF.length+' scanned';
-  $('#pfill').style.width=(scanned/SHELF.length*100)+'%';
-  if(scanned===SHELF.length){ const s=$('#scanall'); s.disabled=true; s.textContent='Shelf clear ✓'; }
-}
-function autoScan(){
-  if(autoT)return; let i=0;
-  autoT=setInterval(()=>{
-    while(i<SHELF.length&&cratesEl.children[i].classList.contains('open'))i++;
-    if(i>=SHELF.length){clearInterval(autoT);autoT=null;return}
-    openCrate(i++);
-  },190);
-}
-$('#scanall').addEventListener('click',autoScan);
-
-/* ============ WORK tabs ============ */
-const tabs=$$('.tab');
-function selTab(i){
-  tabs.forEach((t,j)=>{
-    const on=j===i;
-    t.setAttribute('aria-selected',on); t.tabIndex=on?0:-1;
-    const p=document.getElementById(t.getAttribute('aria-controls'));
-    p.classList.toggle('on',on); p.hidden=!on;
-  });
-}
-tabs.forEach((t,i)=>{
-  t.addEventListener('click',()=>selTab(i));
-  t.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
-      e.preventDefault();
-      const n=(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
-      tabs[n].focus(); selTab(n);
-    }
-  });
-});
-
-/* ============ SKILLS families ============ */
-const FAMS=[
- {k:'com',n:'Commercial',c:'--hivis',s:[
-   ['B2B contract negotiation',5,'Himanshu'],['Pricing &amp; tier design',4,'Himanshu'],
-   ['Debt &amp; asset financing',4,'Himanshu'],['P&amp;L ownership',4,'Himanshu'],
-   ['Sponsorship sales',4,'BITSoM'],['Referral growth loops',3,'Himanshu'],
-   ['Go-to-market design',3,'Transit One']]},
- {k:'ops',n:'Operations',c:'--chill',s:[
-   ['Write-off &amp; shrinkage control',4,'BigBasket'],['Inventory &amp; MBQ correction',4,'BigBasket'],
-   ['Warehouse &amp; BIN audits',4,'BigBasket'],['FEFO &amp; cold chain',3,'BigBasket'],
-   ['Root-cause analysis, DMAIC',4,'BigBasket'],['Fleet &amp; vendor operations',4,'Himanshu'],
-   ['Cost engineering',4,'Himanshu'],['SOP &amp; governance design',3,'BigBasket'],
-   ['Cross-functional escalation',4,'BigBasket']]},
- {k:'dat',n:'Data',c:'--tag',s:[
-   ['Looker Studio dashboards',4,'BigBasket'],['Advanced Excel modelling',5,'BigBasket'],
-   ['Econometrics',4,'DTU'],['Regression &amp; forecasting',3,'Google cert'],
-   ['A/B testing',3,'Google cert'],['KPI &amp; OKR design',3,'BigBasket']]},
- {k:'mkt',n:'Marketing',c:'--ik',s:[
-   ['Influencer marketing',4,'IKONA'],['Campus &amp; ambassador programmes',4,'IKONA'],
-   ['Content &amp; creator briefing',3,'IKONA'],['Performance marketing',3,'Meta cert'],
-   ['Brand &amp; market research',3,'Consortico']]},
- {k:'ai',n:'AI',c:'--preql',s:[
-   ['AI campaign tracking',3,'PreQL'],['AI ops-analytics design',3,'BigBasket'],
-   ['Prompt-driven analysis',3,'Working stack']]}
-];
+/* ============ AI PROJECT EMBEDS ============
+   Local iframes stay unloaded until the section is near the viewport.
+   FinBuddy is a plain link, because it stores chats in localStorage and
+   browsers block that inside a cross-origin frame. */
 (function(){
-  const box=$('#fams'), drop=$('#fdrop');
-  let open=-1;
-  FAMS.forEach((f,i)=>{
-    const b=document.createElement('button');
-    b.type='button'; b.className='fam'; b.style.setProperty('--c','var('+f.c+')');
-    b.setAttribute('aria-expanded','false');
-    b.innerHTML='<span class="fc">'+f.s.length+' skills</span><span class="fn">'+f.n+'</span><span class="fx">+</span>';
-    b.addEventListener('click',()=>toggle(i));
-    box.appendChild(b);
-  });
-  function toggle(i){
-    open = open===i ? -1 : i;
-    [...box.children].forEach((b,j)=>b.setAttribute('aria-expanded',j===open));
-    if(open<0){ drop.classList.remove('on'); drop.innerHTML=''; return; }
-    const f=FAMS[open];
-    drop.style.setProperty('--c','var('+f.c+')');
-    drop.innerHTML='<div class="slist">'+f.s.map(s=>
-      '<div class="srow"><span class="sn">'+s[0]+'</span>'+
-      '<span class="sb">'+[1,2,3,4,5].map(n=>'<i class="'+(n<=s[1]?'on':'')+'"></i>').join('')+'</span>'+
-      '<span class="so">'+s[2]+'</span></div>').join('')+'</div>';
-    drop.classList.add('on');
+  const sec=$('#projects'); if(!sec)return;
+  function scaleBrowsers(){
+    $$('.browview').forEach(v=>{
+      const f=v.querySelector('iframe'); if(!f)return;
+      f.style.transform='scale('+(v.clientWidth/1100)+')';
+    });
   }
-  $('#tools').innerHTML=['Looker Studio','Advanced Excel','Google Analytics','Meta Ads Manager',
-    'Six Sigma DMAIC','Econometrics','A/B testing','Business Model Canvas']
-    .map(t=>'<span class="tool">'+t+'</span>').join('');
+  scaleBrowsers();
+  addEventListener('resize',scaleBrowsers,{passive:true});
+  new IntersectionObserver((es,o)=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      $$('#projects iframe[data-src]').forEach(f=>{ f.src=f.dataset.src; f.removeAttribute('data-src'); });
+      scaleBrowsers(); o.disconnect();
+    }});
+  },{rootMargin:'400px'}).observe(sec);
 })();
 
 /* ============ BRIEF MODE ============ */
@@ -988,36 +816,27 @@ function setBrief(on){
   document.body.classList.toggle('brief',on);
   modebtn.setAttribute('aria-pressed',on);
   modebtn.textContent=on?'Exit brief mode':'Brief mode';
-  if(on){
-    SHELF.forEach((x,i)=>openCrate(i));
-    $$('.panel').forEach(p=>{p.classList.add('on');p.hidden=false});
-    $$('.rv').forEach(e=>e.classList.add('in'));
-    $$('.fam').forEach(b=>b.setAttribute('aria-expanded','true'));
-    $('#fdrop').innerHTML='<div class="slist">'+FAMS.flatMap(f=>f.s.map(s=>
-      '<div class="srow" style="--c:var('+f.c+')"><span class="sn">'+s[0]+'</span>'+
-      '<span class="sb">'+[1,2,3,4,5].map(n=>'<i class="'+(n<=s[1]?'on':'')+'"></i>').join('')+'</span>'+
-      '<span class="so">'+s[2]+'</span></div>')).join('')+'</div>';
-    $('#fdrop').classList.add('on');
-    toast('Brief mode, everything open');
-  } else { selTab(0); toast('Interactive mode back on'); }
+  $$('.rv').forEach(e=>e.classList.add('in'));
+  toast(on?'Brief mode, motion off':'Interactive mode back on');
 }
 modebtn.addEventListener('click',()=>setBrief(!document.body.classList.contains('brief')));
 
 /* ============ COMMAND PALETTE ============ */
 const CMDS=[
-  {i:'GO',n:'Ledger',        d:'the money',       a:()=>jump('#ledger')},
-  {i:'GO',n:'Work',          d:'four roles',      a:()=>jump('#work')},
-  {i:'GO',n:'Skills',        d:'five families',   a:()=>jump('#skills')},
-  {i:'GO',n:'AI Projects',   d:'transit one',     a:()=>jump('#projects')},
-  {i:'GO',n:'Credentials',   d:'roles, awards',   a:()=>jump('#credentials')},
-  {i:'GO',n:'Contact',       d:'get in touch',    a:()=>jump('#contact')},
-  {i:'COPY',n:'Copy email',  d:'prathamg329@gmail.com', a:()=>copy('prathamg329@gmail.com')},
-  {i:'COPY',n:'Copy phone',  d:'+91 80768 78652', a:()=>copy('+918076878652')},
-  {i:'OPEN',n:'Open LinkedIn',d:'in/pgupta05',    a:()=>window.open('https://www.linkedin.com/in/pgupta05','_blank','noopener')},
-  {i:'MAIL',n:'Write an email',d:'mail client',   a:()=>location.href='mailto:prathamg329@gmail.com'},
+  {i:'GO',n:'Chapter 01, Himanshu Travel Line', d:'the fleet', a:()=>jump('#story')},
+  {i:'GO',n:'Chapter 02, BigBasket',            d:'22 cities', a:()=>jump('#ch02')},
+  {i:'GO',n:'Chapter 03, IKONA',                d:'creators',  a:()=>jump('#ch03')},
+  {i:'GO',n:'Chapter 04, BITSoM',               d:'campus',    a:()=>jump('#ch04')},
+  {i:'GO',n:'AI Projects',      d:'three builds',    a:()=>jump('#projects')},
+  {i:'GO',n:'Receipts',         d:'every number',    a:()=>jump('#receipts')},
+  {i:'GO',n:'Credentials',      d:'roles, awards',   a:()=>jump('#credentials')},
+  {i:'GO',n:'Contact',          d:'get in touch',    a:()=>jump('#contact')},
+  {i:'COPY',n:'Copy email',     d:'prathamg329@gmail.com', a:()=>copy('prathamg329@gmail.com')},
+  {i:'COPY',n:'Copy phone',     d:'+91 80768 78652', a:()=>copy('+918076878652')},
+  {i:'OPEN',n:'Open LinkedIn',  d:'in/pgupta05',     a:()=>window.open('https://www.linkedin.com/in/pgupta05','_blank','noopener')},
+  {i:'MAIL',n:'Write an email', d:'mail client',     a:()=>location.href='mailto:prathamg329@gmail.com'},
   {i:'VIEW',n:'Toggle brief mode',d:'recruiter view',a:()=>setBrief(!document.body.classList.contains('brief'))},
-  {i:'VIEW',n:'Print or save as PDF',d:'clean layout',a:()=>window.print()},
-  {i:'RUN',n:'Scan the shelf',d:'ledger',         a:()=>{jump('#ledger');autoScan()}}
+  {i:'VIEW',n:'Print or save as PDF',d:'clean layout',a:()=>window.print()}
 ];
 function jump(h){ const t=$(h); if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'}); }
 (function(){
@@ -1057,61 +876,11 @@ function jump(h){ const t=$(h); if(t)t.scrollIntoView({behavior:RM?'auto':'smoot
   });
 })();
 
-/* ============ AI PROJECT EMBEDS ============
-   Iframes stay unloaded until the section is near the viewport, so the page
-   opens fast. FinBuddy is an external app, so it loads on click instead. */
-(function(){
-  const sec=$('#projects'); if(!sec)return;
-
-  function scaleBrowsers(){
-    $$('.browview').forEach(v=>{
-      const f=v.querySelector('iframe'); if(!f)return;
-      f.style.transform='scale('+(v.clientWidth/1100)+')';
-    });
-  }
-  scaleBrowsers();
-  addEventListener('resize',scaleBrowsers,{passive:true});
-
-  const load=()=>$$('#projects iframe[data-src]').forEach(f=>{
-    f.src=f.dataset.src; f.removeAttribute('data-src');
-  });
-  new IntersectionObserver((es,o)=>{
-    es.forEach(e=>{ if(e.isIntersecting){ load(); scaleBrowsers(); o.disconnect(); } });
-  },{rootMargin:'400px'}).observe(sec);
-
-  const btn=$('#launchfb');
-  if(btn) btn.addEventListener('click',()=>{
-    const wrap=document.createElement('div');
-    wrap.className='phone';
-    wrap.innerHTML='<div class="screen"><div class="pfb">Loading FinBuddy</div>'+
-      '<iframe src="https://myai6-private.vercel.app" title="FinBuddy portfolio assistant"></iframe></div>';
-    btn.replaceWith(wrap);
-    toast('FinBuddy loading');
-  });
-})();
-
-/* ============ count-up + reveal ============ */
-function countUp(el){
-  if(el.dataset.done)return; el.dataset.done='1';
-  const target=+el.dataset.count, dec=+(el.dataset.dec||0), post=el.dataset.post||'', pre=el.dataset.pre||'';
-  if(RM){el.textContent=pre+target.toFixed(dec)+post;return}
-  const dur=1400,t0=performance.now();
-  (function step(t){
-    const p=Math.min((t-t0)/dur,1), e=1-Math.pow(1-p,3);
-    el.textContent=pre+(target*e).toFixed(dec)+post;
-    if(p<1)requestAnimationFrame(step);
-  })(t0);
-}
+/* ============ reveal ============ */
 const io=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(!e.isIntersecting)return;
-    e.target.classList.add('in');
-    e.target.querySelectorAll('[data-count]').forEach(countUp);
-    if(e.target.id==='crates')setTimeout(autoScan,550);
-    io.unobserve(e.target);
-  });
-},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-$$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*70+'ms';io.observe(el)});
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+$$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*60+'ms';io.observe(el)});
 </script>
 </body>
 </html>
