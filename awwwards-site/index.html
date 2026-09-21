@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awwwards Style Site</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Macro Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Three.js Canvas -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Main Content wrapper for Lenis -->
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <header class="header">
+                <div class="logo">AWWWARDS.</div>
+                <nav>
+                    <ul>
+                        <li><a href="#work">Work</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section class="hero">
+                <h1 class="macro-type">
+                    <span class="line">DIGITAL</span>
+                    <span class="line">EXPERIENCE</span>
+                </h1>
+            </section>
+
+            <section class="marquee-section">
+                <div class="marquee-inner">
+                    <div class="marquee-part">
+                        CREATIVE DESIGN &bull; WEBGL &bull; GSAP &bull; LENIS &bull; 
+                    </div>
+                    <div class="marquee-part">
+                        CREATIVE DESIGN &bull; WEBGL &bull; GSAP &bull; LENIS &bull; 
+                    </div>
+                </div>
+            </section>
+
+            <section class="horizontal-scroll-section">
+                <div class="horizontal-container">
+                    <div class="horizontal-panel">
+                        <h2>INNOVATION</h2>
+                        <p>Pushing the boundaries of web experiences.</p>
+                    </div>
+                    <div class="horizontal-panel">
+                        <h2>INTERACTION</h2>
+                        <p>Engaging users through dynamic interfaces.</p>
+                    </div>
+                    <div class="horizontal-panel">
+                        <h2>IMMERSION</h2>
+                        <p>Creating worlds within the browser.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glassmorphism-section">
+                <div class="container">
+                    <h2 class="section-title">PREMIUM CARDS</h2>
+                    <div class="cards-grid">
+                        <div class="glass-card">
+                            <h3>Design</h3>
+                            <p>Crafting pixel-perfect aesthetics.</p>
+                        </div>
+                        <div class="glass-card">
+                            <h3>Development</h3>
+                            <p>Robust and performant code.</p>
+                        </div>
+                        <div class="glass-card">
+                            <h3>Motion</h3>
+                            <p>Fluid and natural animations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <h2>LET'S TALK</h2>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
