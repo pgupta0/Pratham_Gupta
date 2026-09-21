@@ -25,22 +25,34 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- GSAP & ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<!-- Lenis -->
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <style>
 :root{
-  --ink:#0A1410;--panel:#14231D;--frost:#E9F1EC;--muted:#8FA79B;
-  --hivis:#FF6A13;--chill:#7FD8D0;--tag:#FFD24A;--paper:#F3F1E9;--paperink:#151815;
-  --him:#FF6A13;--bb:#7FD8D0;--roar:#FFD24A;--ik:#C7D9CE;--preql:#B388FF;
+  --ink:#030303;--panel:rgba(255,255,255,0.03);--frost:#FFFFFF;--muted:#A0A0A0;
+  --hivis:#FF4500;--chill:#00FFCC;--tag:#FFD24A;--paper:#111111;--paperink:#EEEEEE;
+  --him:#FF4500;--bb:#00FFCC;--roar:#FFD24A;--ik:#C7D9CE;--preql:#B388FF;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+html{scroll-behavior:auto;scroll-padding-top:84px}
 body{background:var(--ink);color:var(--frost);font-family:'Public Sans',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Oswald',sans-serif;font-weight:600;line-height:1.03;text-transform:uppercase;letter-spacing:.01em}
+h1,h2,h3,h4{font-family:'Oswald',sans-serif;font-weight:700;line-height:0.95;text-transform:uppercase;letter-spacing:-0.02em}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--chill);outline-offset:3px}
 .mono{font-family:'JetBrains Mono',monospace}
 
 /* ============ LIVING BACKGROUND ============ */
-#living{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
+#webgl-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none}
+#living{display:none} /* Hide old living background */
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
 section,header{position:relative;z-index:1}
 /* dark sections stay transparent so the background keeps moving behind them */
@@ -119,7 +131,7 @@ section,header{position:relative;z-index:1}
 .why p b{color:var(--frost);font-weight:600}
 .prow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
 @media(max-width:1000px){.prow{grid-template-columns:1fr;gap:22px;justify-items:center}}
-.proj{border:1px solid #ffffff14;background:#0A1410CC;display:flex;flex-direction:column;width:100%;max-width:430px;transition:.28s}
+.proj{border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;flex-direction:column;width:100%;max-width:430px;transition:.28s;border-radius:12px;overflow:hidden}
 .proj:hover{border-color:#ffffff2a}
 .proj-h{padding:16px 18px;border-bottom:1px solid #ffffff12;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .proj-h h4{font-size:17px;color:var(--frost);letter-spacing:.02em;line-height:1.2}
@@ -288,6 +300,52 @@ body.brief .hero{padding-top:106px}
   .rv{opacity:1!important;transform:none!important}
   a{text-decoration:none}
 }
+/* ============ MARQUEE ============ */
+.marquee-container {
+  width: 100vw;
+  overflow: hidden;
+  background: var(--hivis);
+  padding: 24px 0;
+  display: flex;
+  white-space: nowrap;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.marquee-content {
+  display: flex;
+  animation: marquee 20s linear infinite;
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.marquee-content span { padding: 0 4vw; }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* HORIZONTAL SCROLL OVERRIDES */
+.horiz-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+.horiz-container {
+  width: 300%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.horiz-container .prow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 40px;
+}
+.horiz-container .proj { max-width: 500px; flex: none; }
 </style>
 <script type="application/ld+json">
 {
@@ -308,6 +366,7 @@ body.brief .hero{padding-top:106px}
 </script>
 </head>
 <body>
+<canvas id="webgl-bg" aria-hidden="true"></canvas>
 
 <canvas id="living" aria-hidden="true"></canvas>
 <div class="sbar" id="sbar"></div>
@@ -352,6 +411,12 @@ body.brief .hero{padding-top:106px}
     </div>
   </div>
 </header>
+
+<div class="marquee-container">
+  <div class="marquee-content">
+    <span>SOFTWARE ENGINEER &nbsp;•&nbsp; UI DESIGNER &nbsp;•&nbsp; CREATIVE DEVELOPER &nbsp;•&nbsp; SOFTWARE ENGINEER &nbsp;•&nbsp; UI DESIGNER &nbsp;•&nbsp; CREATIVE DEVELOPER &nbsp;•&nbsp; SOFTWARE ENGINEER &nbsp;•&nbsp; UI DESIGNER &nbsp;•&nbsp; CREATIVE DEVELOPER</span>
+  </div>
+</div>
 
 <!-- ============ STORY : FOUR CHAPTERS ============ -->
 <section class="sec" id="story" style="padding-top:26px">
@@ -528,15 +593,6 @@ body.brief .hero{padding-top:106px}
 
 <!-- ============ AI PROJECTS ============ -->
 <section class="sec" id="projects">
-  <div class="wrap">
-    <div class="zone rv" style="color:var(--preql)">AI Projects</div>
-    <div class="head rv">
-      <div><h2>I wanted to build it, not talk about it</h2></div>
-    </div>
-    <div class="why rv">
-      <p>Before business school I wanted to actually understand what AI is, rather than join the crowd who talk about it without ever having built anything. <b>So I built.</b></p>
-    </div>
-
     <div class="prow rv">
 
       <div class="proj">
@@ -599,6 +655,7 @@ body.brief .hero{padding-top:106px}
         <div class="pnote">A food delivery network running live on a map: five operating models, moving riders, relay handovers and a KPI terminal. <b>Concept work, not a real product.</b></div>
       </div>
 
+    </div>
     </div>
   </div>
 </section>
@@ -926,6 +983,75 @@ const io=new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 },{threshold:.1,rootMargin:'0px 0px -50px 0px'});
 $$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*60+'ms';io.observe(el)});
+/* ============ Awwwards Scripts ============ */
+// Lenis Smooth Scroll
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+  direction: 'vertical',
+  gestureDirection: 'vertical',
+  smooth: true,
+  mouseMultiplier: 1,
+  smoothTouch: false,
+  touchMultiplier: 2,
+  infinite: false,
+})
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
+
+// GSAP Horizontal Scroll
+gsap.registerPlugin(ScrollTrigger);
+let panels = gsap.utils.toArray(".proj");
+if (panels.length && document.querySelector('.horiz-wrapper')) {
+  gsap.to(panels, {
+    xPercent: -100 * (panels.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".horiz-wrapper",
+      pin: true,
+      scrub: 1,
+      snap: 1 / (panels.length - 1),
+      end: () => "+=" + document.querySelector(".horiz-wrapper").offsetWidth
+    }
+  });
+}
+
+// Three.js Background
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, canvas: document.getElementById('webgl-bg') });
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const geometry = new THREE.BufferGeometry();
+const vertices = [];
+for ( let i = 0; i < 5000; i ++ ) {
+  vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ); // x
+  vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ); // y
+  vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ); // z
+}
+geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+const material = new THREE.PointsMaterial( { color: 0xffffff, size: 2, transparent: true, opacity: 0.5 } );
+const particles = new THREE.Points( geometry, material );
+scene.add( particles );
+camera.position.z = 1000;
+
+function animate() {
+  requestAnimationFrame( animate );
+  particles.rotation.x += 0.0005;
+  particles.rotation.y += 0.001;
+  renderer.render( scene, camera );
+}
+animate();
+
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
 </script>
 </body>
 </html>
