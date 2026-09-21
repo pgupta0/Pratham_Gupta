@@ -140,7 +140,7 @@ section,header{position:relative;z-index:1}
 .pst.live{background:var(--preql);color:#0A1410}
 .pst.team{background:var(--chill);color:#0A1410}
 .pst.sim{background:var(--tag);color:#0A1410}
-.pmedia{padding:20px 18px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:13px;flex:1;min-height:468px}
+.pmedia{padding:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:13px;flex:1;min-height:468px}
 .pnote{margin-top:auto;padding:14px 18px 16px;font-size:13px;color:#94AB9F;font-weight:300;line-height:1.55}
 .pnote b{color:#C4D6CC;font-weight:600}
 
@@ -249,12 +249,12 @@ section,header{position:relative;z-index:1}
 .oc1 p b{color:var(--frost);font-weight:600}
 
 /* ============ contact ============ */
-.contact{background:var(--hivis);color:#170A02;padding:76px 0 28px;z-index:2}
-.contact h2{font-size:clamp(38px,6.6vw,86px);color:#170A02;line-height:.92}
-.contact .sub{margin-top:18px;font-size:18px;max-width:40ch;color:#3A1D0B}
+.contact{background:var(--paper);color:var(--frost);padding:76px 0 28px;z-index:2;border-top:1px solid rgba(255,255,255,0.1)}
+.contact h2{font-size:clamp(38px,6.6vw,86px);color:var(--frost);line-height:.92}
+.contact .sub{margin-top:18px;font-size:18px;max-width:40ch;color:var(--muted)}
 .clinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.clinks a,.clinks button{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;background:#170A02;color:#FFD9C2;padding:15px 22px;text-decoration:none;transition:.22s;border:0;cursor:pointer}
-.clinks a:hover,.clinks button:hover{background:#2E1405;transform:translateY(-2px)}
+.clinks a,.clinks button{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;background:var(--ink);color:var(--frost);padding:15px 22px;text-decoration:none;transition:.22s;border:1px solid rgba(255,255,255,0.1);cursor:pointer;border-radius:6px}
+.clinks a:hover,.clinks button:hover{background:#ffffff11;transform:translateY(-2px)}
 .cfoot{margin-top:46px;padding-top:18px;border-top:1px solid #170A0233;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:#4A2409}
 .fbar{display:flex;align-items:flex-end;gap:2px;height:26px}
 .fbar i{display:block;background:#170A02;width:2px}
@@ -347,10 +347,23 @@ body.brief .hero{padding-top:106px}
 }
 .horiz-container .proj { max-width: 500px; flex: none; }
 
+.proj {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+}
+.proj-h { border-bottom: none !important; padding: 0 0 16px 0 !important; }
 .proj p, .pnote {
-  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 16.5px !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 .proj h4 {
+  font-size: 24px !important;
   color: #fff;
 }
 
@@ -536,11 +549,12 @@ body.brief .hero{padding-top:106px}
 <!-- ============ AI PROJECTS ============ -->
 <section class="sec" id="projects">
     
-  <div class="wrap" style="padding-bottom: 24px;">
-    <h2>Selected Works</h2>
-  </div>
-  <div class="horiz-wrapper" style="padding-left: 28px;">
-    <div class="horiz-container prow rv" style="width: max-content;">
+  <div class="wrap">
+    <div class="zone rv">Case Studies</div>
+    <div class="head rv">
+      <div><h2>Selected works</h2></div>
+    </div>
+    <div class="prow rv">
     
 
       <div class="proj">
@@ -605,7 +619,6 @@ body.brief .hero{padding-top:106px}
 
     </div>
     </div>
-  </div>
   </div>
   </div>
 </section>
@@ -1019,23 +1032,6 @@ function raf(time) {
   requestAnimationFrame(raf)
 }
 requestAnimationFrame(raf)
-
-// GSAP Horizontal Scroll
-gsap.registerPlugin(ScrollTrigger);
-let panels = gsap.utils.toArray(".proj");
-if (panels.length && document.querySelector('.horiz-wrapper')) {
-  gsap.to(panels, {
-    xPercent: -100 * (panels.length - 1),
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".horiz-wrapper",
-      pin: true,
-      scrub: 1,
-      snap: 1 / (panels.length - 1),
-      end: () => "+=" + document.querySelector(".horiz-wrapper").offsetWidth
-    }
-  });
-}
 
 // Three.js Background
 const scene = new THREE.Scene();
