@@ -1,199 +1,43 @@
-:root {
-    --bg-color: #050505;
-    --text-color: #f0f0f0;
-    --accent: #ff4500;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-}
-
-#webgl-canvas {
+/* Custom Cursor */
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    background-color: #D4AF37; /* Gold */
+    border-radius: 50%;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
     pointer-events: none;
-}
-
-/* Header */
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 2rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
     mix-blend-mode: difference;
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
 }
 
-.logo {
-    font-family: 'Syncopate', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    letter-spacing: 2px;
+/* Hide default cursor globally */
+body, a, button, .glass-card {
+    cursor: none !important;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-/* Hero & Macro Typography */
-.hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 4rem;
-}
-
-.macro-type {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 8vw;
-    font-weight: 700;
-    line-height: 1.1;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Infinite Marquee */
-.marquee-section {
-    padding: 5rem 0;
-    background: transparent;
-    overflow: hidden;
-    white-space: nowrap;
-    display: flex;
-}
-
-.marquee-inner {
-    display: flex;
-    width: max-content;
-}
-
-.marquee-part {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 4rem;
-    font-weight: 700;
-    padding: 0 2rem;
-    -webkit-text-stroke: 1px var(--text-color);
-    color: transparent;
-}
-
-/* Horizontal Scroll Section */
-.horizontal-scroll-section {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-}
-
-.horizontal-container {
-    display: flex;
-    width: 300vw;
-    height: 100%;
-}
-
-.horizontal-panel {
-    width: 100vw;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 4rem;
-    text-align: center;
-}
-
-.horizontal-panel h2 {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 6vw;
-    margin-bottom: 1rem;
-}
-
-.horizontal-panel p {
-    font-size: 1.5rem;
-    max-width: 600px;
-    opacity: 0.8;
-}
-
-/* Glassmorphism Cards */
-.glassmorphism-section {
-    padding: 10rem 4rem;
-}
-
-.section-title {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 3rem;
-    margin-bottom: 4rem;
-    text-align: center;
-}
-
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
-}
-
+/* Glassmorphism Cards with Parallax Tilt support */
 .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 3rem;
-    border-radius: 20px;
-    transition: transform 0.3s ease, background 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    /* Hide overflow for glare effect */
+    overflow: hidden; 
 }
 
-.glass-card:hover {
-    transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.08);
+/* Inner elements popping out for 3D effect */
+.glass-card h3, .glass-card p {
+    transform: translateZ(40px); 
+    transition: transform 0.3s ease;
 }
 
-.glass-card h3 {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.glass-card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Footer */
-.footer {
-    height: 50vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer h2 {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 5vw;
+/* Fix for Safari backdrop-filter glitch when scrolling */
+.glassmorphism-section {
+    transform: translateZ(0);
 }
