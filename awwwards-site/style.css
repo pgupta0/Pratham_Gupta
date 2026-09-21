@@ -1,0 +1,43 @@
+/* Custom Cursor */
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    background-color: #D4AF37; /* Gold */
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hide default cursor globally */
+body, a, button, .glass-card {
+    cursor: none !important;
+}
+
+/* Glassmorphism Cards with Parallax Tilt support */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    /* Hide overflow for glare effect */
+    overflow: hidden; 
+}
+
+/* Inner elements popping out for 3D effect */
+.glass-card h3, .glass-card p {
+    transform: translateZ(40px); 
+    transition: transform 0.3s ease;
+}
+
+/* Fix for Safari backdrop-filter glitch when scrolling */
+.glassmorphism-section {
+    transform: translateZ(0);
+}
