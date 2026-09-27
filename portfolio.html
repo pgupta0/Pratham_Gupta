@@ -73,7 +73,7 @@ a{color:inherit}
 
 .entry{margin-bottom:74px}
 .entry:last-child{margin-bottom:0}
-.card{margin-top:-4px;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;transition:border-color .25s}
+.card{margin-top:-4px;border:1px solid rgba(255,255,255,0.1);background:rgba(11, 15, 13, 0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:14px;overflow:hidden;transition:border-color .25s}
 .card:hover{border-color:#ffffff28}
 .ch{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
 .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--c)}
@@ -128,9 +128,26 @@ a{color:inherit}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+#webgl-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+}
+.wrap, section, header {
+  position: relative;
+  z-index: 1;
+}
+
 </style>
 </head>
 <body>
+<canvas id="webgl-bg" aria-hidden="true"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <div class="sbar" id="sbar"></div>
 
 <div class="topbar">
@@ -327,5 +344,146 @@ $$('.entry').forEach(el=>{
   },{rootMargin:'400px'}).observe(el);
 });
 </script>
+
+<script>
+// Crazy Tech / Jarvis Style 3D Background
+const canvas = document.getElementById('webgl-bg');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+camera.position.z = 15;
+
+const group = new THREE.Group();
+scene.add(group);
+
+// Colors matching the site theme: chill (0x00FFCC), preql (0xB388FF), hivis (0xFF4500)
+const colors = [0x00FFCC, 0xB388FF, 0x00FFCC];
+
+// 1. Concentric Tech Rings (Torus/Wireframes)
+const ringCount = 5;
+const rings = [];
+for(let i = 0; i < ringCount; i++) {
+  const geometry = new THREE.TorusGeometry(8 + i * 2, 0.05, 16, 100);
+  const material = new THREE.MeshBasicMaterial({ 
+    color: colors[i % colors.length], 
+    wireframe: true, 
+    transparent: true, 
+    opacity: 0.15 + (0.05 * (ringCount - i))
+  });
+  const torus = new THREE.Mesh(geometry, material);
+  
+  // Random initial rotation
+  torus.rotation.x = Math.random() * Math.PI;
+  torus.rotation.y = Math.random() * Math.PI;
+  
+  // Random rotation speed
+  torus.userData = {
+    rx: (Math.random() - 0.5) * 0.005,
+    ry: (Math.random() - 0.5) * 0.005,
+    rz: (Math.random() - 0.5) * 0.005
+  };
+  
+  rings.push(torus);
+  group.add(torus);
+}
+
+// 2. Inner Data Sphere
+const sphereGeo = new THREE.IcosahedronGeometry(5, 2); // complex sphere
+const sphereMat = new THREE.MeshBasicMaterial({
+  color: 0x00FFCC,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.1
+});
+const innerSphere = new THREE.Mesh(sphereGeo, sphereMat);
+group.add(innerSphere);
+
+// 3. Floating Data Particles
+const particleCount = 1000;
+const particlesGeo = new THREE.BufferGeometry();
+const posArray = new Float32Array(particleCount * 3);
+for(let i = 0; i < particleCount * 3; i++) {
+  posArray[i] = (Math.random() - 0.5) * 50; // spread across 50 units
+}
+particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+const particlesMat = new THREE.PointsMaterial({
+  size: 0.05,
+  color: 0x00FFCC,
+  transparent: true,
+  opacity: 0.5,
+  blending: THREE.AdditiveBlending
+});
+const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+scene.add(particlesMesh);
+
+// Mouse interaction for parallax
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
+document.addEventListener('mousemove', (event) => {
+  mouseX = (event.clientX - windowHalfX);
+  mouseY = (event.clientY - windowHalfY);
+});
+
+// Animation Loop
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsedTime = clock.getElapsedTime();
+
+  // Rotate Rings
+  rings.forEach((ring, i) => {
+    ring.rotation.x += ring.userData.rx;
+    ring.rotation.y += ring.userData.ry;
+    ring.rotation.z += ring.userData.rz;
+  });
+
+  // Rotate inner sphere
+  innerSphere.rotation.y = elapsedTime * 0.1;
+  innerSphere.rotation.x = elapsedTime * 0.05;
+
+  // Rotate entire group slowly
+  group.rotation.y = elapsedTime * 0.02;
+
+  // Move particles slowly upwards (data stream effect)
+  const positions = particlesGeo.attributes.position.array;
+  for(let i = 1; i < particleCount * 3; i += 3) {
+    positions[i] += 0.02;
+    if (positions[i] > 25) {
+      positions[i] = -25;
+    }
+  }
+  particlesGeo.attributes.position.needsUpdate = true;
+
+  // Mouse Parallax (smoothly interpolate towards mouse position)
+  targetX = mouseX * 0.001;
+  targetY = mouseY * 0.001;
+  
+  group.rotation.x += 0.05 * (targetY - group.rotation.x);
+  group.rotation.y += 0.05 * (targetX - group.rotation.y);
+  
+  particlesMesh.rotation.y = -mouseX * 0.0005;
+  particlesMesh.rotation.x = -mouseY * 0.0005;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// Handle Resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
 </body>
 </html>
