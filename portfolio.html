@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Log / Pratham Gupta — AI &amp; Product Portfolio</title>
+<meta name="description" content="Three products, shipped as a changelog: Transit One, FinBuddy and Crave Command Center. What shipped, what broke, what I'd do differently.">
+<meta name="author" content="Pratham Gupta">
+<link rel="canonical" href="https://prathamgupta.vercel.app/portfolio.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#07090C">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://prathamgupta.vercel.app/portfolio.html">
+<meta property="og:title" content="Build Log / Pratham Gupta — AI &amp; Product Portfolio">
+<meta property="og:description" content="Three products, shipped as a changelog. What shipped, what broke, what I'd do differently.">
+<meta property="og:image" content="https://prathamgupta.vercel.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#030303;--frost:#FFFFFF;--muted:#8B958F;--dim:#5C6A60;
+  --hivis:#FF4500;--chill:#00FFCC;--tag:#FFD24A;--preql:#B388FF;
+  --card:#0B0F0D;--line:#ffffff14;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--frost);font-family:'Public Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Oswald',sans-serif;font-weight:700;line-height:.98;text-transform:uppercase;letter-spacing:-0.02em}
+.mono{font-family:'JetBrains Mono',monospace}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--chill);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+
+/* progress bar, same idea as main site */
+.sbar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--preql),var(--chill));z-index:90;width:0}
+
+/* ============ TOPBAR ============ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:space-between;align-items:center;padding:14px 26px;background:#07090CE6;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.back{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:.2s}
+.back:hover{color:var(--chill)}
+.topbar .stat{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.topbar .dot{width:6px;height:6px;border-radius:50%;background:var(--chill);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #00FFCC66}70%{box-shadow:0 0 0 9px #00FFCC00}100%{box-shadow:0 0 0 0 #00FFCC00}}
+@media(max-width:640px){.topbar .stat span.full{display:none}}
+
+/* ============ HERO ============ */
+.hero{padding:150px 0 70px;border-bottom:1px solid var(--line);position:relative}
+.hero::before{content:"";position:absolute;top:0;right:0;width:46%;height:100%;background:radial-gradient(ellipse at top right,#B388FF14,transparent 60%);pointer-events:none}
+.term{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--chill);margin-bottom:22px;display:flex;align-items:center;gap:2px}
+.term .prompt{color:var(--preql)}
+.term .cur{display:inline-block;width:7px;height:14px;background:var(--chill);margin-left:2px;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.hero h1{font-size:clamp(48px,8vw,104px)}
+.hero h1 span{color:var(--preql)}
+.hero .sub{margin-top:20px;font-size:17.5px;color:#B9C2BD;max-width:56ch;font-weight:300;line-height:1.6}
+.hero .sub b{color:var(--frost);font-weight:600}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:32px}
+.legend div{display:flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase}
+.legend i{width:9px;height:9px;border-radius:50%;flex:none}
+
+/* ============ LOG LAYOUT ============ */
+.log{padding:70px 0 40px;position:relative}
+.rail{display:grid;grid-template-columns:34px 1fr;gap:0}
+@media(max-width:760px){.rail{grid-template-columns:22px 1fr}}
+.rail .line{position:relative}
+.rail .line::before{content:"";position:absolute;top:8px;bottom:-70px;left:50%;width:1px;background:linear-gradient(180deg,var(--c),transparent 96%);transform:translateX(-50%)}
+.entry:last-child .rail .line::before{display:none}
+.rail .node{width:15px;height:15px;border-radius:50%;background:var(--ink);border:2px solid var(--c);position:relative;z-index:2;box-shadow:0 0 0 5px var(--ink)}
+@media(max-width:760px){.rail .node{width:11px;height:11px}}
+
+.entry{margin-bottom:74px}
+.entry:last-child{margin-bottom:0}
+.card{margin-top:-4px;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;transition:border-color .25s}
+.card:hover{border-color:#ffffff28}
+.ch{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--c)}
+.ch h3{font-size:clamp(24px,3.4vw,34px);color:var(--frost);margin-top:6px;text-transform:none;letter-spacing:-.01em}
+.ch .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;margin-top:8px}
+.pill{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 11px;border-radius:20px;font-weight:700;white-space:nowrap;flex:none;background:var(--c);color:#07090C}
+
+.cb{padding:26px}
+.diffgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:26px}
+@media(max-width:800px){.diffgrid{grid-template-columns:1fr}}
+.diff{padding-left:16px;border-left:2px solid var(--line)}
+.diff b.lab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:var(--c);text-transform:uppercase;display:block;margin-bottom:9px}
+.diff p{font-size:14.5px;color:#C3CCC7;font-weight:300;line-height:1.6}
+
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 12px;border-radius:20px;color:#AEB8B2}
+
+/* ---- embeds, reused pattern from main site ---- */
+.embed{background:#07090C;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:22px;gap:14px}
+.phone{width:220px;flex:none;background:#0d0d0f;border-radius:26px;padding:9px;box-shadow:0 30px 60px -26px #000,0 0 0 1px #ffffff14}
+.phone .screen{border-radius:19px;overflow:hidden;background:#FAFAF7;height:430px;position:relative}
+.phone iframe{width:390px;height:760px;border:0;display:block;transform:scale(.5641);transform-origin:top left;position:relative;z-index:2}
+.brow{width:100%;max-width:640px;background:#0d0d0f;border-radius:9px;padding:0 0 5px;box-shadow:0 26px 54px -26px #000,0 0 0 1px #ffffff14;overflow:hidden}
+.browbar{height:22px;display:flex;align-items:center;gap:5px;padding:0 9px;background:#191b1e}
+.browbar i{width:7px;height:7px;border-radius:50%;background:#3a3f45;flex:none}
+.browbar span{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;color:#5C6A60;margin-left:8px;text-transform:uppercase}
+.browview{position:relative;overflow:hidden;background:#F1F5F9;width:100%;aspect-ratio:1100/1180}
+.brow iframe{width:1100px;height:1180px;border:0;display:block;position:absolute;top:0;left:0;transform-origin:top left}
+.pfb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#12211c;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;line-height:2}
+.cover{text-decoration:none;width:100%;max-width:420px;border:1px solid var(--line);background:linear-gradient(160deg,#141a34,#0C1120);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px 24px;cursor:pointer;transition:.25s;font:inherit;color:inherit;border-radius:10px}
+.cover:hover{border-color:var(--preql);background:linear-gradient(160deg,#1b2246,#0E1428)}
+.cover .cvi{width:44px;height:44px;border:1px solid var(--preql);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px}
+.cover .cvd{font-size:12.5px;color:#9AA5C4;font-weight:300;line-height:1.6}
+.cover .cvb{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:var(--preql);color:#0A1410;padding:11px 16px;font-weight:700;margin-top:2px}
+
+.foot{padding:20px 26px 26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.links{display:flex;gap:14px;flex-wrap:wrap}
+.lk{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--c);border-bottom:1px solid transparent;padding-bottom:2px;transition:.2s}
+.lk:hover{border-color:var(--c)}
+.commit{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:var(--dim)}
+
+/* ============ CLOSER ============ */
+.closer{padding:90px 0 100px;text-align:left;border-top:1px solid var(--line);margin-top:20px}
+.closer h2{font-size:clamp(30px,4.6vw,52px);max-width:16ch}
+.closer p{margin-top:16px;color:var(--muted);max-width:48ch;font-size:15px;font-weight:300}
+.cbtns{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:14px 22px;text-decoration:none;border:1px solid var(--line);color:var(--frost);transition:.22s;display:inline-block;background:transparent;border-radius:6px}
+.btn:hover{border-color:var(--chill);color:var(--chill);transform:translateY(-2px)}
+.btn.solid{background:var(--hivis);border-color:var(--hivis);color:#160A02;font-weight:700}
+.btn.solid:hover{background:#ff7f33;color:#160A02}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="sbar" id="sbar"></div>
+
+<div class="topbar">
+  <a class="back" href="index.html">&larr; Pratham Gupta</a>
+  <div class="stat"><span class="dot"></span><span class="full">3 builds logged &nbsp;·&nbsp;</span> 2 live &nbsp;·&nbsp; 1 concept</div>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="term"><span class="prompt">pratham@portfolio</span>&nbsp;$&nbsp;git log --oneline --graph --all<span class="cur"></span></div>
+    <h1>Build<br>Log<span>.</span></h1>
+    <p class="sub">Not a slide deck &mdash; a changelog. Three products, three different problems, shipped as commits: what the problem was, what I actually built, and what state it's in today. <b>Scroll to open one up.</b></p>
+    <div class="legend">
+      <div><i style="background:var(--preql)"></i> Prototype</div>
+      <div><i style="background:var(--chill)"></i> Live</div>
+      <div><i style="background:var(--tag)"></i> Concept sim</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ LOG ============ -->
+<section class="log">
+  <div class="wrap">
+
+    <!-- ---- 01 Transit One ---- -->
+    <div class="entry rv" style="--c:var(--preql)">
+      <div class="rail">
+        <div class="line"><div class="node"></div></div>
+        <div class="card">
+          <div class="ch">
+            <div>
+              <div class="tag">v1.0.0 &middot; BITSoM PROJECT</div>
+              <h3>Transit One</h3>
+              <div class="kicker">B2B transport marketplace &middot; built solo</div>
+            </div>
+            <span class="pill">Prototype</span>
+          </div>
+          <div class="cb">
+            <div class="diffgrid">
+              <div class="diff"><b class="lab">Problem</b><p>Corporates booking freight negotiate rates over calls and email, one truck at a time, with no price discovery and no way to compare fleet operators against each other.</p></div>
+              <div class="diff"><b class="lab">Build</b><p>A two-sided marketplace: corporates post a route, verified fleet operators bid on it. I built <b style="color:#fff;font-weight:600">the pricing model, the tiering logic and both user journeys</b> end to end.</p></div>
+              <div class="diff"><b class="lab">State today</b><p>Working interactive prototype, mobile-first. Not yet handling live payments or contracts &mdash; the next commit would be operator verification.</p></div>
+            </div>
+            <div class="stack">
+              <span class="chip">Two-sided marketplace</span><span class="chip">Dynamic pricing tiers</span><span class="chip">Bid &amp; match flow</span><span class="chip">Mobile-first UI</span>
+            </div>
+            <div class="embed">
+              <div class="phone">
+                <div class="screen">
+                  <div class="pfb">Prototype loads on the live site</div>
+                  <iframe data-src="transit-one-app.html" title="Transit One app prototype" loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="foot">
+            <div class="links"><a class="lk" href="transit-one-app.html" target="_blank" rel="noopener">Open full screen &#8599;</a></div>
+            <div class="commit">commit 4a1f0c &middot; BITSoM, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- 02 FinBuddy ---- -->
+    <div class="entry rv" style="--c:var(--chill)">
+      <div class="rail">
+        <div class="line"><div class="node"></div></div>
+        <div class="card">
+          <div class="ch">
+            <div>
+              <div class="tag">v1.2.0 &middot; TEAM OF FOUR</div>
+              <h3>FinBuddy</h3>
+              <div class="kicker">RAG-based portfolio assistant &middot; shipped &amp; live</div>
+            </div>
+            <span class="pill">Live</span>
+          </div>
+          <div class="cb">
+            <div class="diffgrid">
+              <div class="diff"><b class="lab">Problem</b><p>First-time Indian investors get either a generic robo-advisor with no explanation, or a model that hallucinates fund recommendations with no source behind them.</p></div>
+              <div class="diff"><b class="lab">Build</b><p>A short risk quiz scores the investor, then a retrieval layer pulls <b style="color:#fff;font-weight:600">real, cited fund data</b> instead of letting the model guess, before it generates an allocation.</p></div>
+              <div class="diff"><b class="lab">State today</b><p>Live and public. Chats run entirely client-side via localStorage, which is why it opens in its own tab rather than an embedded frame here.</p></div>
+            </div>
+            <div class="stack">
+              <span class="chip">Next.js</span><span class="chip">Vercel AI SDK</span><span class="chip">Pinecone</span><span class="chip">Claude</span><span class="chip">RAG</span>
+            </div>
+            <div class="embed">
+              <a class="cover" href="https://finn-buddy.vercel.app/" target="_blank" rel="noopener">
+                <span class="cvi">&#8377;</span>
+                <span class="cvd">Score your risk in a short quiz, then get a fund allocation backed by real, cited market data &mdash; not a model's guess.</span>
+                <span class="cvb">Open the live app &#8599;</span>
+              </a>
+            </div>
+          </div>
+          <div class="foot">
+            <div class="links">
+              <a class="lk" href="https://finn-buddy.vercel.app/" target="_blank" rel="noopener">Open live &#8599;</a>
+              <a class="lk" href="https://github.com/pgupta0/FinBuddy" target="_blank" rel="noopener">Source &#8599;</a>
+            </div>
+            <div class="commit">commit 8b3ce1 &middot; team of 4, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- 03 Crave Command Center ---- -->
+    <div class="entry rv" style="--c:var(--tag)">
+      <div class="rail">
+        <div class="line"><div class="node"></div></div>
+        <div class="card">
+          <div class="ch">
+            <div>
+              <div class="tag">v0.9.0 &middot; CONCEPT SIMULATION</div>
+              <h3>Crave Command Center</h3>
+              <div class="kicker">Live food-delivery operations map</div>
+            </div>
+            <span class="pill">Concept sim</span>
+          </div>
+          <div class="cb">
+            <div class="diffgrid">
+              <div class="diff"><b class="lab">Problem</b><p>Dispatchers running a delivery network can't see rider load, relay handovers or which operating model is winning &mdash; that all lives in separate dashboards, after the fact.</p></div>
+              <div class="diff"><b class="lab">Build</b><p>A live operations map simulating <b style="color:#fff;font-weight:600">five operating models</b> at once, with riders moving in real time, relay handovers between them, and a KPI terminal overlaid on top.</p></div>
+              <div class="diff"><b class="lab">State today</b><p>Concept work, not a real product or real data. Built to explore what a live-ops control surface could feel like.</p></div>
+            </div>
+            <div class="stack">
+              <span class="chip">5 operating models</span><span class="chip">Real-time map sim</span><span class="chip">Relay handovers</span><span class="chip">KPI terminal</span>
+            </div>
+            <div class="embed">
+              <div class="brow">
+                <div class="browbar"><i></i><i></i><i></i><span>live operations control</span></div>
+                <div class="browview">
+                  <iframe data-src="crave-command-center.html" title="Crave live operations simulation" loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="foot">
+            <div class="links"><a class="lk" href="crave-command-center.html" target="_blank" rel="noopener">Open full screen &#8599;</a></div>
+            <div class="commit">commit f02e9a &middot; solo concept, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CLOSER ============ -->
+<section class="closer">
+  <div class="wrap rv">
+    <h2>Want the story behind these?</h2>
+    <p>The rest of the profile has the fleet P&amp;L, the BigBasket supply chain work and everything else that isn't a build.</p>
+    <div class="cbtns">
+      <a class="btn solid" href="mailto:prathamg329@gmail.com">Get in touch</a>
+      <a class="btn" href="index.html#story">Back to the full profile</a>
+    </div>
+  </div>
+</section>
+
+<script>
+"use strict";
+const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+
+/* scroll progress */
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  $('#sbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%';
+},{passive:true});
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.08,rootMargin:'0px 0px -60px 0px'});
+$$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*70+'ms';io.observe(el)});
+
+/* lazy-load embeds, same pattern as the main site */
+function scaleBrowsers(){
+  $$('.browview').forEach(v=>{
+    const f=v.querySelector('iframe'); if(!f)return;
+    f.style.transform='scale('+(v.clientWidth/1100)+')';
+  });
+}
+scaleBrowsers();
+addEventListener('resize',scaleBrowsers,{passive:true});
+$$('.entry').forEach(el=>{
+  new IntersectionObserver((es,o)=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      const f=e.target.querySelector('iframe[data-src]');
+      if(f){ f.src=f.dataset.src; f.removeAttribute('data-src'); }
+      scaleBrowsers();
+      o.disconnect();
+    }});
+  },{rootMargin:'400px'}).observe(el);
+});
+</script>
+</body>
+</html>

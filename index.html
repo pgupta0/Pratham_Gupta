@@ -103,7 +103,10 @@ section,header{position:relative;z-index:1}
 .btn:hover{border-color:var(--hivis);color:var(--hivis);transform:translateY(-2px)}
 .btn.solid{background:var(--hivis);border-color:var(--hivis);color:#160A02;font-weight:700}
 .btn.solid:hover{background:#ff7f33;color:#160A02}
-.modebtn[aria-pressed="true"]{background:var(--chill);border-color:var(--chill);color:#08120F;font-weight:700}
+.btn.ai{border-color:#B388FF55;color:var(--preql)}
+.btn.ai:hover{border-color:var(--preql);background:#B388FF14;color:var(--preql)}
+.btn.about{border-color:#00FFCC44;color:var(--chill)}
+.btn.about:hover{border-color:var(--chill);background:#00FFCC10;color:var(--chill)}
 
 .tagcard{background:var(--paper);color:var(--paperink);padding:13px 13px 0;position:relative;box-shadow:0 40px 80px -30px #000000cc,0 0 0 1px #ffffff12;transform:rotate(-1.1deg)}
 .tagcard::after{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:34px;height:18px;border-radius:0 0 20px 20px;background:var(--ink)}
@@ -281,12 +284,6 @@ section,header{position:relative;z-index:1}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.2,.7,.3,1),transform .65s cubic-bezier(.2,.7,.3,1)}
 .rv.in{opacity:1;transform:none}
 
-/* ============ brief mode ============ */
-body.brief #living,body.brief .scan{display:none}
-body.brief .rv{opacity:1!important;transform:none!important}
-body.brief .sec{padding:44px 0}
-body.brief .hero{padding-top:106px}
-
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
@@ -414,8 +411,8 @@ body.brief .hero{padding-top:106px}
         <p class="kick">Four times now I have walked into something that was losing money or leaving it on the table. Here is what I found each time, and what I did about it.</p>
         <div class="cta">
           <a class="btn solid" href="mailto:prathamg329@gmail.com">Get in touch</a>
-          <a class="btn" href="#story">Start reading</a>
-          <button class="btn modebtn" id="modebtn" type="button" aria-pressed="false">Brief mode</button>
+          <a class="btn ai" href="portfolio.html">AI / Product Portfolio ↗</a>
+          <a class="btn about" href="#credentials">About me</a>
         </div>
       </div>
       <div class="tagcard">
@@ -943,17 +940,6 @@ document.addEventListener('click',e=>{ const b=e.target.closest('[data-copy]'); 
   },{rootMargin:'400px'}).observe(sec);
 })();
 
-/* ============ BRIEF MODE ============ */
-const modebtn=$('#modebtn');
-function setBrief(on){
-  document.body.classList.toggle('brief',on);
-  modebtn.setAttribute('aria-pressed',on);
-  modebtn.textContent=on?'Exit brief mode':'Brief mode';
-  $$('.rv').forEach(e=>e.classList.add('in'));
-  toast(on?'Brief mode, motion off':'Interactive mode back on');
-}
-modebtn.addEventListener('click',()=>setBrief(!document.body.classList.contains('brief')));
-
 /* ============ COMMAND PALETTE ============ */
 const CMDS=[
   {i:'GO',n:'Chapter 01, Himanshu Travel Line', d:'the fleet', a:()=>jump('#story')},
@@ -964,11 +950,12 @@ const CMDS=[
   {i:'GO',n:'AI Projects',      d:'three builds',    a:()=>jump('#projects')},
   {i:'GO',n:'Credentials',      d:'roles, awards',   a:()=>jump('#credentials')},
   {i:'GO',n:'Contact',          d:'get in touch',    a:()=>jump('#contact')},
+  {i:'OPEN',n:'AI / Product Portfolio', d:'full case studies', a:()=>location.href='portfolio.html'},
+  {i:'GO',n:'About me',         d:'education, roles, awards', a:()=>jump('#credentials')},
   {i:'COPY',n:'Copy email',     d:'prathamg329@gmail.com', a:()=>copy('prathamg329@gmail.com')},
   {i:'COPY',n:'Copy phone',     d:'+91 80768 78652', a:()=>copy('+918076878652')},
   {i:'OPEN',n:'Open LinkedIn',  d:'in/pgupta05',     a:()=>window.open('https://www.linkedin.com/in/pgupta05','_blank','noopener')},
   {i:'MAIL',n:'Write an email', d:'mail client',     a:()=>location.href='mailto:prathamg329@gmail.com'},
-  {i:'VIEW',n:'Toggle brief mode',d:'recruiter view',a:()=>setBrief(!document.body.classList.contains('brief'))},
   {i:'VIEW',n:'Print or save as PDF',d:'clean layout',a:()=>window.print()}
 ];
 function jump(h){ const t=$(h); if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'}); }
