@@ -262,6 +262,119 @@ section,header{position:relative;z-index:1}
   100% { transform: translateX(-50%); }
 }
 
+
+/* Business Card Modal */
+.biz-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 3, 3, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.biz-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.biz-card {
+  position: relative;
+  width: 90%;
+  max-width: 440px;
+  background: linear-gradient(135deg, #111513, #0a0d0b);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: perspective(1000px) rotateX(15deg) translateY(40px) scale(0.9);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.biz-overlay.active .biz-card {
+  transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+  opacity: 1;
+}
+
+.biz-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+  padding: 0;
+}
+.biz-close:hover {
+  color: var(--frost);
+}
+
+.biz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.biz-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--hivis);
+  letter-spacing: 0.1em;
+}
+.biz-sku {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+}
+
+.biz-name {
+  font-size: clamp(32px, 5vw, 42px);
+  color: var(--frost);
+  margin-bottom: 8px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.biz-tagline {
+  font-size: 18px;
+  color: var(--chill);
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.biz-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.biz-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.2s, transform 0.2s;
+  letter-spacing: 0.05em;
+}
+.biz-link:hover {
+  color: var(--frost);
+  transform: translateX(4px);
+}
+
 </style>
 <script type="application/ld+json">
 {
@@ -292,7 +405,7 @@ section,header{position:relative;z-index:1}
   <nav class="nav">
     <a href="#story">Story</a>
     <a href="portfolio.html">AI Projects</a>
-    <a class="hire" href="#contact">Let's connect</a>
+    <a class="hire biz-card-trigger" href="javascript:void(0)">Let's connect</a>
   </nav>
 </div>
 
@@ -305,7 +418,7 @@ section,header{position:relative;z-index:1}
         <h1>I find the<br>leak before<span class="l2">it costs you.</span></h1>
         <p class="kick">Four times now I have walked into something that was losing money or leaving it on the table. Here is what I found each time, and what I did about it.</p>
         <div class="cta">
-          <a class="btn solid" href="mailto:prathamg329@gmail.com">Get in touch</a>
+          <a class="btn solid biz-card-trigger" href="javascript:void(0)">Get in touch</a>
           <a class="btn ai" href="portfolio.html">AI / Product Portfolio ↗</a>
           <a class="btn about" href="#story">About me</a>
         </div>
@@ -785,5 +898,58 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 </script>
+
+<div class="biz-overlay" id="biz-overlay">
+  <div class="biz-card" id="biz-card">
+    <button class="biz-close" id="biz-close" aria-label="Close">&times;</button>
+    <div class="biz-content">
+      <div class="biz-header">
+        <div class="biz-logo">PG</div>
+        <div class="biz-sku">SKU: PG-2027</div>
+      </div>
+      <h2 class="biz-name">Pratham Gupta</h2>
+      <p class="biz-tagline">I am a product person.</p>
+      
+      <div class="biz-details">
+        <a href="mailto:prathamg329@gmail.com" class="biz-link">prathamg329@gmail.com &nearr;</a>
+        <a href="tel:+918076878652" class="biz-link">+91 80768 78652 &nearr;</a>
+        <a href="https://www.linkedin.com/in/pgupta05" target="_blank" rel="noopener" class="biz-link">LinkedIn &nearr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Business Card Modal Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('biz-overlay');
+  const closeBtn = document.getElementById('biz-close');
+  const triggers = document.querySelectorAll('.biz-card-trigger');
+
+  function openCard(e) {
+    e.preventDefault();
+    overlay.classList.add('active');
+  }
+
+  function closeCard() {
+    overlay.classList.remove('active');
+  }
+
+  triggers.forEach(t => t.addEventListener('click', openCard));
+  closeBtn.addEventListener('click', closeCard);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeCard();
+  });
+  
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closeCard();
+    }
+  });
+});
+</script>
+
 </body>
 </html>
