@@ -128,51 +128,6 @@ section,header{position:relative;z-index:1}
 .proof .n{font-family:'Oswald',sans-serif;font-size:clamp(24px,2.6vw,30px);font-weight:600;color:var(--chill);line-height:1;white-space:nowrap}
 .proof .l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;line-height:1.5}
 
-/* ============ AI PROJECTS ============ */
-.why{border-left:2px solid var(--preql);padding:4px 0 4px 20px;margin-bottom:30px;max-width:60ch}
-.why p{font-size:17px;color:#C4D6CC;font-weight:300;line-height:1.6}
-.why p b{color:var(--frost);font-weight:600}
-.prow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
-@media(max-width:1000px){.prow{grid-template-columns:1fr;gap:22px;justify-items:center}}
-.proj{border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;flex-direction:column;width:100%;max-width:430px;transition:.28s;border-radius:12px;overflow:hidden}
-.proj:hover{border-color:#ffffff2a}
-.proj-h{padding:16px 18px;border-bottom:1px solid #ffffff12;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.proj-h h4{font-size:17px;color:var(--frost);letter-spacing:.02em;line-height:1.2}
-.proj-h .pk{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;margin-top:5px;line-height:1.7}
-.pst{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:4px 8px;font-weight:700;white-space:nowrap;flex:none}
-.pst.live{background:var(--preql);color:#0A1410}
-.pst.team{background:var(--chill);color:#0A1410}
-.pst.sim{background:var(--tag);color:#0A1410}
-.pmedia{padding:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:13px;flex:1;min-height:468px}
-.pnote{margin-top:auto;padding:14px 18px 16px;font-size:13px;color:#94AB9F;font-weight:300;line-height:1.55}
-.pnote b{color:#C4D6CC;font-weight:600}
-
-/* phone frame */
-.phone{width:232px;flex:none;background:#0d0d0f;border-radius:28px;padding:9px;box-shadow:0 30px 60px -26px #000,0 0 0 1px #ffffff14}
-.phone .screen{border-radius:21px;overflow:hidden;background:#FAFAF7;height:452px;position:relative}
-.phone iframe{width:390px;height:760px;border:0;display:block;transform:scale(.5949);transform-origin:top left;position:relative;z-index:2}
-
-/* browser frame */
-.brow{width:100%;background:#0d0d0f;border-radius:9px;padding:0 0 5px;box-shadow:0 26px 54px -26px #000,0 0 0 1px #ffffff14;overflow:hidden}
-.browbar{height:22px;display:flex;align-items:center;gap:5px;padding:0 9px;background:#191b1e}
-.browbar i{width:7px;height:7px;border-radius:50%;background:#3a3f45;flex:none}
-.browbar span{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.1em;color:#5C6A60;margin-left:8px;text-transform:uppercase;overflow:hidden;white-space:nowrap}
-.browview{position:relative;overflow:hidden;background:#F1F5F9;width:100%;aspect-ratio:1100/1180}
-.brow iframe{width:1100px;height:1180px;border:0;display:block;position:absolute;top:0;left:0;transform-origin:top left}
-
-/* click to launch cover */
-.cover{text-decoration:none;width:232px;height:452px;border:1px solid #ffffff1c;background:linear-gradient(160deg,#141a34,#0C1120);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:26px 20px;cursor:pointer;transition:.25s;font:inherit;color:inherit;border-radius:6px}
-.cover:hover{border-color:var(--preql);background:linear-gradient(160deg,#1b2246,#0E1428)}
-.cover .cvi{width:44px;height:44px;border:1px solid var(--preql);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px}
-.cover .cvn{font-family:'Oswald',sans-serif;font-size:20px;text-transform:uppercase;color:var(--frost);letter-spacing:.03em;line-height:1.15}
-.cover .cvd{font-size:12.5px;color:#9AA5C4;font-weight:300;line-height:1.6}
-.cvstack{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.11em;color:var(--muted);text-transform:uppercase;line-height:1.9;border-top:1px solid #ffffff14;padding-top:12px;width:100%}
-.cover .cvd{font-size:12.5px;color:#9AA5C4;font-weight:300;line-height:1.6}
-.cover .cvb{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:var(--preql);color:#0A1410;padding:11px 16px;font-weight:700;margin-top:2px}
-.plink{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--preql);text-decoration:none;border-bottom:1px solid #B388FF55}
-.plink:hover{border-color:var(--preql)}
-.pfb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#0F2A24;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;line-height:2}
-
 /* ============ CREDENTIALS : photo + stack ============ */
 .cred{display:grid;grid-template-columns:.82fr 1.18fr;gap:38px;align-items:start}
 @media(max-width:900px){.cred{grid-template-columns:1fr;gap:28px}}
@@ -290,7 +245,7 @@ section,header{position:relative;z-index:1}
   #living{display:none}
 }
 @media print{
-  .topbar,#living,.sbar,.cmdk,.toast,.phone,.brow,.kbtn{display:none!important}
+  .topbar,#living,.sbar,.cmdk,.toast,.kbtn{display:none!important}
   body{background:#fff;color:#111;font-size:11pt}
   .sec,.hero,.paper{background:#fff!important;color:#111!important;padding:12px 0!important}
   h1,h2,h3,h4,.beat p b,.row .rn{color:#111!important}
@@ -326,44 +281,6 @@ section,header{position:relative;z-index:1}
   100% { transform: translateX(-50%); }
 }
 
-/* HORIZONTAL SCROLL OVERRIDES */
-.horiz-wrapper {
-  overflow: hidden;
-  width: 100%;
-}
-.horiz-container {
-  width: 300%;
-  display: flex;
-  flex-wrap: nowrap;
-}
-.horiz-container .prow {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 40px;
-}
-.horiz-container .proj { max-width: 500px; flex: none; }
-
-.proj {
-  background: transparent !important;
-  border: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  padding: 0 !important;
-}
-.proj-h { border-bottom: none !important; padding: 0 0 16px 0 !important; }
-.proj p, .pnote {
-  font-size: 16.5px !important;
-  line-height: 1.6 !important;
-  color: rgba(255, 255, 255, 0.9) !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-.proj h4 {
-  font-size: 24px !important;
-  color: #fff;
-}
-
 </style>
 <script type="application/ld+json">
 {
@@ -394,7 +311,7 @@ section,header{position:relative;z-index:1}
   <nav class="nav">
     <a href="#story">Story</a>
     <a href="#receipts">Receipts</a>
-    <a href="#projects">AI Projects</a>
+    <a href="portfolio.html">AI Projects</a>
     <a href="#credentials">Credentials</a>
     <button class="kbtn" id="cmdopen" type="button" aria-label="Open command palette"><span class="klab">Jump</span> <kbd>⌘K</kbd></button>
     <a class="hire" href="#contact">Hire me</a>
@@ -542,85 +459,6 @@ section,header{position:relative;z-index:1}
 
   </div>
 </section>
-
-<!-- ============ AI PROJECTS ============ -->
-<section class="sec" id="projects">
-    
-  <div class="wrap">
-    <div class="zone rv">Case Studies</div>
-    <div class="head rv">
-      <div><h2>Selected works</h2></div>
-    </div>
-    <div class="prow rv">
-    
-
-      <div class="proj">
-        <div class="proj-h">
-          <div>
-            <h4>Transit One</h4>
-            <div class="pk">B2B transport marketplace · BITSoM project</div>
-          </div>
-          <span class="pst live">Prototype</span>
-        </div>
-        <div class="pmedia">
-          <div class="phone">
-            <div class="screen">
-              <div class="pfb">Prototype loads<br>on the live site</div>
-              <iframe data-src="transit-one-app.html" title="Transit One app prototype" loading="lazy"></iframe>
-            </div>
-          </div>
-          <a class="plink" href="transit-one-app.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        </div>
-        <div class="pnote">Corporates post a route, verified fleet operators bid. I built the <b>model, pricing tiers and both journeys</b>.</div>
-      </div>
-
-      <div class="proj">
-        <div class="proj-h">
-          <div>
-            <h4>FinBuddy</h4>
-            <div class="pk">RAG chatbot · team of four</div>
-          </div>
-          <span class="pst team">Live</span>
-        </div>
-        <div class="pmedia">
-          <a class="cover" href="https://finn-buddy.vercel.app/" target="_blank" rel="noopener">
-            <span class="cvi">₹</span>
-            <span class="cvn">FinBuddy</span>
-            <span class="cvd">An AI portfolio assistant for first-time Indian investors. Scores your risk through a short quiz, then allocates against real, cited fund data instead of a model's guess.</span>
-            <span class="cvstack">Next.js · Vercel AI SDK · Pinecone · Claude</span>
-            <span class="cvb">Open the live app ↗</span>
-          </a>
-        </div>
-        <div class="pnote">RAG-based AI portfolio assistant. Assesses risk via a quiz to suggest mutual fund allocations backed by real market data. <a href="https://github.com/pgupta0/FinBuddy" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;"><b>Source on GitHub</b></a>.</div>
-      </div>
-
-      <div class="proj">
-        <div class="proj-h">
-          <div>
-            <h4>Crave Command Center</h4>
-            <div class="pk">Concept simulation</div>
-          </div>
-          <span class="pst sim">Sim</span>
-        </div>
-        <div class="pmedia">
-          <div class="brow">
-            <div class="browbar"><i></i><i></i><i></i><span>live operations control</span></div>
-            <div class="browview">
-              <iframe data-src="crave-command-center.html" title="Crave live operations simulation" loading="lazy"></iframe>
-            </div>
-          </div>
-          <a class="plink" href="crave-command-center.html" target="_blank" rel="noopener">Open full screen ↗</a>
-        </div>
-        <div class="pnote">A food delivery network running live on a map: five operating models, moving riders, relay handovers and a KPI terminal. <b>Concept work, not a real product.</b></div>
-      </div>
-
-    </div>
-    </div>
-  </div>
-  </div>
-</section>
-
-
 
 <!-- ============ RECEIPTS ============ -->
 <section class="sec tight" id="receipts">
@@ -918,28 +756,6 @@ function copy(v){ (navigator.clipboard?navigator.clipboard.writeText(v):Promise.
   .then(()=>toast('Copied '+v)).catch(()=>toast(v)); }
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-copy]'); if(b)copy(b.dataset.copy); });
 
-/* ============ AI PROJECT EMBEDS ============
-   Local iframes stay unloaded until the section is near the viewport.
-   FinBuddy is a plain link, because it stores chats in localStorage and
-   browsers block that inside a cross-origin frame. */
-(function(){
-  const sec=$('#projects'); if(!sec)return;
-  function scaleBrowsers(){
-    $$('.browview').forEach(v=>{
-      const f=v.querySelector('iframe'); if(!f)return;
-      f.style.transform='scale('+(v.clientWidth/1100)+')';
-    });
-  }
-  scaleBrowsers();
-  addEventListener('resize',scaleBrowsers,{passive:true});
-  new IntersectionObserver((es,o)=>{
-    es.forEach(e=>{ if(e.isIntersecting){
-      $$('#projects iframe[data-src]').forEach(f=>{ f.src=f.dataset.src; f.removeAttribute('data-src'); });
-      scaleBrowsers(); o.disconnect();
-    }});
-  },{rootMargin:'400px'}).observe(sec);
-})();
-
 /* ============ COMMAND PALETTE ============ */
 const CMDS=[
   {i:'GO',n:'Chapter 01, Himanshu Travel Line', d:'the fleet', a:()=>jump('#story')},
@@ -947,7 +763,6 @@ const CMDS=[
   {i:'GO',n:'Chapter 03, IKONA',                d:'creators',  a:()=>jump('#ch03')},
   {i:'GO',n:'Chapter 04, BITSoM',               d:'campus',    a:()=>jump('#ch04')},
   {i:'GO',n:'Receipts',         d:'every number',    a:()=>jump('#receipts')},
-  {i:'GO',n:'AI Projects',      d:'three builds',    a:()=>jump('#projects')},
   {i:'GO',n:'Credentials',      d:'roles, awards',   a:()=>jump('#credentials')},
   {i:'GO',n:'Contact',          d:'get in touch',    a:()=>jump('#contact')},
   {i:'OPEN',n:'AI / Product Portfolio', d:'full case studies', a:()=>location.href='portfolio.html'},
