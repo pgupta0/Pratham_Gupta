@@ -80,11 +80,8 @@ section,header{position:relative;z-index:1}
 .nav a:hover{color:var(--hivis)}
 .nav a.hire{color:var(--ink);background:var(--hivis);padding:9px 15px;font-weight:700}
 .nav a.hire:hover{background:#ff7f33}
-.kbtn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid #ffffff22;color:var(--muted);padding:8px 11px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:7px}
-.kbtn:hover{border-color:var(--chill);color:var(--chill)}
-.kbtn kbd{font-family:inherit;font-size:9px;border:1px solid #ffffff26;padding:1px 4px}
 @media(max-width:980px){.nav a:not(.hire){display:none}}
-@media(max-width:520px){.topbar{padding:11px 18px}.topbar .id .sku{display:none}.kbtn .klab{display:none}}
+@media(max-width:520px){.topbar{padding:11px 18px}.topbar .id .sku{display:none}}
 .sbar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--hivis),var(--tag));z-index:90;width:0}
 
 /* ============ hero ============ */
@@ -217,22 +214,6 @@ section,header{position:relative;z-index:1}
 .fbar{display:flex;align-items:flex-end;gap:2px;height:26px}
 .fbar i{display:block;background:#170A02;width:2px}
 
-/* ============ command palette ============ */
-.cmdk{position:fixed;inset:0;z-index:120;background:#050A08DB;backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:14vh 20px 20px}
-.cmdk.on{display:flex}
-.cbox{width:100%;max-width:540px;background:#0E1B16;border:1px solid #ffffff1f;box-shadow:0 40px 90px -30px #000;animation:pop .25s cubic-bezier(.2,.9,.3,1)}
-.cbox input{width:100%;background:transparent;border:0;border-bottom:1px solid #ffffff14;padding:17px 20px;color:var(--frost);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.04em}
-.cbox input::placeholder{color:#5C6A60}
-.cbox input:focus{outline:0}
-.clist{max-height:44vh;overflow-y:auto;padding:7px}
-.ci{display:flex;align-items:center;gap:13px;padding:11px 13px;cursor:pointer;transition:.15s;border:0;background:transparent;width:100%;text-align:left;font:inherit;color:inherit}
-.ci:hover,.ci.sel{background:#1A2C24}
-.ci.sel{box-shadow:inset 2px 0 0 var(--hivis)}
-.ci .ck{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--hivis);text-transform:uppercase;width:52px;flex:none}
-.ci .cn{font-size:14.5px;color:var(--frost)}
-.ci .cd{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);letter-spacing:.06em;margin-left:auto;white-space:nowrap}
-.cfooter{border-top:1px solid #ffffff14;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;color:#5C6A60;text-transform:uppercase;display:flex;gap:16px;flex-wrap:wrap}
-.cempty{padding:26px 16px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.13em;color:#5C6A60;text-transform:uppercase}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#0E1B16;border:1px solid var(--chill);color:var(--frost);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;padding:13px 20px;z-index:130;opacity:0;pointer-events:none;transition:.3s}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -245,7 +226,7 @@ section,header{position:relative;z-index:1}
   #living{display:none}
 }
 @media print{
-  .topbar,#living,.sbar,.cmdk,.toast,.kbtn{display:none!important}
+  .topbar,#living,.sbar,.toast{display:none!important}
   body{background:#fff;color:#111;font-size:11pt}
   .sec,.hero,.paper{background:#fff!important;color:#111!important;padding:12px 0!important}
   h1,h2,h3,h4,.beat p b,.row .rn{color:#111!important}
@@ -310,11 +291,8 @@ section,header{position:relative;z-index:1}
   <div class="id"><b>PRATHAM GUPTA</b><span class="sku"> &nbsp;/&nbsp; SKU: PG-2027</span></div>
   <nav class="nav">
     <a href="#story">Story</a>
-    <a href="#receipts">Receipts</a>
     <a href="portfolio.html">AI Projects</a>
-    <a href="#credentials">Credentials</a>
-    <button class="kbtn" id="cmdopen" type="button" aria-label="Open command palette"><span class="klab">Jump</span> <kbd>⌘K</kbd></button>
-    <a class="hire" href="#contact">Hire me</a>
+    <a class="hire" href="#contact">Let's connect</a>
   </nav>
 </div>
 
@@ -329,7 +307,7 @@ section,header{position:relative;z-index:1}
         <div class="cta">
           <a class="btn solid" href="mailto:prathamg329@gmail.com">Get in touch</a>
           <a class="btn ai" href="portfolio.html">AI / Product Portfolio ↗</a>
-          <a class="btn about" href="#credentials">About me</a>
+          <a class="btn about" href="#story">About me</a>
         </div>
       </div>
       <div class="tagcard">
@@ -620,13 +598,6 @@ section,header{position:relative;z-index:1}
   </div>
 </section>
 
-<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
-  <div class="cbox">
-    <input type="text" id="cmdinput" placeholder="Jump to a section, or copy something" autocomplete="off" spellcheck="false">
-    <div class="clist" id="clist"></div>
-    <div class="cfooter"><span>↑↓ navigate</span><span>↵ select</span><span>esc close</span></div>
-  </div>
-</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -755,61 +726,6 @@ function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on');
 function copy(v){ (navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject())
   .then(()=>toast('Copied '+v)).catch(()=>toast(v)); }
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-copy]'); if(b)copy(b.dataset.copy); });
-
-/* ============ COMMAND PALETTE ============ */
-const CMDS=[
-  {i:'GO',n:'Chapter 01, Himanshu Travel Line', d:'the fleet', a:()=>jump('#story')},
-  {i:'GO',n:'Chapter 02, BigBasket',            d:'22 cities', a:()=>jump('#ch02')},
-  {i:'GO',n:'Chapter 03, IKONA',                d:'creators',  a:()=>jump('#ch03')},
-  {i:'GO',n:'Chapter 04, BITSoM',               d:'campus',    a:()=>jump('#ch04')},
-  {i:'GO',n:'Receipts',         d:'every number',    a:()=>jump('#receipts')},
-  {i:'GO',n:'Credentials',      d:'roles, awards',   a:()=>jump('#credentials')},
-  {i:'GO',n:'Contact',          d:'get in touch',    a:()=>jump('#contact')},
-  {i:'OPEN',n:'AI / Product Portfolio', d:'full case studies', a:()=>location.href='portfolio.html'},
-  {i:'GO',n:'About me',         d:'education, roles, awards', a:()=>jump('#credentials')},
-  {i:'COPY',n:'Copy email',     d:'prathamg329@gmail.com', a:()=>copy('prathamg329@gmail.com')},
-  {i:'COPY',n:'Copy phone',     d:'+91 80768 78652', a:()=>copy('+918076878652')},
-  {i:'OPEN',n:'Open LinkedIn',  d:'in/pgupta05',     a:()=>window.open('https://www.linkedin.com/in/pgupta05','_blank','noopener')},
-  {i:'MAIL',n:'Write an email', d:'mail client',     a:()=>location.href='mailto:prathamg329@gmail.com'},
-  {i:'VIEW',n:'Print or save as PDF',d:'clean layout',a:()=>window.print()}
-];
-function jump(h){ const t=$(h); if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'}); }
-(function(){
-  const w=$('#cmdk'), inp=$('#cmdinput'), list=$('#clist');
-  let shown=[], sel=0;
-  function render(q){
-    q=q.trim().toLowerCase();
-    shown=q?CMDS.filter(c=>(c.n+' '+c.d+' '+c.i).toLowerCase().includes(q)):CMDS;
-    sel=0;
-    list.innerHTML=shown.length?shown.map((c,i)=>
-      '<button type="button" class="ci'+(i===0?' sel':'')+'" data-i="'+i+'">'+
-      '<span class="ck">'+c.i+'</span><span class="cn">'+c.n+'</span><span class="cd">'+c.d+'</span></button>').join('')
-      :'<div class="cempty">Nothing matches</div>';
-  }
-  const open=()=>{w.classList.add('on');inp.value='';render('');inp.focus()};
-  const close=()=>w.classList.remove('on');
-  function run(i){ const c=shown[i]; if(!c)return; close(); setTimeout(c.a,60); }
-  function move(d){
-    if(!shown.length)return;
-    sel=(sel+d+shown.length)%shown.length;
-    [...list.children].forEach((e,i)=>e.classList&&e.classList.toggle('sel',i===sel));
-    const cur=list.children[sel]; if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:'nearest'});
-  }
-  $('#cmdopen').addEventListener('click',open);
-  inp.addEventListener('input',()=>render(inp.value));
-  list.addEventListener('click',e=>{const b=e.target.closest('.ci'); if(b)run(+b.dataset.i)});
-  w.addEventListener('click',e=>{if(e.target===w)close()});
-  addEventListener('keydown',e=>{
-    const typing=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);
-    if((e.key==='k'||e.key==='K')&&(e.metaKey||e.ctrlKey)){e.preventDefault();w.classList.contains('on')?close():open();return}
-    if(e.key==='/'&&!typing){e.preventDefault();open();return}
-    if(!w.classList.contains('on'))return;
-    if(e.key==='Escape'){e.preventDefault();close()}
-    else if(e.key==='ArrowDown'){e.preventDefault();move(1)}
-    else if(e.key==='ArrowUp'){e.preventDefault();move(-1)}
-    else if(e.key==='Enter'){e.preventDefault();run(sel)}
-  });
-})();
 
 /* ============ reveal ============ */
 const io=new IntersectionObserver(es=>{
