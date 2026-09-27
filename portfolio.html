@@ -345,145 +345,181 @@ $$('.entry').forEach(el=>{
 });
 </script>
 
+
+
 <script>
-// Crazy Tech / Jarvis Style 3D Background
+// Masterpiece AI Neural Network Background
 const canvas = document.getElementById('webgl-bg');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+scene.fog = new THREE.FogExp2(0x030303, 0.0012); // Deep space fade
+
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+camera.position.z = 400;
+
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-camera.position.z = 15;
-
 const group = new THREE.Group();
 scene.add(group);
 
-// Colors matching the site theme: chill (0x00FFCC), preql (0xB388FF), hivis (0xFF4500)
-const colors = [0x00FFCC, 0xB388FF, 0x00FFCC];
+const particleCount = window.innerWidth < 768 ? 200 : 450; // Performance scaling
+const r = 900; // Spread radius
 
-// 1. Concentric Tech Rings (Torus/Wireframes)
-const ringCount = 5;
-const rings = [];
-for(let i = 0; i < ringCount; i++) {
-  const geometry = new THREE.TorusGeometry(8 + i * 2, 0.05, 16, 100);
-  const material = new THREE.MeshBasicMaterial({ 
-    color: colors[i % colors.length], 
-    wireframe: true, 
-    transparent: true, 
-    opacity: 0.15 + (0.05 * (ringCount - i))
+const particlesData = [];
+const positions = new Float32Array(particleCount * 3);
+const colors = new Float32Array(particleCount * 3);
+
+const color1 = new THREE.Color(0x00FFCC); // Chill
+const color2 = new THREE.Color(0xB388FF); // Preql
+
+for (let i = 0; i < particleCount; i++) {
+  const x = Math.random() * r - r / 2;
+  const y = Math.random() * r - r / 2;
+  const z = Math.random() * r - r / 2;
+
+  positions[i * 3] = x;
+  positions[i * 3 + 1] = y;
+  positions[i * 3 + 2] = z;
+
+  const mixedColor = color1.clone().lerp(color2, Math.random());
+  colors[i * 3] = mixedColor.r;
+  colors[i * 3 + 1] = mixedColor.g;
+  colors[i * 3 + 2] = mixedColor.b;
+
+  particlesData.push({
+    velocity: new THREE.Vector3(-1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2).normalize().multiplyScalar(0.3 + Math.random() * 0.4),
+    numConnections: 0
   });
-  const torus = new THREE.Mesh(geometry, material);
-  
-  // Random initial rotation
-  torus.rotation.x = Math.random() * Math.PI;
-  torus.rotation.y = Math.random() * Math.PI;
-  
-  // Random rotation speed
-  torus.userData = {
-    rx: (Math.random() - 0.5) * 0.005,
-    ry: (Math.random() - 0.5) * 0.005,
-    rz: (Math.random() - 0.5) * 0.005
-  };
-  
-  rings.push(torus);
-  group.add(torus);
 }
 
-// 2. Inner Data Sphere
-const sphereGeo = new THREE.IcosahedronGeometry(5, 2); // complex sphere
-const sphereMat = new THREE.MeshBasicMaterial({
-  color: 0x00FFCC,
-  wireframe: true,
+const pMaterial = new THREE.PointsMaterial({
+  size: 3.5,
+  vertexColors: true,
   transparent: true,
-  opacity: 0.1
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false
 });
-const innerSphere = new THREE.Mesh(sphereGeo, sphereMat);
-group.add(innerSphere);
+const pGeometry = new THREE.BufferGeometry();
+pGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+pGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-// 3. Floating Data Particles
-const particleCount = 1000;
-const particlesGeo = new THREE.BufferGeometry();
-const posArray = new Float32Array(particleCount * 3);
-for(let i = 0; i < particleCount * 3; i++) {
-  posArray[i] = (Math.random() - 0.5) * 50; // spread across 50 units
-}
-particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-const particlesMat = new THREE.PointsMaterial({
-  size: 0.05,
-  color: 0x00FFCC,
+const particleSystem = new THREE.Points(pGeometry, pMaterial);
+group.add(particleSystem);
+
+const maxLines = 15000;
+const linePositions = new Float32Array(maxLines * 6);
+const lineColors = new Float32Array(maxLines * 6);
+
+const lGeometry = new THREE.BufferGeometry();
+lGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
+lGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
+
+const lMaterial = new THREE.LineBasicMaterial({
+  vertexColors: true,
   transparent: true,
   opacity: 0.5,
-  blending: THREE.AdditiveBlending
+  blending: THREE.AdditiveBlending,
+  depthWrite: false
 });
-const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
-scene.add(particlesMesh);
+const linesMesh = new THREE.LineSegments(lGeometry, lMaterial);
+group.add(linesMesh);
 
-// Mouse interaction for parallax
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-const windowHalfX = window.innerWidth / 2;
-const windowHalfY = window.innerHeight / 2;
+const maxDistance = 110;
+let mouseX = 0, mouseY = 0;
+let targetX = 0, targetY = 0;
 
-document.addEventListener('mousemove', (event) => {
-  mouseX = (event.clientX - windowHalfX);
-  mouseY = (event.clientY - windowHalfY);
+document.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX - window.innerWidth / 2);
+  mouseY = (e.clientY - window.innerHeight / 2);
 });
 
-// Animation Loop
-const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
-  const elapsedTime = clock.getElapsedTime();
 
-  // Rotate Rings
-  rings.forEach((ring, i) => {
-    ring.rotation.x += ring.userData.rx;
-    ring.rotation.y += ring.userData.ry;
-    ring.rotation.z += ring.userData.rz;
-  });
+  group.rotation.y += 0.0008;
+  group.rotation.x += 0.0004;
+  group.rotation.z += 0.0002;
 
-  // Rotate inner sphere
-  innerSphere.rotation.y = elapsedTime * 0.1;
-  innerSphere.rotation.x = elapsedTime * 0.05;
+  let vertexpos = 0;
+  let colorpos = 0;
+  let numConnected = 0;
 
-  // Rotate entire group slowly
-  group.rotation.y = elapsedTime * 0.02;
+  for (let i = 0; i < particleCount; i++)
+    particlesData[i].numConnections = 0;
 
-  // Move particles slowly upwards (data stream effect)
-  const positions = particlesGeo.attributes.position.array;
-  for(let i = 1; i < particleCount * 3; i += 3) {
-    positions[i] += 0.02;
-    if (positions[i] > 25) {
-      positions[i] = -25;
+  const positions = particleSystem.geometry.attributes.position.array;
+  const pColors = particleSystem.geometry.attributes.color.array;
+  const lPositions = linesMesh.geometry.attributes.position.array;
+  const lColors = linesMesh.geometry.attributes.color.array;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particleData = particlesData[i];
+
+    positions[i * 3] += particleData.velocity.x;
+    positions[i * 3 + 1] += particleData.velocity.y;
+    positions[i * 3 + 2] += particleData.velocity.z;
+
+    // Bounce off edges smoothly
+    if (positions[i * 3] < -r / 2 || positions[i * 3] > r / 2) particleData.velocity.x *= -1;
+    if (positions[i * 3 + 1] < -r / 2 || positions[i * 3 + 1] > r / 2) particleData.velocity.y *= -1;
+    if (positions[i * 3 + 2] < -r / 2 || positions[i * 3 + 2] > r / 2) particleData.velocity.z *= -1;
+
+    for (let j = i + 1; j < particleCount; j++) {
+      const dx = positions[i * 3] - positions[j * 3];
+      const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+      const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+      if (dist < maxDistance && numConnected < maxLines) {
+        particleData.numConnections++;
+        particlesData[j].numConnections++;
+
+        // Smooth fade out based on distance
+        const alpha = Math.pow(1.0 - dist / maxDistance, 1.5);
+
+        lPositions[vertexpos++] = positions[i * 3];
+        lPositions[vertexpos++] = positions[i * 3 + 1];
+        lPositions[vertexpos++] = positions[i * 3 + 2];
+
+        lPositions[vertexpos++] = positions[j * 3];
+        lPositions[vertexpos++] = positions[j * 3 + 1];
+        lPositions[vertexpos++] = positions[j * 3 + 2];
+
+        lColors[colorpos++] = pColors[i * 3] * alpha;
+        lColors[colorpos++] = pColors[i * 3 + 1] * alpha;
+        lColors[colorpos++] = pColors[i * 3 + 2] * alpha;
+
+        lColors[colorpos++] = pColors[j * 3] * alpha;
+        lColors[colorpos++] = pColors[j * 3 + 1] * alpha;
+        lColors[colorpos++] = pColors[j * 3 + 2] * alpha;
+
+        numConnected++;
+      }
     }
   }
-  particlesGeo.attributes.position.needsUpdate = true;
 
-  // Mouse Parallax (smoothly interpolate towards mouse position)
-  targetX = mouseX * 0.001;
-  targetY = mouseY * 0.001;
-  
-  group.rotation.x += 0.05 * (targetY - group.rotation.x);
-  group.rotation.y += 0.05 * (targetX - group.rotation.y);
-  
-  particlesMesh.rotation.y = -mouseX * 0.0005;
-  particlesMesh.rotation.x = -mouseY * 0.0005;
+  linesMesh.geometry.setDrawRange(0, numConnected * 2);
+  linesMesh.geometry.attributes.position.needsUpdate = true;
+  linesMesh.geometry.attributes.color.needsUpdate = true;
+  particleSystem.geometry.attributes.position.needsUpdate = true;
+
+  targetX = mouseX * 0.15;
+  targetY = mouseY * 0.15;
+  camera.position.x += (targetX - camera.position.x) * 0.02;
+  camera.position.y += (-targetY - camera.position.y) * 0.02;
+  camera.lookAt(scene.position);
 
   renderer.render(scene, camera);
 }
-
 animate();
 
-// Handle Resize
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 </script>
-
 </body>
 </html>
