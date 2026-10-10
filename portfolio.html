@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build Log / Pratham Gupta — AI &amp; Product Portfolio</title>
-<meta name="description" content="Chhatri, Transit One, FinBuddy, Crave Command Center and more — every build, one tile each. Click a tile for the full case study.">
+<title>Build Log / Pratham Gupta | AI &amp; Product Portfolio</title>
+<meta name="description" content="Chhatri, Transit One, FinBuddy, Crave Command Center and more. Each build has a concise case study and direct product link.">
 <meta name="author" content="Pratham Gupta">
 <link rel="canonical" href="https://prathamgupta.vercel.app/portfolio.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#07090C">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://prathamgupta.vercel.app/portfolio.html">
-<meta property="og:title" content="Build Log / Pratham Gupta — AI &amp; Product Portfolio">
+<meta property="og:title" content="Build Log / Pratham Gupta | AI &amp; Product Portfolio">
 <meta property="og:description" content="Every build, one tile each. Click a tile for the full case study.">
 <meta property="og:image" content="https://prathamgupta.vercel.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -88,36 +88,38 @@ button{font:inherit}
 .gridsec{padding:60px 0 40px}
 .zone{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .zone::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,#ffffff1a,transparent)}
-.pgrid{display:flex;flex-direction:column;gap:18px}
-.tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:grid;grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:28px;min-height:310px;padding:26px 28px;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s}
-@media(max-width:760px){.tile{grid-template-columns:1fr;padding:22px;gap:22px}}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:grid;grid-template-rows:auto 232px;gap:20px;min-height:440px;padding:23px;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s}
+@media(max-width:720px){.pgrid{grid-template-columns:1fr}.tile{padding:22px;gap:18px}}
 .tile::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
 .tile:hover,.tile:focus-visible{border-color:var(--c);transform:translateY(-4px);box-shadow:0 20px 40px -22px #000}
-.tile .tcopy{display:flex;flex-direction:column;gap:16px;min-width:0}
-.tile .trow{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tile .tcopy{display:grid;grid-template-columns:1fr auto;grid-template-areas:"meta meta" "title status" "summary summary" "link link";gap:10px 16px;min-width:0}
+.tile .trow{grid-area:meta;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .tile .tv{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;color:var(--c)}
 .tile .tpill{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;padding:4px 8px;border-radius:20px;font-weight:700;white-space:nowrap;background:var(--c);color:#07090C}
-.tile h4{font-size:19px;color:var(--frost);text-transform:none;letter-spacing:-.01em;line-height:1.18}
+.tile h4{font-size:23px;color:var(--frost);text-transform:none;letter-spacing:-.01em;line-height:1.18}
+.tile h4,.tile .tk{grid-area:title}
 .tile .tk{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;line-height:1.6}
-.tile .tsummary{font-size:14px;line-height:1.55;color:#b9c2bd;font-weight:300;max-width:30ch}
-.tile .texp{margin-top:auto;padding-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--c);text-transform:uppercase;display:flex;align-items:center;gap:7px;border-top:1px solid var(--line)}
+.tile .tsummary{grid-area:summary;font-size:14px;line-height:1.55;color:#b9c2bd;font-weight:300;max-width:42ch}
+.tile .texp{grid-area:link;margin-top:4px;padding-top:12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--c);text-transform:uppercase;display:flex;align-items:center;gap:7px;border-top:1px solid var(--line)}
 .tile .texp .arrow{transition:transform .22s}
 .tile:hover .texp .arrow{transform:translateX(4px)}
 
-.tile .product-preview{position:relative;min-height:250px;border:1px solid #ffffff12;border-radius:10px;background:#07090c;overflow:hidden;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.tile .product-preview .phone{transform:scale(.54);transform-origin:center}
-.tile .product-preview .brow{width:96%;max-width:540px;transform:none;box-shadow:0 26px 54px -26px #000}
-.tile .product-preview .browview{height:250px;aspect-ratio:auto;display:flex;align-items:center;justify-content:center}
-.tile .product-preview .brow iframe{position:static;transform:scale(.205);transform-origin:center;flex:none}
-.tile .product-preview .cover{height:100%;min-height:250px;max-width:none;border:0;border-radius:0;background:linear-gradient(145deg,#111a32,#0C1120)}
+.tile .product-preview{position:relative;min-height:0;border:1px solid #ffffff12;border-radius:10px;background:radial-gradient(circle at 50% 30%,#15211d,#07090c 68%);overflow:hidden;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.tile .product-preview::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:24px 24px;mask-image:linear-gradient(to bottom,#0008,transparent);pointer-events:none}
+.tile .product-preview .phone{transform:scale(.52);transform-origin:center;position:relative;z-index:1}
+.tile .product-preview .brow{width:88%;max-width:410px;transform:none;box-shadow:0 26px 54px -26px #000;position:relative;z-index:1}
+.tile .product-preview .browview{height:190px;aspect-ratio:auto;display:flex;align-items:center;justify-content:center;background:#07090c}
+.tile .product-preview .brow iframe{position:static;transform:scale(.16);transform-origin:center;flex:none}
+.tile .product-preview .cover{height:100%;min-height:0;max-width:none;border:0;border-radius:0;background:linear-gradient(145deg,#111a32,#0C1120);position:relative;z-index:1}
 .tile .product-preview .cover::before{content:"FINBUDDY";font:700 46px/.9 'Oswald',sans-serif;letter-spacing:-.03em;color:#ffffff12;position:absolute;bottom:18px;right:16px}
 .tile .preview-label{position:absolute;bottom:12px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#8b958f;background:#07090ccc;padding:5px 7px;border:1px solid #ffffff14;border-radius:4px}
-@media(max-width:760px){.tile .product-preview .browview{height:220px}}
+@media(max-width:720px){.tile .product-preview .browview{height:200px}}
 
 /* ============ MODAL, the "one screen pop" ============ */
 .modal{position:fixed;inset:0;z-index:150;background:#03050490;backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:24px}
 .modal.on{display:flex}
-.mbox{width:100%;max-width:900px;max-height:88vh;overflow-y:auto;background:#0B0F0D;border:1px solid var(--line);border-radius:16px;box-shadow:0 70px 130px -40px #000;position:relative;animation:pop .22s cubic-bezier(.2,.9,.3,1)}
+.mbox{width:100%;max-width:980px;height:min(820px,calc(100vh - 36px));overflow:hidden;background:#0B0F0D;border:1px solid var(--line);border-radius:16px;box-shadow:0 70px 130px -40px #000;position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;animation:pop .22s cubic-bezier(.2,.9,.3,1)}
 @keyframes pop{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
 .mclose{position:sticky;float:right;top:16px;right:16px;margin:16px 16px -44px 0;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#07090CEE;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;z-index:5;font-size:16px}
 .mclose:hover{border-color:var(--chill);color:var(--chill)}
@@ -128,7 +130,8 @@ button{font:inherit}
 .ch .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;margin-top:8px}
 .pill{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 11px;border-radius:20px;font-weight:700;white-space:nowrap;flex:none;background:var(--c);color:#07090C}
 
-.cb{padding:26px 28px}
+.cb{padding:22px 28px;overflow-y:auto;scrollbar-width:none}
+.cb::-webkit-scrollbar{display:none}
 .diffgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:26px}
 @media(max-width:700px){.diffgrid{grid-template-columns:1fr}}
 .diff{padding-left:16px;border-left:2px solid var(--line)}
@@ -139,22 +142,22 @@ button{font:inherit}
 .chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 12px;border-radius:20px;color:#AEB8B2}
 
 /* ---- embeds ---- */
-.embed{background:#07090C;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:22px;gap:14px}
+.embed{background:#07090C;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:14px;gap:10px;max-height:300px}
 .phone{width:220px;flex:none;background:#0d0d0f;border-radius:26px;padding:9px;box-shadow:0 30px 60px -26px #000,0 0 0 1px #ffffff14}
-.phone .screen{border-radius:19px;overflow:hidden;background:#FAFAF7;height:430px;position:relative}
-.phone iframe{width:390px;height:760px;border:0;display:block;transform:scale(.5641);transform-origin:top left;position:relative;z-index:2}
+.phone .screen{border-radius:19px;overflow:hidden;background:#FAFAF7;height:270px;position:relative}
+.phone iframe{width:390px;height:760px;border:0;display:block;transform:scale(.3553);transform-origin:top left;position:relative;z-index:2}
 .brow{width:100%;max-width:640px;background:#0d0d0f;border-radius:9px;padding:0 0 5px;box-shadow:0 26px 54px -26px #000,0 0 0 1px #ffffff14;overflow:hidden}
 .browbar{height:22px;display:flex;align-items:center;gap:5px;padding:0 9px;background:#191b1e}
 .browbar i{width:7px;height:7px;border-radius:50%;background:#3a3f45;flex:none}
 .browbar span{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;color:#5C6A60;margin-left:8px;text-transform:uppercase}
-.browview{position:relative;overflow:hidden;background:#F1F5F9;width:100%;aspect-ratio:1100/1180}
+.browview{position:relative;overflow:hidden;background:#07090c;width:100%;height:210px}
 .brow iframe{width:1100px;height:1180px;border:0;display:block;position:absolute;top:0;left:0;transform-origin:top left}
 .pfb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#12211c;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;line-height:2}
 .cover{width:100%;max-width:420px;border:1px solid var(--line);background:linear-gradient(160deg,#141a34,#0C1120);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px 24px;border-radius:10px}
 .cover .cvi{width:44px;height:44px;border:1px solid var(--preql);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px}
 .cover .cvd{font-size:12.5px;color:#9AA5C4;font-weight:300;line-height:1.6}
 
-.foot{padding:20px 28px 28px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.foot{padding:16px 28px 20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border-top:1px solid var(--line)}
 .links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .golink{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;padding:13px 20px;border-radius:8px;background:var(--c);color:#07090C;font-weight:700;text-decoration:none;transition:.2s}
 .golink:hover{filter:brightness(1.1);transform:translateY(-2px)}
@@ -232,8 +235,8 @@ button{font:inherit}
     <div class="cb">
       <div class="diffgrid">
         <div class="diff"><b class="lab">Problem</b><p id="mproblem"></p></div>
-        <div class="diff"><b class="lab">Build</b><p id="mbuild"></p></div>
-        <div class="diff"><b class="lab">State today</b><p id="mstate"></p></div>
+        <div class="diff"><b class="lab">Approach</b><p id="mbuild"></p></div>
+        <div class="diff"><b class="lab">Status &amp; learning</b><p id="mstate"></p></div>
       </div>
       <div class="stack" id="mstack"></div>
       <div class="embed" id="membed"></div>
@@ -263,7 +266,7 @@ const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 
 /* ============ DATA ============
-   Add a new build by pushing one object here — the status card, the
+   Add a new build by pushing one object here. The status card, the
    legend counts, the tile grid and the modal all render from this list. */
 const PROJECTS=[
   {
@@ -413,7 +416,10 @@ $$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*70+'ms';io.observe(el)
 function scaleBrowsers(){
   $$('#membed .browview').forEach(v=>{
     const f=v.querySelector('iframe'); if(!f)return;
-    f.style.transform='scale('+(v.clientWidth/1100)+')';
+    const scale=Math.min(v.clientWidth/1100,v.clientHeight/1180);
+    f.style.transform='scale('+scale+')';
+    f.style.left=((v.clientWidth-(1100*scale))/2)+'px';
+    f.style.top=((v.clientHeight-(1180*scale))/2)+'px';
   });
 }
 addEventListener('resize',scaleBrowsers,{passive:true});

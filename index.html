@@ -366,7 +366,7 @@ section,header{position:relative;z-index:1}
   display: flex; justify-content: space-between; align-items: center;
 }
 .biz-logo {
-  font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700;
+  font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700;
   color: #fff; letter-spacing: 0.1em;
   text-shadow: 0 0 20px rgba(255,255,255,0.4);
 }
@@ -378,18 +378,21 @@ section,header{position:relative;z-index:1}
 .biz-body {
   transform: translateZ(30px);
 }
+.biz-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:var(--chill);text-transform:uppercase;display:block;margin-bottom:10px}
 .biz-name {
-  font-size: clamp(28px, 4vw, 36px);
+  font-size: clamp(29px, 4vw, 38px);
   color: #fff;
   line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em;
 }
 .biz-tagline {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
-  color: var(--chill);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+  color: #b6c8be;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  text-shadow: none;
+  max-width:31ch;
+  line-height:1.55;
 }
 
 .biz-details {
@@ -459,7 +462,7 @@ section,header{position:relative;z-index:1}
       <div>
         <div class="stock"><span class="pulse"></span> SIX SIGMA GREEN BELT &nbsp;·&nbsp; MBA 2027, BITSOM &nbsp;·&nbsp; OPEN TO ROLES</div>
         <h1>I turn messy<br>problems into<span class="l2">practical plans.</span></h1>
-        <p class="kick">I start by understanding how the system really works—then turn research, data and people into a change that can actually be implemented.</p>
+        <p class="kick">I start by understanding how the system really works, then turn research, data and people into a change that can actually be implemented.</p>
         <div class="cta">
           <a class="btn solid biz-card-trigger" href="javascript:void(0)">Get in touch</a>
           <a class="btn ai" href="portfolio.html">Product Portfolio ↗</a>
@@ -506,7 +509,7 @@ section,header{position:relative;z-index:1}
       <div class="beats">
         <div class="beat">
           <span class="bl">The focus</span>
-          <p>I am specialising in marketing, e-commerce and operations—where a good strategy must work for the customer, the market and the people delivering it.</p>
+          <p>I am specialising in marketing, e-commerce and operations, where a good strategy must work for the customer, the market and the people delivering it.</p>
         </div>
         <div class="beat">
           <span class="bl">How I practise</span>
@@ -514,8 +517,8 @@ section,header{position:relative;z-index:1}
         </div>
         <div class="beat">
           <span class="bl">What it signals</span>
-          <span class="bnum">WiRED 9 &amp; 10</span>
-          <p>National semi-finalist across Flipkart’s flagship B-school case competition—learning to build solutions around real ecommerce challenges.</p>
+          <span class="bnum">WiRED × 2 · TCPL</span>
+          <p>National semi-finalist twice at Flipkart WiRED, and national top 13 at TCPL Grow Beyond Better. Both made corporate problem solving feel real, not theoretical.</p>
         </div>
       </div>
     </div>
@@ -558,7 +561,7 @@ section,header{position:relative;z-index:1}
         </div>
         <div class="beat">
           <span class="bl">What I built</span>
-          <p>I handled operations, growth and key accounts—adding GPS, cameras and a clearer service proposition alongside corporate pricing, routes, dispatch and process improvements.</p>
+          <p>I handled operations, growth and key accounts, adding GPS, cameras and a clearer service proposition alongside corporate pricing, routes, dispatch and process improvements.</p>
         </div>
         <div class="beat">
           <span class="bl">What proved it</span>
@@ -572,7 +575,7 @@ section,header{position:relative;z-index:1}
     <div class="chap rv" style="--c:var(--ik)">
       <div class="ctop"><span class="cno">04</span><span class="cmeta"><b class="corg">Internships &amp; undergraduate foundation</b><span class="crole">Marketing · consulting · research · leadership</span></span></div>
       <h2>The earlier chapters taught me to research, communicate and lead.</h2>
-      <div class="beats"><div class="beat"><span class="bl">Marketing</span><p>At IKONA Media, I helped build creator and campus-ambassador infrastructure—supporting 50+ creators and a 40% lift in social reach.</p></div><div class="beat"><span class="bl">Consulting &amp; research</span><p>At Consortico, I led a five-member team to investigate volunteer attrition, combining outreach audits, user mapping and NGO benchmarking into a six-month growth strategy.</p></div><div class="beat"><span class="bl">Leadership</span><p>Rotaract taught me how to take responsibility for people and execution. Today, I continue that through MBA mentoring, AI sessions and hands-on project building.</p></div></div>
+      <div class="beats"><div class="beat"><span class="bl">Marketing</span><p>At IKONA Media, I helped build creator and campus-ambassador infrastructure, supporting 50+ creators and a 40% lift in social reach.</p></div><div class="beat"><span class="bl">Consulting &amp; research</span><p>At Consortico, I led a five-member team to investigate volunteer attrition, combining outreach audits, user mapping and NGO benchmarking into a six-month growth strategy.</p></div><div class="beat"><span class="bl">Leadership</span><p>Rotaract taught me how to take responsibility for people and execution. Today, I continue that through MBA mentoring, AI sessions and hands-on project building.</p></div></div>
     </div>
 
     </div>
@@ -645,7 +648,7 @@ section,header{position:relative;z-index:1}
     </div>
 
     <div class="oc1 rv" style="margin-top:38px">
-      <p><b>How I work:</b> Lean Six Sigma gives me a practical lens for improving processes, products and operating efficiency—define the friction, test the change and make the better way repeatable.</p>
+      <p><b>How I work:</b> Lean Six Sigma gives me a practical lens for improving processes, products and operating efficiency: define the friction, test the change and make the better way repeatable.</p>
     </div>
     <div class="life-log rv">
       <div class="zone">Beyond the work</div>
@@ -877,12 +880,13 @@ function onWindowResize() {
       <button class="biz-close" id="biz-close" aria-label="Close">&times;</button>
       <div class="biz-content">
         <div class="biz-header">
-          <div class="biz-logo">PRATHAM.</div>
-          <div class="biz-sku">SYS.ARCHITECT // PG2027</div>
+          <div class="biz-logo">PG / PRATHAM GUPTA</div>
+          <div class="biz-sku">MBA 2027 · BITSOM</div>
         </div>
         <div class="biz-body">
-          <h2 class="biz-name">Pratham Gupta</h2>
-          <p class="biz-tagline">I build products that refuse to be ignored.</p>
+          <span class="biz-eyebrow">Open to opportunities</span>
+          <h2 class="biz-name">Strategy, marketing<br>&amp; operations.</h2>
+          <p class="biz-tagline">I turn research into practical operating plans, products and measurable improvements.</p>
         </div>
         <div class="biz-details">
           <a href="mailto:prathamg329@gmail.com" class="biz-link">EMAIL</a>
