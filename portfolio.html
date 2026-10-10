@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build Log / Pratham Gupta — AI &amp; Product Portfolio</title>
-<meta name="description" content="Transit One, FinBuddy, Crave Command Center and more — every build, one tile each. Click a tile for the full case study.">
+<meta name="description" content="Chhatri, Transit One, FinBuddy, Crave Command Center and more — every build, one tile each. Click a tile for the full case study.">
 <meta name="author" content="Pratham Gupta">
 <link rel="canonical" href="https://prathamgupta.vercel.app/portfolio.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -297,11 +297,23 @@ const PROJECTS=[
     primary:{label:'Go to product', href:'crave-command-center.html'},
     secondary:null,
     commit:'commit f02e9a · solo concept, 2026'
+  },
+  {
+    id:'chhatri', accent:'#f6a623', version:'v1.0.0', status:'Concept deck',
+    name:'Chhatri', kicker:'Climate tech cool-roof system · Quick Pivots',
+    problem:"Urban tin and asbestos sheet roofs turn low-income homes into 48°C ovens during peak Indian summers, causing severe health risks, lost work hours, and evening power grid spikes. Existing cool-roof drives never scaled past 0.2%.",
+    build:"A five-piece system that sells degrees, not paint: reflective coat, foil air gap, wind turbine vent, women's installation crews at ₹200/mo, and measured sensor verification paid by institutional sponsors.",
+    state:"Scroll-driven interactive film & investment thesis. Models thermal physics, colony network rollouts, unit economics (₹7,300/home), and a ₹271 Cr Year-5 financial roadmap.",
+    stack:['Climate tech','Scroll-driven film','Thermal physics sim','Unit economics model','GSAP / SVG'],
+    embed:{type:'browser', src:'chhatri.html', label:'interactive scroll deck'},
+    primary:{label:'Go to product', href:'chhatri.html'},
+    secondary:null,
+    commit:'commit 5e291b · Team Quick Pivots, 2026'
   }
 ];
 
 /* ============ RENDER: legend + status counts ============ */
-const STATUS_COLOR={'Live':'var(--chill)','Prototype':'var(--preql)','Concept sim':'var(--tag)'};
+const STATUS_COLOR={'Live':'var(--chill)','Prototype':'var(--preql)','Concept sim':'var(--tag)','Concept deck':'#f6a623'};
 (function renderCounts(){
   const counts={};
   PROJECTS.forEach(p=>{counts[p.status]=(counts[p.status]||0)+1});
