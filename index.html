@@ -209,6 +209,14 @@ section,header{position:relative;z-index:1}
 .oc1{display:flex;align-items:flex-start;gap:16px;border-left:2px solid var(--chill);padding-left:20px;max-width:70ch}
 .oc1 p{font-size:16.5px;color:#B6C8BE;font-weight:300;line-height:1.6}
 .oc1 p b{color:var(--frost);font-weight:600}
+.life-log{margin-top:42px;padding-top:28px;border-top:1px solid #ffffff10}
+.life-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.life-card{margin:0;padding:10px;background:#101512;border:1px solid #ffffff14;transform:rotate(var(--tilt));transition:transform .25s,border-color .25s}
+.life-card:hover{transform:rotate(0) translateY(-5px);border-color:var(--chill)}
+.life-photo{min-height:138px;display:flex;align-items:flex-end;padding:12px;background:linear-gradient(145deg,#21362e,#0A1410 70%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#d9ebe1}
+.life-card figcaption{padding:11px 4px 3px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;line-height:1.55}
+@media(max-width:800px){.life-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.life-grid{grid-template-columns:1fr}.life-photo{min-height:120px}}
 
 /* ============ contact ============ */
 .contact{background:var(--hivis);color:#170A02;padding:76px 0 28px;z-index:2}
@@ -479,34 +487,35 @@ section,header{position:relative;z-index:1}
   </div>
 </div>
 
-<!-- ============ STORY : FOUR CHAPTERS ============ -->
+<!-- ============ EXPERIENCE TIMELINE ============ -->
 <section class="sec" id="story" style="padding-top:26px">
   <div class="wrap">
     <div class="journey-intro rv">
-      <div><div class="zone">How I built the way I work</div><h2>Each experience gave me the next tool.</h2></div>
-      <p>I began by learning to lead people. Then I learned to build reliable operations, communicate value and use data to make a system easier to improve.</p>
+      <div><div class="zone">A problem-solving timeline</div><h2>From business brief to working system.</h2></div>
+      <p>My work has moved from framing opportunities at BITSoM to solving live operating problems. The constant is simple: understand the system first, then build what makes it work better.</p>
     </div>
     <div class="journey">
 
     <!-- ---- 01 ---- -->
-    <div class="chap rv" style="--c:var(--him)">
+    <div class="chap rv" style="--c:var(--preql)">
       <div class="ctop">
         <span class="cno">01</span>
-        <span class="cmeta"><b class="corg">Start with people</b><span class="crole">Rotaract · Official Thume Mentor</span></span>
+        <span class="cmeta"><b class="corg">BITSoM</b><span class="crole">MBA · Marketing, e-commerce &amp; operations</span></span>
       </div>
-      <h2>First, I learned that an idea only matters if people can act on it.</h2>
+      <h2>I am learning to solve a business problem across the whole value chain.</h2>
       <div class="beats">
         <div class="beat">
-          <span class="bl">What I learned</span>
-          <p>Through Rotaract and mentoring MBA students as an official Thume Mentor, I learned to listen, organise people and make an idea feel possible for a team.</p>
+          <span class="bl">The focus</span>
+          <p>I am specialising in marketing, e-commerce and operations—where a good strategy must work for the customer, the market and the people delivering it.</p>
         </div>
         <div class="beat">
-          <span class="bl">What it became</span>
-          <p>A preference for practical leadership: understand what people need, remove the friction and leave them with a clearer way forward.</p>
+          <span class="bl">How I practise</span>
+          <p>Flipkart WiRED 9 and 10 pushed me to turn broad business briefs into journeys, operating models and plans. At PreQL, I built an AI campaign tracker linking CRM and ad platforms, and run sessions on using AI in case work.</p>
         </div>
         <div class="beat">
-          <span class="bl">Away from work</span>
-          <p>Pool keeps teaching the same lesson: read the angle early, plan the next move and stay calm when the table changes.</p>
+          <span class="bl">What it signals</span>
+          <span class="bnum">WiRED 9 &amp; 10</span>
+          <p>National semi-finalist across Flipkart’s flagship B-school case competition—learning to build solutions around real ecommerce challenges.</p>
         </div>
       </div>
     </div>
@@ -515,55 +524,55 @@ section,header{position:relative;z-index:1}
     <div class="chap rv" id="ch02" style="--c:var(--bb)">
       <div class="ctop">
         <span class="cno">02</span>
-        <span class="cmeta"><b class="corg">Himanshu Travel Line</b><span class="crole">Operations &amp; Growth Manager · 2023 to 2025</span></span>
+        <span class="cmeta"><b class="corg">BigBasket</b><span class="crole">Strategic Initiative Intern · Apr to Jun 2026</span></span>
       </div>
-      <h2>Then I learned that growth only works when the operation can carry it.</h2>
+      <h2>Then I took that curiosity into a live inventory problem.</h2>
       <div class="beats">
         <div class="beat">
           <span class="bl">The question</span>
-          <p>How could a transport business reach new markets without letting pricing, route capacity and service quality fall out of sync?</p>
+          <p>Write-offs were visible; the reasons behind them were scattered. How could the team spot loss early enough to act before it repeated?</p>
         </div>
         <div class="beat">
           <span class="bl">What I built</span>
-          <p>I connected corporate pricing, vehicle positioning, routes, dispatch and vendor choices—treating the business as one operating system, not separate fixes.</p>
+          <p>I learned the floor process, researched the inventory system and brought SKU-level root causes into daily monitoring so operations and buying teams could work from the same view.</p>
         </div>
         <div class="beat">
           <span class="bl">What proved it</span>
-          <span class="bnum">₹2.5Cr</span>
-          <p>in B2B revenue, with productive hours up <b>15%</b> and vehicle availability up <b>26%</b>.</p>
+          <span class="bnum">~₹20L</span>
+          <p>saved, with write-offs moving from <b>1.21% to 0.88%</b> of sales. It strengthened my belief that better data and automation make action easier.</p>
         </div>
       </div>
     </div>
 
     <!-- ---- 03 ---- -->
-    <div class="chap rv" id="ch03" style="--c:var(--ik)">
+    <div class="chap rv" id="ch03" style="--c:var(--him)">
       <div class="ctop">
         <span class="cno">03</span>
-        <span class="cmeta"><b class="corg">IKONA Media</b><span class="crole">Market Research Intern · Nov 2024 to Feb 2025</span></span>
+        <span class="cmeta"><b class="corg">Himanshu Travel Line</b><span class="crole">Operations, growth &amp; key accounts · 2023 to 2025</span></span>
       </div>
-      <h2>Next, I learned to build the missing structure behind a message.</h2>
+      <h2>Here I learned how to move a price-sensitive service towards quality.</h2>
       <div class="beats">
         <div class="beat">
           <span class="bl">The question</span>
-          <p>How do you create momentum when the network, process and proof are not there yet?</p>
+          <p>A bus operator serving schools, colleges, hospitals and B2C customers. The market was price-sensitive, but reliability mattered just as much.</p>
         </div>
         <div class="beat">
           <span class="bl">What I built</span>
-          <p>Creator sourcing, a campus ambassador programme and clearer briefs—then a focused sponsorship pipeline at BITSoM.</p>
+          <p>I handled operations, growth and key accounts—adding GPS, cameras and a clearer service proposition alongside corporate pricing, routes, dispatch and process improvements.</p>
         </div>
         <div class="beat">
           <span class="bl">What proved it</span>
-          <span class="bnum">+40%</span>
-          <p>social reach, with <b>50+ creators</b> and eight colleges engaged. Later, 80 qualified Roar &amp; Conclave leads converted into ₹12L in sponsorship.</p>
+          <span class="bnum">₹2.5Cr</span>
+          <p>in B2B revenue from two new contracts and five expanded fleets. Vehicle availability rose <b>26%</b> as the operating system became more dependable.</p>
         </div>
       </div>
     </div>
 
     <!-- ---- 04 ---- -->
-    <div class="chap rv" style="--c:var(--preql)">
-      <div class="ctop"><span class="cno">04</span><span class="cmeta"><b class="corg">BigBasket &amp; product work</b><span class="crole">2026 onwards</span></span></div>
-      <h2>Now I use data and AI to make good decisions easier to repeat.</h2>
-      <div class="beats"><div class="beat"><span class="bl">The question</span><p>At BigBasket, the task was to control write-offs. The larger question was how to spot a loss early enough to act.</p></div><div class="beat"><span class="bl">What I built</span><p>A daily view of SKU-level root causes that gave operations and buying teams a shared place to work from.</p></div><div class="beat"><span class="bl">What proved it</span><span class="bnum">~₹20L</span><p>saved, with write-offs moving from <b>1.21% to 0.88%</b> of sales. That same interest now drives the AI products I build.</p></div></div>
+    <div class="chap rv" style="--c:var(--ik)">
+      <div class="ctop"><span class="cno">04</span><span class="cmeta"><b class="corg">Internships &amp; undergraduate foundation</b><span class="crole">Marketing · consulting · research · leadership</span></span></div>
+      <h2>The earlier chapters taught me to research, communicate and lead.</h2>
+      <div class="beats"><div class="beat"><span class="bl">Marketing</span><p>At IKONA Media, I helped build creator and campus-ambassador infrastructure—supporting 50+ creators and a 40% lift in social reach.</p></div><div class="beat"><span class="bl">Consulting &amp; research</span><p>At Consortico, I led a five-member team to investigate volunteer attrition, combining outreach audits, user mapping and NGO benchmarking into a six-month growth strategy.</p></div><div class="beat"><span class="bl">Leadership</span><p>Rotaract taught me how to take responsibility for people and execution. Today, I continue that through MBA mentoring, AI sessions and hands-on project building.</p></div></div>
     </div>
 
     </div>
@@ -606,7 +615,8 @@ section,header{position:relative;z-index:1}
           <div class="bt">Positions of responsibility</div>
           <div class="rows">
             <div class="row"><div class="rn">BITSoM Roar &amp; Conclave, Sponsorship<em>₹25L budget across 10 domains; 80 leads converted into ₹12L</em></div><div class="rval">2026</div></div>
-            <div class="row"><div class="rn">PreQL, Senior<em>AI campaign tracker, CRM and ad platforms</em></div><div class="rval">2026</div></div>
+            <div class="row"><div class="rn">PreQL, Senior<em>AI campaign tracker, CRM and ad platforms; AI sessions for case work</em></div><div class="rval">2026</div></div>
+            <div class="row"><div class="rn">Official Thume Mentor<em>Mentoring MBA students through their learning journey</em></div><div class="rval">Current</div></div>
             <div class="row"><div class="rn">Marketing &amp; Ops Committee<em>Club marketing and stall contracts</em></div><div class="rval">2026</div></div>
             <div class="row"><div class="rn">Rotaract USME, Vice President<em>200+ members, partnerships and 10+ events</em></div><div class="rval">2023</div></div>
           </div>
@@ -626,7 +636,7 @@ section,header{position:relative;z-index:1}
         <div class="blk">
           <div class="bt">Certificates</div>
           <div class="cgrid">
-            <div class="cert"><span class="ci">Henry Harvin</span><div class="cn">Six Sigma Green Belt</div></div>
+            <div class="cert"><span class="ci">Henry Harvin · practitioner licence</span><div class="cn">Lean Six Sigma Green Belt</div></div>
             <div class="cert"><span class="ci">Wharton · 2026</span><div class="cn">Marketing: Brand Equity, Customer Centricity &amp; Go-to-Market</div></div>
           </div>
         </div>
@@ -635,7 +645,17 @@ section,header{position:relative;z-index:1}
     </div>
 
     <div class="oc1 rv" style="margin-top:38px">
-      <p><b>Off the clock:</b> badminton, pool and cycling. All three reward reading the angle early and not overhitting, which is roughly how I approach the rest of it too.</p>
+      <p><b>How I work:</b> Lean Six Sigma gives me a practical lens for improving processes, products and operating efficiency—define the friction, test the change and make the better way repeatable.</p>
+    </div>
+    <div class="life-log rv">
+      <div class="zone">Beyond the work</div>
+      <p class="head" style="margin:0"><span style="font-size:16px;color:#B6C8BE;font-weight:300;max-width:58ch;display:block">The other things that keep me curious: music, a pool table, a new place and the next meal worth planning around.</span></p>
+      <div class="life-grid">
+        <figure class="life-card" style="--tilt:-1.5deg"><div class="life-photo">Photo slot · music</div><figcaption>Music &amp; singing<br>Finding a room’s rhythm.</figcaption></figure>
+        <figure class="life-card" style="--tilt:1.2deg"><div class="life-photo">Photo slot · pool</div><figcaption>Pool<br>Reading angles and staying calm.</figcaption></figure>
+        <figure class="life-card" style="--tilt:-.8deg"><div class="life-photo">Photo slot · cuisine</div><figcaption>Food<br>Trying a city through its cuisine.</figcaption></figure>
+        <figure class="life-card" style="--tilt:1.6deg"><div class="life-photo">Photo slot · travel</div><figcaption>Travel<br>Exploring new places, not just routes.</figcaption></figure>
+      </div>
     </div>
   </div>
 </section>
@@ -645,8 +665,8 @@ section,header{position:relative;z-index:1}
   <div class="wrap">
     <div class="rv">
       <div class="mono" style="font-size:11px;letter-spacing:.2em;color:#5C2E0C;margin-bottom:18px">DISPATCH</div>
-      <h2>Let's talk<br>about your<br>numbers.</h2>
-      <p class="sub">Growth, marketing, brand and operations. Email is fastest.</p>
+      <h2>Let's talk<br>about the<br>problem.</h2>
+      <p class="sub">Strategy, marketing, e-commerce and operations. Email is fastest.</p>
       <div class="clinks">
         <a href="mailto:prathamg329@gmail.com">prathamg329@gmail.com</a>
         <a href="tel:+918076878652">+91 80768 78652</a>
