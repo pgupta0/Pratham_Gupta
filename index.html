@@ -421,6 +421,24 @@ section,header{position:relative;z-index:1}
   transform: scale(0.92) !important;
 }
 
+#webgl-bg{opacity:.35}
+.life-photo{min-height:76px;align-items:center;font-size:11px;letter-spacing:.08em}
+.biz-overlay{visibility:hidden;padding:18px;height:100dvh;transition:opacity .25s,visibility .25s}
+.biz-overlay.active{visibility:visible}
+.biz-card-wrapper{width:100%;max-width:520px;transform:translateY(12px);transition:opacity .25s,transform .25s}
+.biz-card{aspect-ratio:auto;max-height:calc(100dvh - 36px);overflow-y:auto;scrollbar-width:thin;min-height:330px}
+.biz-content{height:auto;padding:30px;gap:30px;transform:none}
+.biz-header{padding-right:26px;gap:12px;flex-wrap:wrap}.biz-logo{text-shadow:none;letter-spacing:.04em}
+.biz-sku{color:#b6c8be;letter-spacing:.08em}
+.biz-details{gap:10px;flex-wrap:wrap;transform:none}
+.biz-link{padding:11px 14px;border:1px solid #ffffff24;border-radius:4px;color:#e2ece6;font-size:11px;min-height:44px}
+.biz-link:first-child{background:var(--chill);color:#07100c;border-color:var(--chill)}
+.biz-close{width:40px;height:40px;right:8px;top:8px}
+.marquee-container{padding:12px 0}.marquee-content{font-size:clamp(26px,4vw,45px);animation-duration:45s}
+@media(max-width:520px){.biz-content{padding:26px 22px;gap:24px}.biz-card{min-height:0}.biz-header{display:block}.biz-logo{font-size:18px}.biz-sku{display:inline-block;margin-top:8px}.biz-name{font-size:30px}.biz-tagline{max-width:none}.biz-details{gap:8px}}
+@media(max-width:980px){.nav a:not(.hire){display:inline-block}.nav{gap:10px}.topbar .id .sku{display:none}.nav a{font-size:10px;letter-spacing:.04em}.nav a.hire{padding:9px 10px}}
+@media(max-width:400px){.topbar .id{font-size:10px;letter-spacing:.04em}.topbar{padding:11px 12px}.nav{gap:8px}.nav a{font-size:9px}.nav a.hire{padding:9px 8px}}
+@media(prefers-reduced-motion:reduce){.biz-card{transform:none!important}#webgl-bg{opacity:.12}}
 </style>
 <script type="application/ld+json">
 {
@@ -439,6 +457,7 @@ section,header{position:relative;z-index:1}
   "address": {"@type": "PostalAddress", "addressCountry": "IN"}
 }
 </script>
+<script src="profile-ui.js" defer></script>
 </head>
 <body>
 <canvas id="webgl-bg" aria-hidden="true"></canvas>
@@ -450,7 +469,7 @@ section,header{position:relative;z-index:1}
   <div class="id"><b>PRATHAM GUPTA</b><span class="sku"> &nbsp;/&nbsp; SKU: PG-2027</span></div>
   <nav class="nav">
     <a href="#story">Story</a>
-    <a href="portfolio.html">AI Projects</a>
+    <a href="portfolio.html">Products</a>
     <a class="hire biz-card-trigger" href="javascript:void(0)">Let's connect</a>
   </nav>
 </div>
@@ -460,9 +479,9 @@ section,header{position:relative;z-index:1}
   <div class="wrap">
     <div class="hgrid">
       <div>
-        <div class="stock"><span class="pulse"></span> SIX SIGMA GREEN BELT &nbsp;·&nbsp; MBA 2027, BITSOM &nbsp;·&nbsp; OPEN TO ROLES</div>
+        <div class="stock"><span class="pulse"></span> CERTIFIED LEAN SIX SIGMA GREEN BELT &nbsp;·&nbsp; MBA 2027, BITSOM</div>
         <h1>I turn messy<br>problems into<span class="l2">practical plans.</span></h1>
-        <p class="kick">I start by understanding how the system really works, then turn research, data and people into a change that can actually be implemented.</p>
+        <p class="kick">Marketing, e-commerce and operations. I understand the system, find the friction and build a practical way forward.</p>
         <div class="cta">
           <a class="btn solid biz-card-trigger" href="javascript:void(0)">Get in touch</a>
           <a class="btn ai" href="portfolio.html">Product Portfolio ↗</a>
@@ -495,7 +514,7 @@ section,header{position:relative;z-index:1}
   <div class="wrap">
     <div class="journey-intro rv">
       <div><div class="zone">A problem-solving timeline</div><h2>From business brief to working system.</h2></div>
-      <p>My work has moved from framing opportunities at BITSoM to solving live operating problems. The constant is simple: understand the system first, then build what makes it work better.</p>
+      <p>Recent work first, followed by the experiences that shaped it. My approach stays consistent: understand the problem, find the leverage, then make the solution practical.</p>
     </div>
     <div class="journey">
 
@@ -505,7 +524,7 @@ section,header{position:relative;z-index:1}
         <span class="cno">01</span>
         <span class="cmeta"><b class="corg">BITSoM</b><span class="crole">MBA · Marketing, e-commerce &amp; operations</span></span>
       </div>
-      <h2>I am learning to solve a business problem across the whole value chain.</h2>
+      <h2>Learning to connect strategy with execution.</h2>
       <div class="beats">
         <div class="beat">
           <span class="bl">The focus</span>
@@ -513,12 +532,12 @@ section,header{position:relative;z-index:1}
         </div>
         <div class="beat">
           <span class="bl">How I practise</span>
-          <p>Flipkart WiRED 9 and 10 pushed me to turn broad business briefs into journeys, operating models and plans. At PreQL, I built an AI campaign tracker linking CRM and ad platforms, and run sessions on using AI in case work.</p>
+          <p>For Flipkart WiRED, I mapped a food-delivery business from customer journey to dark stores. For TCPL, I developed a Korean-noodle go-to-market strategy.</p>
         </div>
         <div class="beat">
           <span class="bl">What it signals</span>
           <span class="bnum">WiRED × 2 · TCPL</span>
-          <p>National semi-finalist twice at Flipkart WiRED, and national top 13 at TCPL Grow Beyond Better. Both made corporate problem solving feel real, not theoretical.</p>
+          <p>Two national semi-finals at Flipkart WiRED; top 13 at TCPL. Beyond competitions, I prototyped an AI campaign tracker at PreQL and lead AI sessions for case work.</p>
         </div>
       </div>
     </div>
@@ -529,7 +548,7 @@ section,header{position:relative;z-index:1}
         <span class="cno">02</span>
         <span class="cmeta"><b class="corg">BigBasket</b><span class="crole">Strategic Initiative Intern · Apr to Jun 2026</span></span>
       </div>
-      <h2>Then I took that curiosity into a live inventory problem.</h2>
+      <h2>Making inventory loss easier to understand and act on.</h2>
       <div class="beats">
         <div class="beat">
           <span class="bl">The question</span>
@@ -537,7 +556,7 @@ section,header{position:relative;z-index:1}
         </div>
         <div class="beat">
           <span class="bl">What I built</span>
-          <p>I learned the floor process, researched the inventory system and brought SKU-level root causes into daily monitoring so operations and buying teams could work from the same view.</p>
+          <p>I studied the inventory process before proposing fixes. Bringing untracked returns and SKU-level causes into daily reporting replaced a two-day information lag with a shared view of loss.</p>
         </div>
         <div class="beat">
           <span class="bl">What proved it</span>
@@ -553,7 +572,7 @@ section,header{position:relative;z-index:1}
         <span class="cno">03</span>
         <span class="cmeta"><b class="corg">Himanshu Travel Line</b><span class="crole">Operations, growth &amp; key accounts · 2023 to 2025</span></span>
       </div>
-      <h2>Here I learned how to move a price-sensitive service towards quality.</h2>
+      <h2>Giving customers a reason to choose more than price.</h2>
       <div class="beats">
         <div class="beat">
           <span class="bl">The question</span>
@@ -561,7 +580,7 @@ section,header{position:relative;z-index:1}
         </div>
         <div class="beat">
           <span class="bl">What I built</span>
-          <p>I handled operations, growth and key accounts, adding GPS, cameras and a clearer service proposition alongside corporate pricing, routes, dispatch and process improvements.</p>
+          <p>I made GPS, cameras and reliable service part of the proposition. Managing key accounts alongside routes and dispatch helped connect the promise to day-to-day delivery.</p>
         </div>
         <div class="beat">
           <span class="bl">What proved it</span>
@@ -654,10 +673,10 @@ section,header{position:relative;z-index:1}
       <div class="zone">Beyond the work</div>
       <p class="head" style="margin:0"><span style="font-size:16px;color:#B6C8BE;font-weight:300;max-width:58ch;display:block">The other things that keep me curious: music, a pool table, a new place and the next meal worth planning around.</span></p>
       <div class="life-grid">
-        <figure class="life-card" style="--tilt:-1.5deg"><div class="life-photo">Photo slot · music</div><figcaption>Music &amp; singing<br>Finding a room’s rhythm.</figcaption></figure>
-        <figure class="life-card" style="--tilt:1.2deg"><div class="life-photo">Photo slot · pool</div><figcaption>Pool<br>Reading angles and staying calm.</figcaption></figure>
-        <figure class="life-card" style="--tilt:-.8deg"><div class="life-photo">Photo slot · cuisine</div><figcaption>Food<br>Trying a city through its cuisine.</figcaption></figure>
-        <figure class="life-card" style="--tilt:1.6deg"><div class="life-photo">Photo slot · travel</div><figcaption>Travel<br>Exploring new places, not just routes.</figcaption></figure>
+        <figure class="life-card" style="--tilt:-1.5deg"><div class="life-photo">01 · Music &amp; singing</div><figcaption>Off the clock<br>A different kind of expression.</figcaption></figure>
+        <figure class="life-card" style="--tilt:1.2deg"><div class="life-photo">02 · Pool</div><figcaption>At the table<br>Angles, patience and a good game.</figcaption></figure>
+        <figure class="life-card" style="--tilt:-.8deg"><div class="life-photo">03 · Different cuisines</div><figcaption>At the table, again<br>Always curious about a new flavour.</figcaption></figure>
+        <figure class="life-card" style="--tilt:1.6deg"><div class="life-photo">04 · Travel</div><figcaption>Out exploring<br>New places and fresh perspectives.</figcaption></figure>
       </div>
     </div>
   </div>
@@ -821,7 +840,7 @@ const io=new IntersectionObserver(es=>{
 $$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*60+'ms';io.observe(el)});
 /* ============ Awwwards Scripts ============ */
 // Lenis Smooth Scroll
-const lenis = new Lenis({
+const lenis = !RM && typeof Lenis === 'function' ? new Lenis({
   duration: 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
   direction: 'vertical',
@@ -831,12 +850,12 @@ const lenis = new Lenis({
   smoothTouch: false,
   touchMultiplier: 2,
   infinite: false,
-})
+}) : null;
 function raf(time) {
   lenis.raf(time)
   requestAnimationFrame(raf)
 }
-requestAnimationFrame(raf)
+if(lenis) requestAnimationFrame(raf)
 
 // Three.js Background
 const scene = new THREE.Scene();
@@ -858,7 +877,7 @@ scene.add( particles );
 camera.position.z = 1000;
 
 function animate() {
-  requestAnimationFrame( animate );
+  if(!RM) requestAnimationFrame( animate );
   particles.rotation.x += 0.0005;
   particles.rotation.y += 0.001;
   renderer.render( scene, camera );
@@ -874,9 +893,9 @@ function onWindowResize() {
 </script>
 
 
-<div class="biz-overlay" id="biz-overlay">
+<div class="biz-overlay" id="biz-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-card-title" aria-hidden="true">
   <div class="biz-card-wrapper">
-    <div class="biz-card" id="biz-card">
+    <div class="biz-card" id="biz-card" data-lenis-prevent>
       <button class="biz-close" id="biz-close" aria-label="Close">&times;</button>
       <div class="biz-content">
         <div class="biz-header">
@@ -885,7 +904,7 @@ function onWindowResize() {
         </div>
         <div class="biz-body">
           <span class="biz-eyebrow">Open to opportunities</span>
-          <h2 class="biz-name">Strategy, marketing<br>&amp; operations.</h2>
+          <h2 class="biz-name" id="contact-card-title">Strategy, marketing<br>&amp; operations.</h2>
           <p class="biz-tagline">I turn research into practical operating plans, products and measurable improvements.</p>
         </div>
         <div class="biz-details">
@@ -909,10 +928,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function openCard(e) {
     e.preventDefault();
     overlay.classList.add('active');
+    lenis?.stop();
+    window.profileDialog.open(overlay, e.currentTarget);
   }
 
   function closeCard() {
     overlay.classList.remove('active');
+    window.profileDialog.close();
+    lenis?.start();
     card.style.setProperty('--rx', 0);
     card.style.setProperty('--ry', 0);
     card.style.setProperty('--mx', 50);
@@ -940,8 +963,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const mx = (x / rect.width) * 100;
       const my = (y / rect.height) * 100;
       
-      const rx = ((y / rect.height) - 0.5) * -30;
-      const ry = ((x / rect.width) - 0.5) * 30;
+      const rx = ((y / rect.height) - 0.5) * -5;
+      const ry = ((x / rect.width) - 0.5) * 5;
 
       card.style.setProperty('--mx', mx);
       card.style.setProperty('--my', my);

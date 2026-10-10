@@ -178,7 +178,33 @@ button{font:inherit}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+#webgl-bg{opacity:.35}
+.tile .tcopy{display:flex;flex-direction:column;gap:10px}
+.tile{grid-template-rows:auto 320px}
+.tile .product-preview{padding:16px 12px 28px;gap:24px}
+.preview-flow{position:relative;z-index:1;display:grid;gap:16px;font-size:12px;color:var(--muted);max-width:130px}
+.preview-flow b{display:block;color:var(--c);font:10px 'JetBrains Mono',monospace;margin-bottom:5px}
+.embed .preview-flow{display:none}
+.tile .preview-label{z-index:2;font-size:9px;bottom:5px;border:0;background:transparent}
+.preview-device{height:100%;aspect-ratio:390/760;background:#07090c;border:4px solid #242b28;border-radius:15px;overflow:hidden;position:relative;z-index:1;box-shadow:0 10px 25px #0005}
+.preview-device img{height:100%;width:100%;display:block;object-fit:contain}
+.preview-browser{width:auto;height:100%;max-width:100%;aspect-ratio:1100/780;position:relative;z-index:1;border:1px solid #ffffff18;background:#0b100e;border-radius:6px;overflow:hidden}
+.preview-bar{height:20px;display:flex;gap:4px;align-items:center;padding:0 9px;background:#181e1b}
+.preview-bar i{width:5px;height:5px;background:#718278;border-radius:50%}
+.preview-bar span{font:9px 'JetBrains Mono',monospace;color:#b2bdb6;margin-left:8px}
+.preview-browser img{width:100%;height:calc(100% - 20px);object-fit:contain;display:block}
+.mclose{position:absolute;top:12px;right:12px;margin:0;float:none;width:40px;height:40px}
+.mbox{height:auto;max-height:calc(100dvh - 32px);grid-template-rows:auto minmax(0,1fr) auto}
+.cb{min-height:0;overscroll-behavior:contain}
+.ch{padding:24px 64px 20px 24px;flex-wrap:nowrap;gap:16px}
+.ch>div{min-width:0}.ch .kicker{letter-spacing:.05em;line-height:1.6}
+.embed{height:240px;max-height:none;padding:10px;pointer-events:none}
+.embed .preview-device{max-height:220px}.embed .preview-browser img{max-height:190px}
+@media(max-width:700px){.modal{padding:12px}.mbox{max-height:calc(100dvh - 24px)}.ch{padding:20px 56px 16px 18px;display:block}.ch h3{font-size:25px}.ch .pill{display:inline-block;margin-top:10px}.cb{padding:20px 18px}.foot{padding:12px 18px}.golink{min-height:44px;font-size:10px;padding:11px 14px}.links{gap:12px}.embed{height:210px}.embed .preview-device{max-height:190px}.embed .preview-browser img{max-height:160px}}
+@media(max-width:700px){.cb .embed{display:none}.diffgrid{gap:16px;margin-bottom:18px}.diff p{font-size:14px;line-height:1.5}.stack{margin-bottom:0}.chip{padding:6px 9px;font-size:10px}}
+@media(max-width:400px){.tile{grid-template-rows:auto 280px}.tile .product-preview{gap:12px}.preview-flow{font-size:10px;max-width:90px}.tile .preview-device{max-width:118px}}
 </style>
+<script src="profile-ui.js" defer></script>
 </head>
 <body>
 <canvas id="webgl-bg" aria-hidden="true"></canvas>
@@ -221,7 +247,7 @@ button{font:inherit}
 </section>
 
 <!-- ============ MODAL ============ -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle" aria-hidden="true">
   <div class="mbox" id="mbox">
     <button class="mclose" id="mclose" type="button" aria-label="Close">&times;</button>
     <div class="ch">
@@ -232,7 +258,7 @@ button{font:inherit}
       </div>
       <span class="pill" id="mpill"></span>
     </div>
-    <div class="cb">
+    <div class="cb" tabindex="0" aria-label="Project details">
       <div class="diffgrid">
         <div class="diff"><b class="lab">Problem</b><p id="mproblem"></p></div>
         <div class="diff"><b class="lab">Approach</b><p id="mbuild"></p></div>
@@ -243,7 +269,6 @@ button{font:inherit}
     </div>
     <div class="foot">
       <div class="links" id="mlinks"></div>
-      <div class="commit" id="mcommit"></div>
     </div>
   </div>
 </div>
@@ -252,7 +277,7 @@ button{font:inherit}
 <section class="closer">
   <div class="wrap rv">
     <h2>Want the story behind these?</h2>
-    <p>The rest of the profile has the fleet P&amp;L, the BigBasket supply chain work and everything else that isn't a build.</p>
+    <p>See how transport operations, inventory research and business case work shaped my approach.</p>
     <div class="cbtns">
       <a class="btn solid" href="mailto:prathamg329@gmail.com">Get in touch</a>
       <a class="btn" href="index.html#story">Back to the full profile</a>
@@ -270,52 +295,48 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
    legend counts, the tile grid and the modal all render from this list. */
 const PROJECTS=[
   {
-    id:'transit-one', accent:'var(--preql)', version:'v1.0.0', status:'Prototype',
-    name:'Transit One', kicker:'B2B transport marketplace · built solo', summary:'A bid-led marketplace where corporates post routes and verified operators compete with clearer pricing.',
-    problem:"Corporates booking freight negotiate rates over calls and email, one truck at a time, with no price discovery and no way to compare fleet operators against each other.",
-    build:"A two-sided marketplace: corporates post a route, verified fleet operators bid on it. I built <b style=\"color:#fff;font-weight:600\">the pricing model, the tiering logic and both user journeys</b> end to end.",
-    state:"Working interactive prototype, mobile-first. Not yet handling live payments or contracts &mdash; the next commit would be operator verification.",
+    id:'transit-one', accent:'var(--preql)', version:'Build 01', status:'Prototype',
+    name:'Transit One', kicker:'B2B passenger transport · built solo', summary:'A bid-led marketplace connecting institutional transport requirements with fleet operators.',
+    problem:"How could schools and businesses compare transport offers beyond a quoted rate, with routes, vehicle requirements and service expectations in one place?",
+    build:"A two-sided marketplace: customers post a route and operators bid. I built <b style=\"color:#fff;font-weight:600\">pricing tiers and both user journeys</b> to make the comparison easier.",
+    state:"Interactive mobile-first prototype. Payments, contracts and operator verification are not live.",
     stack:['Two-sided marketplace','Dynamic pricing tiers','Bid & match flow','Mobile-first UI'],
     embed:{type:'phone', src:'transit-one-app.html'},
     primary:{label:'Go to product', href:'transit-one-app.html'},
     secondary:null,
-    commit:'commit 4a1f0c · BITSoM, 2026'
   },
   {
-    id:'finbuddy', accent:'var(--chill)', version:'v1.2.0', status:'Live',
-    name:'FinBuddy', kicker:'RAG portfolio assistant · team of four', summary:'A risk quiz and cited fund-data layer that makes a suggested allocation easier to inspect.',
-    problem:"First-time Indian investors get either a generic robo-advisor with no explanation, or a model that hallucinates fund recommendations with no source behind them.",
-    build:"A short risk quiz scores the investor, then a retrieval layer pulls <b style=\"color:#fff;font-weight:600\">real, cited fund data</b> instead of letting the model guess, before it generates an allocation.",
-    state:"Live and public. Chats run entirely client-side via localStorage, which is why it opens in its own tab rather than an embedded frame here.",
+    id:'finbuddy', accent:'var(--chill)', version:'Build 02', status:'Live',
+    name:'FinBuddy', kicker:'Financial-learning assistant · team of four', summary:'An approachable way to explore investing concepts, dated sources and an educational risk quiz.',
+    problem:"How could someone new to investing learn the basics without getting lost in jargon or mistaking a chatbot for an adviser?",
+    build:"A conversational interface with <b style=\"color:#fff;font-weight:600\">short explanations, source context and learning prompts</b>, plus a risk quiz with an educational illustration.",
+    state:"Publicly accessible, built in a team of four. An educational tool, not investment advice or evidence of financial performance.",
     stack:['Next.js','Vercel AI SDK','Pinecone','Claude','RAG'],
-    embed:{type:'cover', href:'https://finn-buddy.vercel.app/', icon:'&#8377;', blurb:"Score your risk in a short quiz, then get a fund allocation backed by real, cited market data &mdash; not a model's guess."},
+    embed:{type:'cover', href:'https://finn-buddy.vercel.app/'},
     primary:{label:'Go to product', href:'https://finn-buddy.vercel.app/'},
     secondary:{label:'Source', href:'https://github.com/pgupta0/FinBuddy'},
-    commit:'commit 8b3ce1 · team of 4, 2026'
   },
   {
-    id:'crave', accent:'var(--tag)', version:'v0.9.0', status:'Concept sim',
-    name:'Crave Command Center', kicker:'Live food-delivery operations map', summary:'A simulated control surface for comparing rider load, relay handovers and five delivery models.',
-    problem:"Dispatchers running a delivery network can't see rider load, relay handovers or which operating model is winning &mdash; that all lives in separate dashboards, after the fact.",
+    id:'crave', accent:'var(--tag)', version:'Build 03', status:'Concept sim',
+    name:'Crave Command Center', kicker:'Food-delivery operations simulation', summary:'A simulated control surface for comparing rider load, relay handovers and five delivery models.',
+    problem:"What would a shared view of rider load and relay handovers look like, and how might different delivery models behave?",
     build:"A live operations map simulating <b style=\"color:#fff;font-weight:600\">five operating models</b> at once, with riders moving in real time, relay handovers between them, and a KPI terminal overlaid on top.",
     state:"Concept work, not a real product or real data. Built to explore what a live-ops control surface could feel like.",
     stack:['5 operating models','Real-time map sim','Relay handovers','KPI terminal'],
     embed:{type:'browser', src:'crave-command-center.html', label:'live operations control'},
     primary:{label:'Go to product', href:'crave-command-center.html'},
     secondary:null,
-    commit:'commit f02e9a · solo concept, 2026'
   },
   {
-    id:'chhatri', accent:'#f6a623', version:'v1.0.0', status:'Concept deck',
+    id:'chhatri', accent:'#f6a623', version:'Build 04', status:'Concept deck',
     name:'Chhatri', kicker:'Climate tech cool-roof system · Quick Pivots', summary:'An interactive climate-tech case for a low-cost, measured cool-roof system for heat-exposed homes.',
-    problem:"Urban tin and asbestos sheet roofs turn low-income homes into 48°C ovens during peak Indian summers, causing severe health risks, lost work hours, and evening power grid spikes. Existing cool-roof drives never scaled past 0.2%.",
-    build:"A five-piece system that sells degrees, not paint: reflective coat, foil air gap, wind turbine vent, women's installation crews at ₹200/mo, and measured sensor verification paid by institutional sponsors.",
-    state:"Scroll-driven interactive film & investment thesis. Models thermal physics, colony network rollouts, unit economics (₹7,300/home), and a ₹271 Cr Year-5 financial roadmap.",
+    problem:"How could cooling heat-exposed homes become an affordable service with measurable results, rather than a one-off roof treatment?",
+    build:"A proposed system combining reflective coating, an air gap, ventilation, local installation crews and sensor verification. The case connects <b style=\"color:#fff;font-weight:600\">the physical solution with delivery and funding</b>.",
+    state:"Interactive concept deck by Team Quick Pivots. Thermal outcomes, unit economics and growth projections are model assumptions, not validated field results.",
     stack:['Climate tech','Scroll-driven film','Thermal physics sim','Unit economics model','GSAP / SVG'],
     embed:{type:'browser', src:'chhatri.html', label:'interactive scroll deck'},
     primary:{label:'Go to product', href:'chhatri.html'},
     secondary:null,
-    commit:'commit 5e291b · Team Quick Pivots, 2026'
   }
 ];
 
@@ -340,9 +361,9 @@ $('#statusrows').innerHTML=PROJECTS.map(p=>
 
 /* ============ RENDER: vertical product log ============ */
 function previewHTML(p){
-  if(p.embed.type==='phone') return `<div class="phone"><div class="screen"><iframe src="${p.embed.src}" title="${p.name} preview" loading="lazy"></iframe></div></div>`;
-  if(p.embed.type==='browser') return `<div class="brow"><div class="browbar"><i></i><i></i><i></i><span>${p.embed.label||'product preview'}</span></div><div class="browview"><iframe src="${p.embed.src}" title="${p.name} preview" loading="lazy"></iframe></div></div>`;
-  return `<div class="cover"><span class="cvi">${p.embed.icon||''}</span><span class="cvd">${p.embed.blurb||''}</span></div>`;
+  const img=`<img src="images/${p.id}-preview.png" alt="${p.name} interface preview" loading="lazy" width="${p.embed.type==='phone'?390:1100}" height="760">`;
+  if(p.embed.type==='phone') return `<div class="preview-device">${img}</div><div class="preview-flow"><div><b>01 / REQUEST</b>Define the route</div><div><b>02 / COMPARE</b>Review operator bids</div><div><b>03 / CHOOSE</b>Match the service</div></div>`;
+  return `<div class="preview-browser"><div class="preview-bar"><i></i><i></i><i></i><span>${p.name}</span></div>${img}</div>`;
 }
 $('#pgrid').innerHTML=PROJECTS.map(p=>
   `<article class="tile" tabindex="0" role="button" aria-label="Open ${p.name} case study" style="--c:${p.accent}" data-open="${p.id}">
@@ -353,16 +374,7 @@ $('#pgrid').innerHTML=PROJECTS.map(p=>
    </article>`).join('');
 
 /* ============ MODAL ============ */
-function embedHTML(e){
-  if(e.type==='phone'){
-    return `<div class="phone"><div class="screen"><div class="pfb">Prototype loads on the live site</div><iframe src="${e.src}" title="prototype" loading="lazy"></iframe></div></div>`;
-  }
-  if(e.type==='browser'){
-    return `<div class="brow"><div class="browbar"><i></i><i></i><i></i><span>${e.label||''}</span></div><div class="browview"><iframe src="${e.src}" title="simulation" loading="lazy"></iframe></div></div>`;
-  }
-  return `<div class="cover"><span class="cvi">${e.icon||''}</span><span class="cvd">${e.blurb||''}</span></div>`;
-}
-function openModal(id){
+function openModal(id,trigger){
   const p=PROJECTS.find(x=>x.id===id); if(!p)return;
   $('#mtag').textContent=p.version+' · '+p.status.toUpperCase();
   $('#mtitle').textContent=p.name;
@@ -373,29 +385,29 @@ function openModal(id){
   $('#mbuild').innerHTML=p.build;
   $('#mstate').innerHTML=p.state;
   $('#mstack').innerHTML=p.stack.map(s=>`<span class="chip">${s}</span>`).join('');
-  $('#membed').innerHTML=embedHTML(p.embed);
+  $('#membed').innerHTML=previewHTML(p);
   const links=[`<a class="golink" href="${p.primary.href}" target="_blank" rel="noopener" style="background:${p.accent}">${p.primary.label} &#8599;</a>`];
   if(p.secondary) links.push(`<a class="lk" href="${p.secondary.href}" target="_blank" rel="noopener">${p.secondary.label} &#8599;</a>`);
   $('#mlinks').innerHTML=links.join('');
-  $('#mcommit').textContent=p.commit;
   $('#modal').classList.add('on');
-  document.body.style.overflow='hidden';
-  requestAnimationFrame(scaleBrowsers);
+  $('#modal').style.setProperty('--c', p.accent);
+  $('#mbox').querySelector('.cb').scrollTop=0;
+  window.profileDialog.open($('#modal'),trigger);
   $('#mclose').focus();
 }
 function closeModal(){
   $('#modal').classList.remove('on');
-  document.body.style.overflow='';
-  $('#membed').innerHTML=''; // drop the iframe so it stops running in the background
+  window.profileDialog.close();
+  $('#membed').innerHTML='';
 }
 document.addEventListener('click',e=>{
   const opener=e.target.closest('[data-open]');
-  if(opener){ openModal(opener.dataset.open); return; }
+  if(opener){ openModal(opener.dataset.open,opener); return; }
   if(e.target===$('#modal')) closeModal();
 });
 document.addEventListener('keydown',e=>{
   const opener=e.target.closest('[data-open]');
-  if(opener && (e.key==='Enter'||e.key===' ')){e.preventDefault();openModal(opener.dataset.open);}
+  if(opener && (e.key==='Enter'||e.key===' ')){e.preventDefault();openModal(opener.dataset.open,opener);}
 });
 $('#mclose').addEventListener('click',closeModal);
 addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('#modal').classList.contains('on'))closeModal(); });
@@ -412,17 +424,6 @@ const io=new IntersectionObserver(es=>{
 },{threshold:.08,rootMargin:'0px 0px -60px 0px'});
 $$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*70+'ms';io.observe(el)});
 
-/* scale the browser-frame iframe to fit its box, used inside the modal */
-function scaleBrowsers(){
-  $$('#membed .browview').forEach(v=>{
-    const f=v.querySelector('iframe'); if(!f)return;
-    const scale=Math.min(v.clientWidth/1100,v.clientHeight/1180);
-    f.style.transform='scale('+scale+')';
-    f.style.left=((v.clientWidth-(1100*scale))/2)+'px';
-    f.style.top=((v.clientHeight-(1180*scale))/2)+'px';
-  });
-}
-addEventListener('resize',scaleBrowsers,{passive:true});
 </script>
 
 <script>
@@ -514,7 +515,7 @@ document.addEventListener('mousemove', (e) => {
 });
 
 function animate() {
-  requestAnimationFrame(animate);
+  if(!RM) requestAnimationFrame(animate);
 
   group.rotation.y += 0.0008;
   group.rotation.x += 0.0004;
