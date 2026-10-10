@@ -84,31 +84,35 @@ button{font:inherit}
 .scount{display:flex;gap:16px;padding:12px 18px 16px;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;flex-wrap:wrap}
 .scount b{color:var(--frost);font-weight:700}
 
-/* ============ GRID of build tiles ============ */
+/* ============ VERTICAL PRODUCT LOG ============ */
 .gridsec{padding:60px 0 40px}
 .zone{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .zone::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,#ffffff1a,transparent)}
-.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-@media(max-width:980px){.pgrid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.pgrid{grid-template-columns:1fr}}
-
-.tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:flex;flex-direction:column;gap:16px;min-height:220px;padding:20px 20px 18px;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s}
+.pgrid{display:flex;flex-direction:column;gap:18px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:grid;grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:28px;min-height:310px;padding:26px 28px;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s}
+@media(max-width:760px){.tile{grid-template-columns:1fr;padding:22px;gap:22px}}
 .tile::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
 .tile:hover,.tile:focus-visible{border-color:var(--c);transform:translateY(-4px);box-shadow:0 20px 40px -22px #000}
+.tile .tcopy{display:flex;flex-direction:column;gap:16px;min-width:0}
 .tile .trow{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .tile .tv{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;color:var(--c)}
 .tile .tpill{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;padding:4px 8px;border-radius:20px;font-weight:700;white-space:nowrap;background:var(--c);color:#07090C}
 .tile h4{font-size:19px;color:var(--frost);text-transform:none;letter-spacing:-.01em;line-height:1.18}
 .tile .tk{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;line-height:1.6}
+.tile .tsummary{font-size:14px;line-height:1.55;color:#b9c2bd;font-weight:300;max-width:30ch}
 .tile .texp{margin-top:auto;padding-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--c);text-transform:uppercase;display:flex;align-items:center;gap:7px;border-top:1px solid var(--line)}
 .tile .texp .arrow{transition:transform .22s}
 .tile:hover .texp .arrow{transform:translateX(4px)}
 
-/* "more soon" placeholder tile, keeps the grid from looking unfinished */
-.tile.soon{cursor:default;align-items:center;justify-content:center;text-align:center;background:transparent;border-style:dashed}
-.tile.soon:hover{transform:none;box-shadow:none;border-color:var(--line)}
-.tile.soon::before{display:none}
-.tile.soon span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.tile .product-preview{position:relative;min-height:250px;border:1px solid #ffffff12;border-radius:10px;background:#07090c;overflow:hidden;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.tile .product-preview .phone{transform:scale(.54);transform-origin:center}
+.tile .product-preview .brow{width:92%;max-width:520px;transform:translateY(18px);box-shadow:0 26px 54px -26px #000}
+.tile .product-preview .browview{height:225px;aspect-ratio:auto}
+.tile .product-preview .brow iframe{transform:scale(.47);transform-origin:top left}
+.tile .product-preview .cover{height:100%;min-height:250px;max-width:none;border:0;border-radius:0;background:linear-gradient(145deg,#111a32,#0C1120)}
+.tile .product-preview .cover::before{content:"FINBUDDY";font:700 46px/.9 'Oswald',sans-serif;letter-spacing:-.03em;color:#ffffff12;position:absolute;bottom:18px;right:16px}
+.tile .preview-label{position:absolute;bottom:12px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#8b958f;background:#07090ccc;padding:5px 7px;border:1px solid #ffffff14;border-radius:4px}
+@media(max-width:760px){.tile .product-preview .brow{transform:translateY(12px)}.tile .product-preview .browview{height:205px}}
 
 /* ============ MODAL, the "one screen pop" ============ */
 .modal{position:fixed;inset:0;z-index:150;background:#03050490;backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:24px}
@@ -190,7 +194,7 @@ button{font:inherit}
       <div>
         <div class="term"><span class="prompt">pratham@portfolio</span>&nbsp;$&nbsp;ls -la ./builds<span class="cur"></span></div>
         <h1>Build<br>Log<span>.</span></h1>
-        <p class="sub">Every product below is one tile. <b>Click a tile</b> for the full case study &mdash; problem, what I built, what state it's in &mdash; and a direct link to go try it.</p>
+        <p class="sub">Each build is shown as a product, not just a label. <b>Open one</b> to see the problem it explores, what I built and where to try it.</p>
         <div class="legend" id="legend"></div>
       </div>
       <div class="statuscard rv" id="statuscard">
@@ -208,7 +212,7 @@ button{font:inherit}
 <!-- ============ GRID ============ -->
 <section class="gridsec">
   <div class="wrap">
-    <div class="zone rv">Every build</div>
+    <div class="zone rv">Product log</div>
     <div class="pgrid rv" id="pgrid"></div>
   </div>
 </section>
@@ -264,7 +268,7 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const PROJECTS=[
   {
     id:'transit-one', accent:'var(--preql)', version:'v1.0.0', status:'Prototype',
-    name:'Transit One', kicker:'B2B transport marketplace · built solo',
+    name:'Transit One', kicker:'B2B transport marketplace · built solo', summary:'A bid-led marketplace where corporates post routes and verified operators compete with clearer pricing.',
     problem:"Corporates booking freight negotiate rates over calls and email, one truck at a time, with no price discovery and no way to compare fleet operators against each other.",
     build:"A two-sided marketplace: corporates post a route, verified fleet operators bid on it. I built <b style=\"color:#fff;font-weight:600\">the pricing model, the tiering logic and both user journeys</b> end to end.",
     state:"Working interactive prototype, mobile-first. Not yet handling live payments or contracts &mdash; the next commit would be operator verification.",
@@ -276,7 +280,7 @@ const PROJECTS=[
   },
   {
     id:'finbuddy', accent:'var(--chill)', version:'v1.2.0', status:'Live',
-    name:'FinBuddy', kicker:'RAG portfolio assistant · team of four',
+    name:'FinBuddy', kicker:'RAG portfolio assistant · team of four', summary:'A risk quiz and cited fund-data layer that makes a suggested allocation easier to inspect.',
     problem:"First-time Indian investors get either a generic robo-advisor with no explanation, or a model that hallucinates fund recommendations with no source behind them.",
     build:"A short risk quiz scores the investor, then a retrieval layer pulls <b style=\"color:#fff;font-weight:600\">real, cited fund data</b> instead of letting the model guess, before it generates an allocation.",
     state:"Live and public. Chats run entirely client-side via localStorage, which is why it opens in its own tab rather than an embedded frame here.",
@@ -288,7 +292,7 @@ const PROJECTS=[
   },
   {
     id:'crave', accent:'var(--tag)', version:'v0.9.0', status:'Concept sim',
-    name:'Crave Command Center', kicker:'Live food-delivery operations map',
+    name:'Crave Command Center', kicker:'Live food-delivery operations map', summary:'A simulated control surface for comparing rider load, relay handovers and five delivery models.',
     problem:"Dispatchers running a delivery network can't see rider load, relay handovers or which operating model is winning &mdash; that all lives in separate dashboards, after the fact.",
     build:"A live operations map simulating <b style=\"color:#fff;font-weight:600\">five operating models</b> at once, with riders moving in real time, relay handovers between them, and a KPI terminal overlaid on top.",
     state:"Concept work, not a real product or real data. Built to explore what a live-ops control surface could feel like.",
@@ -300,7 +304,7 @@ const PROJECTS=[
   },
   {
     id:'chhatri', accent:'#f6a623', version:'v1.0.0', status:'Concept deck',
-    name:'Chhatri', kicker:'Climate tech cool-roof system · Quick Pivots',
+    name:'Chhatri', kicker:'Climate tech cool-roof system · Quick Pivots', summary:'An interactive climate-tech case for a low-cost, measured cool-roof system for heat-exposed homes.',
     problem:"Urban tin and asbestos sheet roofs turn low-income homes into 48°C ovens during peak Indian summers, causing severe health risks, lost work hours, and evening power grid spikes. Existing cool-roof drives never scaled past 0.2%.",
     build:"A five-piece system that sells degrees, not paint: reflective coat, foil air gap, wind turbine vent, women's installation crews at ₹200/mo, and measured sensor verification paid by institutional sponsors.",
     state:"Scroll-driven interactive film & investment thesis. Models thermal physics, colony network rollouts, unit economics (₹7,300/home), and a ₹271 Cr Year-5 financial roadmap.",
@@ -331,14 +335,19 @@ $('#statusrows').innerHTML=PROJECTS.map(p=>
      <span class="sd"></span><span class="sn">${p.name}</span><span class="sst">${p.status}</span>
    </button>`).join('');
 
-/* ============ RENDER: tile grid ============ */
+/* ============ RENDER: vertical product log ============ */
+function previewHTML(p){
+  if(p.embed.type==='phone') return `<div class="phone"><div class="screen"><iframe src="${p.embed.src}" title="${p.name} preview" loading="lazy"></iframe></div></div>`;
+  if(p.embed.type==='browser') return `<div class="brow"><div class="browbar"><i></i><i></i><i></i><span>${p.embed.label||'product preview'}</span></div><div class="browview"><iframe src="${p.embed.src}" title="${p.name} preview" loading="lazy"></iframe></div></div>`;
+  return `<div class="cover"><span class="cvi">${p.embed.icon||''}</span><span class="cvd">${p.embed.blurb||''}</span></div>`;
+}
 $('#pgrid').innerHTML=PROJECTS.map(p=>
-  `<button class="tile" type="button" style="--c:${p.accent}" data-open="${p.id}">
-     <div class="trow"><span class="tv">${p.version}</span><span class="tpill">${p.status}</span></div>
-     <div><h4>${p.name}</h4><div class="tk">${p.kicker}</div></div>
-     <div class="texp">Open case study <span class="arrow">&rarr;</span></div>
-   </button>`).join('')
-  + '<div class="tile soon"><span>More builds<br>coming soon</span></div>';
+  `<article class="tile" tabindex="0" role="button" aria-label="Open ${p.name} case study" style="--c:${p.accent}" data-open="${p.id}">
+     <div class="tcopy"><div class="trow"><span class="tv">${p.version}</span><span class="tpill">${p.status}</span></div>
+     <div><h4>${p.name}</h4><div class="tk">${p.kicker}</div></div><p class="tsummary">${p.summary}</p>
+     <div class="texp">What it solves · open case study <span class="arrow">&rarr;</span></div></div>
+     <div class="product-preview">${previewHTML(p)}<span class="preview-label">Product preview</span></div>
+   </article>`).join('');
 
 /* ============ MODAL ============ */
 function embedHTML(e){
@@ -380,6 +389,10 @@ document.addEventListener('click',e=>{
   const opener=e.target.closest('[data-open]');
   if(opener){ openModal(opener.dataset.open); return; }
   if(e.target===$('#modal')) closeModal();
+});
+document.addEventListener('keydown',e=>{
+  const opener=e.target.closest('[data-open]');
+  if(opener && (e.key==='Enter'||e.key===' ')){e.preventDefault();openModal(opener.dataset.open);}
 });
 $('#mclose').addEventListener('click',closeModal);
 addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('#modal').classList.contains('on'))closeModal(); });
