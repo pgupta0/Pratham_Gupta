@@ -106,13 +106,13 @@ button{font:inherit}
 
 .tile .product-preview{position:relative;min-height:250px;border:1px solid #ffffff12;border-radius:10px;background:#07090c;overflow:hidden;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .tile .product-preview .phone{transform:scale(.54);transform-origin:center}
-.tile .product-preview .brow{width:92%;max-width:520px;transform:translateY(18px);box-shadow:0 26px 54px -26px #000}
-.tile .product-preview .browview{height:225px;aspect-ratio:auto}
-.tile .product-preview .brow iframe{transform:scale(.47);transform-origin:top left}
+.tile .product-preview .brow{width:96%;max-width:540px;transform:none;box-shadow:0 26px 54px -26px #000}
+.tile .product-preview .browview{height:250px;aspect-ratio:auto;display:flex;align-items:center;justify-content:center}
+.tile .product-preview .brow iframe{position:static;transform:scale(.205);transform-origin:center;flex:none}
 .tile .product-preview .cover{height:100%;min-height:250px;max-width:none;border:0;border-radius:0;background:linear-gradient(145deg,#111a32,#0C1120)}
 .tile .product-preview .cover::before{content:"FINBUDDY";font:700 46px/.9 'Oswald',sans-serif;letter-spacing:-.03em;color:#ffffff12;position:absolute;bottom:18px;right:16px}
 .tile .preview-label{position:absolute;bottom:12px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#8b958f;background:#07090ccc;padding:5px 7px;border:1px solid #ffffff14;border-radius:4px}
-@media(max-width:760px){.tile .product-preview .brow{transform:translateY(12px)}.tile .product-preview .browview{height:205px}}
+@media(max-width:760px){.tile .product-preview .browview{height:220px}}
 
 /* ============ MODAL, the "one screen pop" ============ */
 .modal{position:fixed;inset:0;z-index:150;background:#03050490;backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:24px}
@@ -411,7 +411,7 @@ $$('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*70+'ms';io.observe(el)
 
 /* scale the browser-frame iframe to fit its box, used inside the modal */
 function scaleBrowsers(){
-  $$('.browview').forEach(v=>{
+  $$('#membed .browview').forEach(v=>{
     const f=v.querySelector('iframe'); if(!f)return;
     f.style.transform='scale('+(v.clientWidth/1100)+')';
   });
