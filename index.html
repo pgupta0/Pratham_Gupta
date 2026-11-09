@@ -3,251 +3,299 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pratham Gupta / Player Profile</title>
-<meta name="description" content="Pratham Gupta, BITSoM MBA 2027. Strategy, marketing and operations. I fix messy business problems.">
+<title>Pratham Gupta / The Route</title>
+<meta name="description" content="Pratham Gupta, BITSoM MBA 2027. Strategy, marketing and operations. I find the friction in messy systems, then fix it for good.">
 <meta name="author" content="Pratham Gupta">
 <link rel="canonical" href="https://prathamgupta.vercel.app/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
-<meta name="theme-color" content="#08070F">
+<meta name="theme-color" content="#05060A">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://prathamgupta.vercel.app/">
-<meta property="og:title" content="Pratham Gupta / Player Profile">
-<meta property="og:description" content="BITSoM MBA 2027. Strategy, marketing and operations. 4 levels cleared, 6 squads led, 5 trophies won.">
+<meta property="og:title" content="Pratham Gupta / The Route">
+<meta property="og:description" content="From bus depots to warehouses to AI products. I find the friction, then fix it for good.">
 <meta property="og:image" content="https://prathamgupta.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_IN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pratham Gupta / Player Profile">
-<meta name="twitter:description" content="BITSoM MBA 2027. Strategy, marketing and operations.">
+<meta name="twitter:title" content="Pratham Gupta / The Route">
+<meta name="twitter:description" content="From bus depots to warehouses to AI products.">
 <meta name="twitter:image" content="https://prathamgupta.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="images/pratham.webp">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.454.0/dist/umd/lucide.min.js" defer></script>
+<script src="profile-ui.js" defer></script>
 <style>
 :root{
-  --bg:#08070F;--panel:#12111C;--panel2:#191826;--line:#ffffff17;
-  --text:#F4F2FF;--muted:#A6A3BC;--dim:#6E6B85;
-  --orange:#FF4500;--teal:#00FFCC;--purple:#B388FF;--gold:#FFD24A;--pink:#FF5FA2;
+  --ink:#05060A;--ink2:#0B0D14;--glass:#0E111ACC;--line:#ffffff14;--line2:#ffffff24;
+  --text:#F2F4F8;--muted:#9AA1B2;--dim:#5F6678;
+  --signal:#FF5A1F;--fix:#2EF2C3;--violet:#8B7CFF;--gold:#FFC857;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --pad:clamp(20px,4vw,56px);
   /* names the business card styles use */
-  --chill:var(--teal);--preql:var(--purple);--frost:#fff;
+  --chill:var(--fix);--preql:var(--violet);--frost:#fff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{background:var(--bg);color:var(--text);font-family:'Public Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(900px 500px at 85% -10%,#B388FF22,transparent 60%),
-    radial-gradient(700px 500px at -10% 40%,#00FFCC12,transparent 60%),
-    linear-gradient(#ffffff06 1px,transparent 1px) 0 0/32px 32px,
-    linear-gradient(90deg,#ffffff06 1px,transparent 1px) 0 0/32px 32px}
-a{color:inherit}
-img{display:block;max-width:100%}
-:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-.hud{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:.06em;line-height:1.6;text-transform:uppercase}
-h1,h2,h3{font-family:'Oswald',sans-serif;font-weight:700;line-height:1;letter-spacing:-.01em}
+html{scroll-padding-top:80px}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+body{background:var(--ink);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--fix);outline-offset:3px;border-radius:4px}
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 var(--pad)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.ic{width:18px;height:18px;stroke-width:1.75;flex:none}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;line-height:.98}
+em{font-style:normal}
+.grad{background:linear-gradient(100deg,var(--signal),#FF9A5A 40%,var(--fix));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ============ TOPBAR + XP ============ */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:80;background:#08070FE0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.tb{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 24px;max-width:1160px;margin:0 auto}
-.id{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.08em;font-size:15px}
-.id .p1{font-family:'Press Start 2P',monospace;font-size:8px;background:var(--orange);color:#160A02;padding:5px 6px;border-radius:3px;letter-spacing:0}
-.nav{display:flex;align-items:center;gap:22px}
-.nav a{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
-.nav a:hover{color:var(--text)}
-.nav a.hire{background:var(--orange);color:#160A02;font-weight:700;padding:10px 14px;border-radius:6px}
-.nav a.hire:hover{background:#ff6a33}
-.xp{display:flex;align-items:center;gap:10px;padding:0 24px 9px;max-width:1160px;margin:0 auto}
-.xp .hud{font-size:7px;color:var(--gold);flex:none;width:58px}
-.xpbar{flex:1;height:6px;background:#ffffff10;border-radius:3px;overflow:hidden}
-.xpfill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--purple),var(--gold));border-radius:3px;transition:width .15s linear}
-@media(max-width:640px){.nav{gap:12px}.nav a{font-size:10px;letter-spacing:.05em}.nav a.hire{padding:9px 10px}.tb{padding:11px 16px}.xp{padding:0 16px 8px}.id .name{display:none}}
+/* WebGL stage behind everything */
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .6s}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 60% 40%,transparent 50%,#05060Acc 100%)}
+main,footer,.topbar{position:relative;z-index:2}
+
+/* ============ LOADER ============ */
+.loader{position:fixed;inset:0;z-index:300;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:var(--pad)}
+.loader .lname{font-family:var(--display);font-weight:800;font-size:clamp(48px,11vw,170px);letter-spacing:-.05em;line-height:.85;overflow:hidden}
+.loader .lname span{display:inline-block}
+.lrow{display:flex;justify-content:space-between;align-items:flex-end;margin-top:20px;color:var(--muted)}
+.lcount{font-family:var(--display);font-size:clamp(40px,7vw,96px);font-weight:700;color:var(--text);line-height:1}
+.lbar{position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,var(--signal),var(--fix))}
+.no-js .loader{display:none}
+
+/* ============ CURSOR ============ */
+.cur{position:fixed;left:0;top:0;z-index:400;pointer-events:none;display:none;opacity:0;transition:opacity .3s}
+.cur.on{opacity:1}
+.cur .dot{position:absolute;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff}
+.cur .ring{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;border:1px solid #ffffff70;transition:width .25s,height .25s,margin .25s,background .25s,border-color .25s}
+.cur.big .ring{width:70px;height:70px;margin:-35px 0 0 -35px;background:#ffffff12;border-color:#ffffffaa}
+@media(pointer:fine){.cur{display:block}}
+
+/* ============ TOPBAR ============ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.topbar.solid{background:#05060ACC;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.tb{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
+.brand .pg{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:14px;background:linear-gradient(135deg,var(--signal),#ff8a4a);color:#120600}
+.nav{display:flex;align-items:center;gap:30px}
+.nav a{font-size:14px;color:var(--muted);transition:color .2s;position:relative}
+.nav a:not(.hire)::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--text);transform:scaleX(0);transform-origin:right;transition:transform .35s}
+.nav a:not(.hire):hover{color:var(--text)}
+.nav a:not(.hire):hover::after{transform:scaleX(1);transform-origin:left}
+.nav a.hire{display:inline-flex;align-items:center;gap:8px;color:#0b0b0b;background:var(--text);padding:10px 16px;border-radius:999px;font-weight:600}
+@media(max-width:760px){.nav a.opt{display:none}.brand .nm{display:none}.nav{gap:18px}}
 
 /* ============ BUTTONS ============ */
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 20px;border-radius:8px;border:2px solid var(--line);color:var(--text);background:transparent;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .2s,background .2s}
-.btn:hover{transform:translateY(-2px);border-color:#ffffff40}
-.btn.primary{background:var(--orange);border-color:var(--orange);color:#160A02;box-shadow:0 5px 0 #8a2500}
-.btn.primary:hover{box-shadow:0 7px 0 #8a2500}
-.btn.primary:active{transform:translateY(3px);box-shadow:0 2px 0 #8a2500}
-.btn.teal{border-color:#00FFCC55;color:var(--teal)}
-.btn.teal:hover{background:#00FFCC12;border-color:var(--teal)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid var(--line2);transition:background .25s,border-color .25s,color .25s;will-change:transform}
+.btn:hover{border-color:#ffffff55}
+.btn.solid{background:var(--signal);border-color:var(--signal);color:#130700}
+.btn.solid:hover{background:#ff7a45}
+.btn .ic{width:17px;height:17px}
 
 /* ============ HERO ============ */
-.hero{padding:132px 0 70px}
-.hgrid{display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center}
-.ready{color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:22px}
-.ready i{width:8px;height:8px;background:var(--teal);display:inline-block;animation:blink 1.1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.hero h1{font-size:clamp(44px,6.6vw,84px);text-transform:uppercase}
-.hero h1 .hi{display:block;font-size:.5em;color:var(--muted);letter-spacing:.02em;margin-bottom:10px}
-.hero h1 em{font-style:normal;color:var(--orange)}
-.lead{margin-top:20px;font-size:18px;color:#CFCBE3;max-width:44ch}
-.lead b{color:#fff;font-weight:600}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:38px;max-width:520px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;transition:border-color .2s,transform .2s}
-.stat:hover{border-color:var(--c);transform:translateY(-3px)}
-.stat b{display:block;font-family:'Oswald',sans-serif;font-size:38px;line-height:1;color:var(--c)}
-.stat span{font-size:13px;color:var(--muted);display:block;margin-top:6px}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:110px 0 60px}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#05060AF0 0%,#05060AB0 38%,#05060A30 70%,transparent),linear-gradient(0deg,#05060A 0%,transparent 30%);pointer-events:none}
+.hero .hgrid{position:relative}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(30px,5vw,80px);align-items:center}
+.kick{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:28px;flex-wrap:wrap}
+.kick .live{width:8px;height:8px;border-radius:50%;background:var(--fix);box-shadow:0 0 0 0 #2EF2C380;animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px #2EF2C300}100%{box-shadow:0 0 0 0 #2EF2C300}}
+.hero h1{font-size:clamp(50px,7.4vw,118px);font-weight:800}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln>span{display:inline-block}
+.hero .sub{margin-top:28px;font-size:clamp(17px,1.4vw,20px);color:#C3C8D4;max-width:40ch}
+.hcta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:clamp(20px,3.5vw,52px);margin-top:54px;padding-top:28px;border-top:1px solid var(--line)}
+.fact b{display:block;font-family:var(--display);font-size:clamp(26px,2.6vw,36px);font-weight:700;letter-spacing:-.02em}
+.fact span{font-size:13px;color:var(--muted)}
 
-/* player card */
-.pcard{position:relative;border-radius:22px;padding:14px;border:2px solid transparent;
-  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(140deg,var(--teal),var(--purple) 50%,var(--orange)) border-box;
-  box-shadow:0 40px 90px -40px #B388FF66}
-.ptop{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px}
-.ptop .lvl{background:var(--gold);color:#1a1300;padding:5px 8px;border-radius:4px}
-.ptop .hp{color:var(--teal)}
-.art{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/4.3;
-  background:radial-gradient(circle at 50% 38%,#B388FF55,transparent 58%),radial-gradient(circle at 50% 110%,#00FFCC33,transparent 55%),linear-gradient(#1b1830,#0e0d18)}
-.art::before{content:"";position:absolute;inset:0;background:linear-gradient(#ffffff08 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,#ffffff08 1px,transparent 1px) 0 0/22px 22px}
-.art img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:96%;width:auto;max-width:none;filter:drop-shadow(0 20px 30px #0009)}
-.perk{position:absolute;z-index:3;display:flex;align-items:center;gap:7px;background:#0d0c16E8;border:1px solid var(--c);color:#fff;font-size:13px;font-weight:600;padding:8px 11px;border-radius:999px;box-shadow:0 10px 24px -10px #000;animation:bob 4s ease-in-out infinite}
-.perk:nth-of-type(2){animation-delay:-1s}.perk:nth-of-type(3){animation-delay:-2s}.perk:nth-of-type(4){animation-delay:-3s}
-@keyframes bob{50%{transform:translateY(-6px)}}
-.pname{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:14px 6px 4px}
-.pname b{font-family:'Oswald',sans-serif;font-size:24px;letter-spacing:.04em;display:block}
-.pname span{font-size:13px;color:var(--muted)}
-.pname .cls{text-align:right;color:var(--purple);white-space:nowrap}
-@media(max-width:900px){.hgrid{grid-template-columns:1fr;gap:40px}.pcard{max-width:440px;width:100%;margin:0 auto}}
-@media(max-width:520px){.hero{padding-top:118px}.stats{gap:8px}.stat{padding:12px}.stat b{font-size:30px}.stat span{font-size:12px}.perk{font-size:11.5px;padding:6px 9px}.pname b{font-size:20px}.lead{font-size:16.5px}}
+.portrait{position:relative;aspect-ratio:1/1.12;max-width:560px;width:100%;justify-self:end}
+.orbit{position:absolute;inset:-4% -2% 6%;pointer-events:none}
+.orbit circle{fill:none;stroke-width:1}
+.orbit .o1{stroke:#ffffff22;stroke-dasharray:2 7;transform-origin:50% 50%;animation:spin 60s linear infinite}
+.orbit .o2{stroke:#FF5A1F55;stroke-dasharray:120 900;stroke-width:1.5;transform-origin:50% 50%;animation:spin 14s linear infinite}
+.orbit .o3{stroke:#2EF2C340;stroke-dasharray:60 500;stroke-width:1.5;transform-origin:50% 50%;animation:spin 22s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glow{position:absolute;left:12%;right:12%;top:10%;bottom:16%;border-radius:50%;background:radial-gradient(circle,#FF5A1F38,#8B7CFF22 45%,transparent 70%);filter:blur(30px)}
+.pimg{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;transform-style:preserve-3d;will-change:transform}
+.pimg img{height:100%;width:auto;max-width:none;object-fit:contain;-webkit-mask-image:linear-gradient(#000 78%,transparent 99%);mask-image:linear-gradient(#000 78%,transparent 99%)}
+.chip{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 10px;border-radius:14px;background:var(--glass);border:1px solid var(--line2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:13.5px;font-weight:500;white-space:nowrap;box-shadow:0 20px 40px -20px #000}
+.chip i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#ffffff0d;color:var(--c)}
+.chip i .ic{width:16px;height:16px}
+.chip small{display:block;font-size:11px;color:var(--muted);font-weight:400}
+.scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--dim)}
+.scrollcue .bar{width:1px;height:46px;background:linear-gradient(var(--muted),transparent);overflow:hidden;position:relative}
+.scrollcue .bar::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:#fff;animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{to{top:110%}}
+@media(max-width:900px){
+  .hgrid{grid-template-columns:1fr}
+  .portrait{justify-self:center;max-width:420px;order:-1;margin-top:10px}
+  .facts{grid-template-columns:repeat(3,1fr)}
+  .scrollcue{display:none}
+}
+@media(max-width:520px){.chip{font-size:12px;padding:8px 10px 8px 8px}.chip i{width:26px;height:26px}.chip small{display:none}.facts{gap:14px}
+  .chip[style*="left:"]{left:0!important}.chip[style*="right:"]{right:0!important}}
 
-/* ============ SECTIONS ============ */
-.sec{padding:64px 0}
-.shead{margin-bottom:34px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-.shead .hud{color:var(--c,var(--teal));margin-bottom:14px}
-.shead h2{font-size:clamp(34px,5vw,56px);text-transform:uppercase}
-.shead p{color:var(--muted);font-size:16px;margin-top:10px;max-width:46ch}
+/* ============ JOURNEY ============ */
+.journey{position:relative}
+.stage{position:sticky;top:0;height:100svh;overflow:hidden}
+.jhead{position:absolute;top:96px;left:0;right:0}
+.jhead .wrap{display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+.jprog{display:flex;align-items:center;gap:14px}
+.jprog .track{width:160px;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
+.jprog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--signal),var(--fix))}
+.chap{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none;visibility:hidden}
+.chap .wrap{display:grid;grid-template-columns:minmax(0,520px) 1fr}
+.card{position:relative;pointer-events:auto;padding:34px 34px 30px;border-radius:24px;background:linear-gradient(160deg,#10131DE6,#0A0C13E6);border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 40px 90px -40px #000}
+.card .num{position:absolute;right:26px;top:14px;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;color:transparent;-webkit-text-stroke:1px #ffffff1c;letter-spacing:-.05em}
+.stop{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:22px}
+.stop i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#ffffff0a;border:1px solid var(--line2);color:var(--fix)}
+.card h3{font-size:clamp(30px,3.2vw,46px);max-width:13ch}
+.card p.body{margin-top:16px;color:#C3C8D4;font-size:16px;max-width:42ch}
+.ff{margin-top:22px;display:grid;gap:10px}
+.ff div{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:baseline;font-size:14.5px;color:#D7DBE5}
+.ff b{font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.ff b::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
+.ff .fr b{color:var(--signal)}.ff .fx b{color:var(--fix)}
+.mets{display:flex;gap:34px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.met b{display:block;font-family:var(--display);font-size:clamp(34px,3.4vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.met span{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
+.prods{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.prods a{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;border:1px solid var(--line2);font-size:13.5px;transition:border-color .2s,background .2s}
+.prods a:hover{border-color:var(--fix);background:#2EF2C312}
+.prods .ic{width:15px;height:15px;color:var(--fix)}
+.card .btn{margin-top:26px}
+/* the route rail */
+.rail{position:absolute;right:var(--pad);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0}
+.rail button{display:flex;align-items:center;justify-content:flex-end;gap:14px;height:48px;color:var(--dim);font-size:13px;position:relative;text-align:right}
+.rail button::after{content:"";width:12px;height:12px;border-radius:50%;border:2px solid currentColor;background:var(--ink);flex:none;transition:all .3s;position:relative;z-index:1}
+.rail button::before{content:"";position:absolute;right:5px;top:-24px;width:2px;height:48px;background:var(--line2)}
+.rail button:first-child::before{display:none}
+.rail button.on{color:var(--text)}
+.rail button.on::after{border-color:#fff;background:#fff;box-shadow:0 0 0 6px #2EF2C333,0 0 18px #2EF2C3}
+.rail button.done{color:var(--muted)}
+.rail button.done::after{border-color:var(--fix);background:var(--fix)}
+.rail button span{opacity:0;transform:translateX(8px);transition:all .3s}
+.rail:hover button span,.rail button.on span{opacity:1;transform:none}
+@media(max-width:900px){
+  .rail{display:none}
+  .chap{align-items:flex-end;padding-bottom:22px}
+  .chap .wrap{grid-template-columns:1fr}
+  .card{padding:24px 22px 22px;border-radius:20px}
+  .card .num{font-size:64px;right:18px}
+  .card h3{font-size:30px}
+  .card p.body{font-size:15px;margin-top:12px}
+  .ff{margin-top:16px}
+  .mets{gap:24px;margin-top:18px;padding-top:16px}
+  .jhead{top:82px}.jprog .track{width:90px}
+}
+@media(max-width:520px){.ff div{grid-template-columns:1fr;gap:2px;font-size:13.5px}.stop{margin-bottom:16px}.jhead .lbl{display:none}.card .num{display:none}}
 
-/* ============ STORY: levels ============ */
-.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;position:relative}
-.levels::before{content:"";position:absolute;left:4%;right:4%;top:36px;border-top:2px dashed #ffffff22;z-index:0}
-@media(max-width:1080px){.levels{grid-template-columns:repeat(3,1fr)}.levels::before{display:none}}
-@media(max-width:700px){.levels{grid-template-columns:1fr}}
-.lv{position:relative;z-index:1;perspective:1200px;cursor:pointer;outline:none;border-radius:16px}
-.lv:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
-.lv-in{display:grid;transition:transform .55s cubic-bezier(.3,.9,.3,1);transform-style:preserve-3d;height:100%}
-.lv.on .lv-in{transform:rotateY(180deg)}
-.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s}
-.lv:hover .face{border-color:var(--c)}
-.back{transform:rotateY(180deg);background:var(--panel2)}
-.lv-top{display:flex;justify-content:space-between;align-items:center}
-.lv-top .hud{color:var(--c)}
-.lv-top .clr{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.06em}
-.ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;background:#ffffff0a;border:1px solid var(--line)}
-.lv h3{font-size:23px;text-transform:uppercase;line-height:1.05}
-.lv .role{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
-.mission{font-size:14.5px;color:#DAD6EC}
-.mission .hud,.loot .hud{display:block;font-size:7px;color:var(--dim);margin-bottom:6px}
-.loot{margin-top:auto;background:#ffffff08;border-radius:10px;padding:12px}
-.loot b{display:block;font-family:'Oswald',sans-serif;font-size:30px;line-height:1;color:var(--c)}
-.loot span{font-size:13px;color:#CFCBE3}
-.tap{font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:6px}
-.back h4{font-family:'Oswald',sans-serif;font-size:20px;text-transform:uppercase}
-.back ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.back li{font-size:14px;color:#DAD6EC;padding-left:20px;position:relative}
-.back li::before{content:"▸";position:absolute;left:0;color:var(--c)}
-.back .yr{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
-/* locked level */
-.lv.locked{cursor:default}
-.lv.locked .face{background:repeating-linear-gradient(135deg,#ffffff05 0 10px,transparent 10px 20px),var(--panel);border-style:dashed;border-top-style:solid;align-items:flex-start}
-.lock{font-size:34px;filter:grayscale(.2)}
-.lv.locked h3{color:#fff}
-.lv.locked .lv-top{align-self:stretch}
-.lv.locked p{font-size:14.5px;color:var(--muted)}
-.lv.locked .btn{margin-top:auto;padding:12px 14px;font-size:11px}
+/* ============ SECTION HEADS ============ */
+.sec{padding:clamp(90px,12vw,160px) 0}
+.eyebrow{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:24px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--signal)}
+.stitle{font-size:clamp(40px,6vw,88px);font-weight:800;max-width:14ch}
+.stitle .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.stitle .ln>span{display:inline-block}
+.slead{margin-top:22px;color:var(--muted);font-size:18px;max-width:46ch}
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:56px}
 
-/* ============ LEADERSHIP ============ */
-.squad{display:grid;grid-template-columns:1.1fr 1fr 1fr;grid-auto-rows:auto;gap:14px}
-.sq{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
-.sq:hover{transform:translateY(-4px);border-color:var(--c)}
-.sq .badge{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#0b0a12;background:var(--c);padding:5px 9px;border-radius:5px}
-.sq h3{font-size:22px;text-transform:uppercase;line-height:1.08}
-.sq p{font-size:14.5px;color:#D3CFE6}
-.sq .party{margin-top:auto;display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--c);padding-top:6px}
-.sq.photo{grid-row:span 3;padding:0;min-height:520px;gap:0}
-.sq.photo img{flex:1 1 280px;min-height:260px;width:100%;object-fit:cover;object-position:50% 93%;border-bottom:1px solid var(--line)}
-.sq.photo .txt{padding:20px;display:flex;flex-direction:column;gap:10px}
-.sq.photo h3{font-size:30px}
-.sq.big{grid-column:span 2}
-@media(max-width:900px){.squad{grid-template-columns:1fr 1fr}.sq.photo{grid-row:auto;grid-column:span 2;min-height:0}.sq.big{grid-column:span 2}}
-@media(max-width:600px){.squad{grid-template-columns:1fr}.sq.photo,.sq.big{grid-column:auto}}
+/* ============ LEADERSHIP (horizontal) ============ */
+.lead-sec{padding-top:clamp(96px,11vh,130px);min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-bottom:40px}
+.lead-sec .shead{margin-bottom:clamp(24px,4vh,44px)}
+.lead-sec .stitle{font-size:clamp(40px,5vw,72px)}
+.hwrap{overflow:hidden}
+.htrack{display:flex;gap:20px;padding:0 var(--pad);width:max-content;will-change:transform}
+.lcard{position:relative;width:min(380px,80vw);min-height:clamp(330px,44vh,420px);border-radius:24px;background:linear-gradient(170deg,#11141F,#0A0C13);border:1px solid var(--line2);padding:30px;display:flex;flex-direction:column;overflow:hidden;transition:border-color .3s}
+.lcard:hover{border-color:#ffffff44}
+.lcard .top{display:flex;justify-content:space-between;align-items:center}
+.lcard .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#ffffff0a;border:1px solid var(--line2);color:var(--c)}
+.lcard .ico .ic{width:22px;height:22px}
+.lcard .yr{color:var(--dim)}
+.lcard .role{margin-top:auto;padding-top:36px;color:var(--c)}
+.lcard h3{font-size:30px;margin-top:10px}
+.lcard p{margin-top:14px;color:#C3C8D4;font-size:15px}
+.lcard .stat{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+.lcard .stat b{font-family:var(--display);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.lcard .stat span{color:var(--muted);font-size:13px}
+.lcard.photo{width:min(520px,86vw);padding:0;justify-content:flex-end}
+.lcard.photo img{position:relative;width:100%;flex:1 1 150px;min-height:130px;object-fit:cover;object-position:50% 93%}
+.lcard.photo .in{position:relative;z-index:2;padding:24px 30px 30px}
+.lcard.photo .role{margin-top:0;padding-top:0}
+.hint{display:flex;align-items:center;gap:10px;color:var(--dim)}
+@media(max-width:900px){
+  .htrack{flex-direction:column;width:auto}
+  .lcard,.lcard.photo{width:100%;min-height:0}
+  .lcard .role{margin-top:30px}
+  .lcard.photo{min-height:480px}
+  .hint{display:none}
+}
 
-/* bonus level banner */
-.bonus{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:60px;padding:24px 26px;border-radius:16px;text-decoration:none;
-  background:linear-gradient(100deg,#B388FF26,#00FFCC14);border:2px solid #B388FF55;transition:border-color .2s,transform .2s}
-.bonus:hover{border-color:var(--purple);transform:translateY(-3px)}
-.bonus .hud{color:var(--gold);margin-bottom:10px}
-.bonus h3{font-size:clamp(24px,3vw,32px);text-transform:uppercase}
-.bonus p{color:var(--muted);font-size:15px;margin-top:6px}
-.bonus .go{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;background:var(--purple);color:#140c22;padding:14px 18px;border-radius:8px}
+/* ============ RECOGNITION ============ */
+.wins{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;align-items:start}
+.wlist{border-top:1px solid var(--line)}
+.wrow{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:20px;padding:24px 4px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.wrow::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#FF5A1F14,transparent 60%);transform:translateX(-101%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.wrow:hover::before{transform:none}
+.wrow i{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line2);color:var(--gold);position:relative}
+.wrow h4{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em;position:relative}
+.wrow .sc{color:var(--muted);font-size:14px;margin-top:2px;position:relative}
+.wrow .rk{font-family:var(--display);font-size:clamp(22px,2.4vw,32px);font-weight:800;letter-spacing:-.02em;text-align:right;position:relative;white-space:nowrap}
+.creds{border-radius:24px;border:1px solid var(--line2);background:linear-gradient(170deg,#11141F,#0A0C13);padding:28px}
+.creds .mono{color:var(--muted);margin-bottom:18px;display:block}
+.cred{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.cred:first-of-type{border-top:0;padding-top:0}
+.cred i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#ffffff0a;color:var(--fix);flex:none}
+.cred b{display:block;font-weight:600}
+.cred span{font-size:13.5px;color:var(--muted)}
+@media(max-width:900px){.wins{grid-template-columns:1fr}.wrow{grid-template-columns:44px minmax(0,1fr);gap:14px}.wrow i{width:40px;height:40px}.wrow .rk{grid-column:2;text-align:left;font-size:20px}}
 
-/* ============ TROPHIES ============ */
-.trophies{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-@media(max-width:1000px){.trophies{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:620px){.trophies{grid-template-columns:1fr 1fr}}
-.tr{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;overflow:hidden;
-  filter:grayscale(1) brightness(.55);transform:scale(.96);transition:filter .6s,transform .6s cubic-bezier(.3,1.4,.4,1),border-color .3s}
-.tr.got{filter:none;transform:none;border-color:#FFD24A44}
-.tr::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,#ffffff22,transparent);transform:skewX(-20deg)}
-.tr.got::after{animation:shine 1.2s .2s ease-out}
-@keyframes shine{to{left:130%}}
-.tr .cup{font-size:38px;line-height:1}
-.tr b{font-family:'Oswald',sans-serif;font-size:22px;line-height:1.05;text-transform:uppercase;color:var(--gold)}
-.tr .what{font-size:13.5px;color:#E2DEF2;font-weight:600}
-.tr .of{font-size:12px;color:var(--muted)}
-.inv{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
-@media(max-width:700px){.inv{grid-template-columns:1fr}}
-.slot{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
-.slot .hud{color:var(--teal);margin-bottom:12px}
-.slot ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.slot li{display:flex;align-items:center;gap:12px;font-size:14.5px}
-.slot li i{font-style:normal;font-size:20px;width:34px;height:34px;flex:none;display:flex;align-items:center;justify-content:center;background:#ffffff0a;border-radius:8px}
-.slot li span{color:var(--muted);font-size:13px;display:block}
+/* ============ OFF THE CLOCK ============ */
+.off{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ofc{border-radius:20px;border:1px solid var(--line);padding:26px;background:#0B0D14;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s}
+.ofc:hover{transform:translateY(-6px);border-color:var(--line2)}
+.ofc i{color:var(--c);display:block;margin-bottom:40px}
+.ofc i .ic{width:26px;height:26px;stroke-width:1.5}
+.ofc h4{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.ofc p{color:var(--muted);font-size:14px;margin-top:6px}
+@media(max-width:900px){.off{grid-template-columns:1fr 1fr}}
 
-/* ============ SIDE QUESTS ============ */
-.quests{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-@media(max-width:800px){.quests{grid-template-columns:1fr 1fr}}
-.q{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;transition:transform .2s,border-color .2s}
-.q:hover{transform:rotate(-1.5deg) translateY(-4px);border-color:var(--c)}
-.q .e{font-size:34px;line-height:1;margin-bottom:14px}
-.q h3{font-size:20px;text-transform:uppercase}
-.q p{font-size:14px;color:var(--muted);margin-top:6px}
+/* ============ CONTACT ============ */
+.contact{padding:clamp(100px,14vw,200px) 0 60px;text-align:center}
+.contact .eyebrow{justify-content:center}
+.contact h2{font-size:clamp(52px,10vw,160px);font-weight:800;letter-spacing:-.05em}
+.contact h2 .ln{display:block;overflow:hidden;padding-bottom:.05em}
+.contact h2 .ln>span{display:inline-block}
+.contact p{color:var(--muted);font-size:18px;margin:24px auto 0;max-width:40ch}
+.orb{margin:54px auto 0;width:168px;height:168px;border-radius:50%;display:grid;place-items:center;text-align:center;background:var(--signal);color:#130700;font-weight:700;font-size:16px;line-height:1.2;will-change:transform;box-shadow:0 30px 80px -20px #FF5A1F88;transition:background .3s}
+.orb:hover{background:#ff7a45}
+.orb span{display:flex;flex-direction:column;align-items:center;gap:8px}
+.clinks{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:54px}
+.clinks a,.clinks button{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border-radius:999px;border:1px solid var(--line2);font-size:14.5px;transition:border-color .2s,background .2s}
+.clinks a:hover,.clinks button:hover{border-color:#ffffff55;background:#ffffff08}
+footer{border-top:1px solid var(--line);padding:26px 0 34px;color:var(--dim);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
-/* ============ FINAL ============ */
-.final{padding:90px 0 60px}
-.boss{border-radius:22px;padding:48px 40px;text-align:center;border:2px solid transparent;
-  background:linear-gradient(#120f1f,#0c0b15) padding-box,linear-gradient(120deg,var(--orange),var(--purple),var(--teal)) border-box}
-.boss .hud{color:var(--orange);margin-bottom:18px}
-.boss h2{font-size:clamp(34px,5.4vw,64px);text-transform:uppercase;max-width:16ch;margin:0 auto}
-.boss p{color:var(--muted);margin:16px auto 0;max-width:44ch}
-.boss .cta{justify-content:center}
-.contacts{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 22px;margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:13px}
-.contacts a,.contacts button{color:var(--muted);text-decoration:none;background:none;border:0;font:inherit;cursor:pointer;border-bottom:1px solid transparent;padding-bottom:2px}
-.contacts a:hover,.contacts button:hover{color:#fff;border-color:#fff}
-footer{text-align:center;padding:26px 0 40px;color:var(--dim)}
-footer .hud{font-size:8px}
-@media(max-width:520px){.boss{padding:36px 20px}}
-
-/* ============ TOAST ============ */
-.toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-.toast{display:flex;align-items:center;gap:12px;background:#15131f;border:1px solid var(--gold);border-radius:12px;padding:12px 16px;box-shadow:0 16px 40px -14px #000;transform:translateX(120%);opacity:0;transition:transform .45s cubic-bezier(.3,1.3,.4,1),opacity .3s;max-width:300px}
-.toast.on{transform:none;opacity:1}
-.toast .ti{font-size:24px}
-.toast .hud{font-size:7px;color:var(--gold);display:block;margin-bottom:5px}
-.toast b{font-size:14px;font-weight:600}
-@media(max-width:520px){.toasts{left:12px;right:12px;bottom:12px}.toast{max-width:none}}
-
-/* reveal */
-.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
-.rv.in{opacity:1;transform:none}
+/* toast */
+.toast{position:fixed;left:50%;bottom:28px;z-index:250;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text);color:#0b0b0b;padding:12px 18px;border-radius:999px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;transition:opacity .3s,transform .3s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .rv{opacity:1;transform:none}
-  .lv.on .lv-in{transform:none}.lv.on .front{visibility:hidden}.back{transform:none;visibility:hidden}.lv.on .back{visibility:visible}
+  .loader{display:none}
 }
 
 
@@ -427,330 +475,277 @@ footer .hud{font-size:8px}
   "address": {"@type": "PostalAddress", "addressCountry": "IN"}
 }
 </script>
-<script src="profile-ui.js" defer></script>
 </head>
 <body>
+<script>document.documentElement.classList.add('js')</script>
 
-<div class="topbar">
-  <div class="tb">
-    <a class="id" href="#top"><span class="p1">P1</span><span class="name">PRATHAM GUPTA</span></a>
-    <nav class="nav" aria-label="Main">
-      <a href="#story">Story</a>
-      <a href="portfolio.html">Products</a>
-      <a class="hire biz-card-trigger" href="javascript:void(0)">Let's connect</a>
-    </nav>
-  </div>
-  <div class="xp" aria-hidden="true"><span class="hud" id="xplab">XP 0%</span><div class="xpbar"><div class="xpfill" id="xpfill"></div></div></div>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="lname"><span>Pratham</span> <span>Gupta</span></div>
+  <div class="lrow"><span class="mono">Loading the route</span><span class="lcount" id="lcount">0</span></div>
+  <div class="lbar" id="lbar"></div>
 </div>
 
-<!-- ============ HERO: player card ============ -->
-<header class="hero" id="top">
-  <div class="wrap hgrid">
-    <div>
-      <div class="ready hud"><i></i> Player 1 · ready</div>
-      <h1><span class="hi">Hi, I'm Pratham.</span>I fix <em>messy</em> business problems.</h1>
-      <p class="lead">MBA at BITSoM, class of 2027. I work across <b>strategy, marketing and operations</b>: find what's broken, then make the fix stick.</p>
-      <div class="cta">
-        <a class="btn primary biz-card-trigger" href="javascript:void(0)">Let's connect</a>
-        <a class="btn teal" href="#story">▶ Play my story</a>
-        <a class="btn" href="portfolio.html">Products ↗</a>
-      </div>
-      <div class="stats">
-        <a class="stat" href="#story" style="--c:var(--teal)"><b data-count="4">4</b><span>levels cleared</span></a>
-        <a class="stat" href="#leadership" style="--c:var(--purple)"><b data-count="6">6</b><span>squads led</span></a>
-        <a class="stat" href="#trophies" style="--c:var(--gold)"><b data-count="5">5</b><span>trophies won</span></a>
-      </div>
-    </div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="cur" id="cur" aria-hidden="true"><div class="ring"></div><div class="dot"></div></div>
 
-    <div class="pcard rv">
-      <div class="ptop hud"><span class="hp">♥♥♥ HP full</span><span class="lvl">LVL 4</span></div>
-      <div class="art">
-        <img src="images/pratham.webp" alt="Pratham Gupta in a black suit, arms crossed" width="589" height="900">
-        <span class="perk" style="--c:var(--teal);top:9%;left:5%">🎯 Strategy</span>
-        <span class="perk" style="--c:var(--pink);top:24%;right:5%">📣 Marketing</span>
-        <span class="perk" style="--c:var(--gold);bottom:26%;left:4%">⚙️ Operations</span>
-        <span class="perk" style="--c:var(--purple);bottom:9%;right:6%">🤖 AI builder</span>
-      </div>
-      <div class="pname">
-        <div><b>PRATHAM GUPTA</b><span>MBA '27 · BITSoM</span></div>
-        <div class="cls"><span class="hud">Class</span><br><span>Problem-solver</span></div>
-      </div>
-    </div>
+<header class="topbar" id="topbar">
+  <div class="wrap tb">
+    <a class="brand" href="#top" aria-label="Pratham Gupta, back to top"><span class="pg">PG</span><span class="nm">Pratham Gupta</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#story">Story</a>
+      <a class="opt" href="#leadership">Leadership</a>
+      <a href="portfolio.html">Products</a>
+      <a class="hire biz-card-trigger magnet" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
+    </nav>
   </div>
 </header>
 
-<!-- ============ STORY ============ -->
-<section class="sec" id="story">
-  <div class="wrap">
-    <div class="shead rv" style="--c:var(--teal)">
-      <div>
-        <div class="hud">Story mode</div>
-        <h2>4 levels cleared.<br>1 to go.</h2>
-        <p>Tap any level to flip it and see how I beat it.</p>
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hgrid">
+    <div>
+      <div class="kick mono reveal"><span class="live"></span> MBA 2027 · BITSoM · Open to roles</div>
+      <h1 class="split"><span class="ln"><span>I find the</span></span><span class="ln"><span><em class="grad">friction.</em></span></span><span class="ln"><span>Then I fix it.</span></span></h1>
+      <p class="sub reveal">Strategy, marketing and operations. From bus depots to warehouses to AI products. Scroll to ride the route.</p>
+      <div class="hcta reveal">
+        <a class="btn solid magnet" href="#story">Start the journey <i data-lucide="arrow-down" class="ic"></i></a>
+        <a class="btn magnet biz-card-trigger" href="javascript:void(0)">Let's connect</a>
+      </div>
+      <div class="facts reveal">
+        <div class="fact"><b>₹2.5 Cr</b><span>new business won</span></div>
+        <div class="fact"><b>~₹20 L</b><span>losses stopped</span></div>
+        <div class="fact"><b>200+</b><span>people led</span></div>
       </div>
     </div>
 
-    <div class="levels">
-      <div class="lv rv" role="button" tabindex="0" aria-pressed="false" style="--c:var(--teal)">
-        <div class="lv-in">
-          <div class="face front">
-            <div class="lv-top"><span class="hud">LVL 1</span><span class="clr">★ CLEARED</span></div>
-            <div class="ico">🎓</div>
-            <div><h3>The training ground</h3><div class="role">DTU · Economics + first internships</div></div>
-            <div class="mission"><span class="hud">Mission</span>Learn to research, pitch and lead.</div>
-            <div class="loot"><span class="hud">Loot</span><b>50+</b><span>creators brought on board at IKONA Media</span></div>
-            <div class="tap">↻ Tap to flip</div>
-          </div>
-          <div class="face back">
-            <div class="lv-top"><span class="hud">LVL 1</span><span class="clr">How I beat it</span></div>
-            <h4>The training ground</h4>
-            <ul>
-              <li>Helped build IKONA's creator and campus network: social reach up 40%.</li>
-              <li>Led a 5-person team at Consortico to find why NGO volunteers quit, then wrote the 6-month fix.</li>
-              <li>BA (Hons) Economics, Delhi Technological University: 84.6%.</li>
-            </ul>
-            <div class="yr">Until 2023</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lv rv" role="button" tabindex="0" aria-pressed="false" style="--c:var(--gold)">
-        <div class="lv-in">
-          <div class="face front">
-            <div class="lv-top"><span class="hud">LVL 2</span><span class="clr">★ CLEARED</span></div>
-            <div class="ico">🚌</div>
-            <div><h3>Himanshu Travel Line</h3><div class="role">Operations, growth &amp; key accounts</div></div>
-            <div class="mission"><span class="hud">Mission</span>Make customers pick us for more than price.</div>
-            <div class="loot"><span class="hud">Loot</span><b>₹2.5 Cr</b><span>of new business won</span></div>
-            <div class="tap">↻ Tap to flip</div>
-          </div>
-          <div class="face back">
-            <div class="lv-top"><span class="hud">LVL 2</span><span class="clr">How I beat it</span></div>
-            <h4>Himanshu Travel Line</h4>
-            <ul>
-              <li>Pitched GPS, cameras and on-time service, not just a lower price.</li>
-              <li>Won 2 new contracts and grew 5 existing ones with schools, colleges and hospitals.</li>
-              <li>Buses were ready to run 26% more often.</li>
-            </ul>
-            <div class="yr">2023 – 2025</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lv rv" role="button" tabindex="0" aria-pressed="false" style="--c:var(--purple)">
-        <div class="lv-in">
-          <div class="face front">
-            <div class="lv-top"><span class="hud">LVL 3</span><span class="clr">★ CLEARED</span></div>
-            <div class="ico">🧠</div>
-            <div><h3>BITSoM MBA</h3><div class="role">Marketing, e-commerce &amp; operations</div></div>
-            <div class="mission"><span class="hud">Mission</span>Turn big strategy into plans that actually work.</div>
-            <div class="loot"><span class="hud">Loot</span><b>2×</b><span>national semi-finalist, Flipkart WiRED</span></div>
-            <div class="tap">↻ Tap to flip</div>
-          </div>
-          <div class="face back">
-            <div class="lv-top"><span class="hud">LVL 3</span><span class="clr">How I beat it</span></div>
-            <h4>BITSoM MBA</h4>
-            <ul>
-              <li>Mapped a food-delivery business end to end for Flipkart WiRED.</li>
-              <li>Built a Korean-noodle launch plan for Tata Consumer: top 13 of 14,000+.</li>
-              <li>Prototyped an AI campaign tracker on the side.</li>
-            </ul>
-            <div class="yr">Class of 2027</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lv rv" role="button" tabindex="0" aria-pressed="false" style="--c:var(--orange)">
-        <div class="lv-in">
-          <div class="face front">
-            <div class="lv-top"><span class="hud">LVL 4</span><span class="clr">★ CLEARED</span></div>
-            <div class="ico">🛒</div>
-            <div><h3>BigBasket</h3><div class="role">Strategic initiative intern</div></div>
-            <div class="mission"><span class="hud">Mission</span>Find out where stock was quietly getting lost.</div>
-            <div class="loot"><span class="hud">Loot</span><b>~₹20 L</b><span>saved by catching losses early</span></div>
-            <div class="tap">↻ Tap to flip</div>
-          </div>
-          <div class="face back">
-            <div class="lv-top"><span class="hud">LVL 4</span><span class="clr">How I beat it</span></div>
-            <h4>BigBasket</h4>
-            <ul>
-              <li>Pulled untracked returns into the daily report.</li>
-              <li>The team now sees losses the same day, not 2 days later.</li>
-              <li>Waste came down by about a quarter.</li>
-            </ul>
-            <div class="yr">Apr – Jun 2026</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lv locked rv" style="--c:var(--pink)">
-        <div class="lv-in">
-          <div class="face">
-            <div class="lv-top"><span class="hud">LVL 5</span><span class="clr" style="color:var(--pink)">LOCKED</span></div>
-            <div class="lock">🔒</div>
-            <h3>Your team?</h3>
-            <p>This level unlocks when we start working together.</p>
-            <a class="btn primary biz-card-trigger" href="javascript:void(0)">Unlock it</a>
-          </div>
-        </div>
-      </div>
+    <div class="portrait" id="portrait">
+      <svg class="orbit" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="o1" cx="50" cy="50" r="46"/><circle class="o2" cx="50" cy="50" r="40"/><circle class="o3" cx="50" cy="50" r="33"/>
+      </svg>
+      <div class="glow"></div>
+      <div class="pimg" id="pimg"><img src="images/pratham.webp" alt="Pratham Gupta in a black suit, arms crossed" width="589" height="900"></div>
+      <div class="chip" style="--c:var(--signal);top:12%;left:-4%"><i><svg class="ic" data-lucide="target"></svg></i><div>Strategy<small>Find the leverage</small></div></div>
+      <div class="chip" style="--c:var(--violet);top:30%;right:-6%"><i><svg class="ic" data-lucide="megaphone"></svg></i><div>Marketing<small>Go-to-market</small></div></div>
+      <div class="chip" style="--c:var(--gold);bottom:30%;left:-8%"><i><svg class="ic" data-lucide="settings-2"></svg></i><div>Operations<small>Make it run</small></div></div>
+      <div class="chip" style="--c:var(--fix);bottom:12%;right:-2%"><i><svg class="ic" data-lucide="cpu"></svg></i><div>AI products<small>Build the fix</small></div></div>
     </div>
+  </div>
+  <div class="scrollcue mono"><span>Scroll</span><div class="bar"></div></div>
+</section>
+
+<!-- ============ THE ROUTE ============ -->
+<section class="journey" id="story" aria-label="My journey, told as a route">
+  <div class="stage" id="stage">
+    <div class="jhead"><div class="wrap"><span class="mono lbl">The route so far</span><div class="jprog mono"><span id="jstop">Stop 01 / 06</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
+
+    <article class="chap" data-i="0">
+      <div class="wrap"><div class="card">
+        <span class="num">01</span>
+        <div class="stop mono"><i><svg class="ic" data-lucide="graduation-cap"></svg></i>Delhi · until 2023</div>
+        <h3>Learning how systems, and people, work.</h3>
+        <p class="body">Economics at DTU taught me to read a system. Rotaract taught me to run one.</p>
+        <div class="ff"><div class="fr"><b>Friction</b>A big club with scattered effort.</div><div class="fx"><b>Fix</b>Clear roles, more events, one direction.</div></div>
+        <div class="mets"><div class="met"><b data-to="200" data-suf="+">200+</b><span>members led as VP</span></div><div class="met"><b>#1</b><span>club in the district, twice</span></div></div>
+      </div></div>
+    </article>
+
+    <article class="chap" data-i="1">
+      <div class="wrap"><div class="card">
+        <span class="num">02</span>
+        <div class="stop mono"><i><svg class="ic" data-lucide="bus"></svg></i>Himanshu Travel Line · 2023–25</div>
+        <h3>Buses were winning on price alone.</h3>
+        <p class="body">I ran operations, growth and key accounts for a fleet serving schools, colleges and hospitals.</p>
+        <div class="ff"><div class="fr"><b>Friction</b>Price wars and unreliable service.</div><div class="fx"><b>Fix</b>Sell trust: GPS, cameras, on-time buses.</div></div>
+        <div class="mets"><div class="met"><b data-to="2.5" data-pre="₹" data-suf=" Cr" data-dec="1">₹2.5 Cr</b><span>in new B2B contracts</span></div><div class="met"><b data-to="26" data-pre="+" data-suf="%">+26%</b><span>more buses ready to run</span></div></div>
+      </div></div>
+    </article>
+
+    <article class="chap" data-i="2">
+      <div class="wrap"><div class="card">
+        <span class="num">03</span>
+        <div class="stop mono"><i><svg class="ic" data-lucide="landmark"></svg></i>BITSoM, Mumbai · 2025–27</div>
+        <h3>Strategy, tested under pressure.</h3>
+        <p class="body">Mapped a food-delivery business end to end for Flipkart. Built a launch plan for Tata Consumer. Led sponsorship for the college fest.</p>
+        <div class="ff"><div class="fr"><b>Friction</b>Big ideas that never meet the ground.</div><div class="fx"><b>Fix</b>Plans built from the customer to the dark store.</div></div>
+        <div class="mets"><div class="met"><b data-to="2" data-suf="×">2×</b><span>national semi-finalist, Flipkart WiRED</span></div><div class="met"><b data-to="12" data-pre="₹" data-suf=" L">₹12 L</b><span>raised in sponsorship</span></div></div>
+      </div></div>
+    </article>
+
+    <article class="chap" data-i="3">
+      <div class="wrap"><div class="card">
+        <span class="num">04</span>
+        <div class="stop mono"><i><svg class="ic" data-lucide="warehouse"></svg></i>BigBasket · Apr–Jun 2026</div>
+        <h3>Stock was leaking, quietly.</h3>
+        <p class="body">Losses showed up two days late, and nobody could say why. I traced them back to the shelf.</p>
+        <div class="ff"><div class="fr"><b>Friction</b>Untracked returns, a two-day blind spot.</div><div class="fx"><b>Fix</b>One daily view of loss, seen the same day.</div></div>
+        <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>less stock written off</span></div></div>
+      </div></div>
+    </article>
+
+    <article class="chap" data-i="4">
+      <div class="wrap"><div class="card">
+        <span class="num">05</span>
+        <div class="stop mono"><i><svg class="ic" data-lucide="cpu"></svg></i>Building with AI · now</div>
+        <h3>Now I build the fix myself.</h3>
+        <p class="body">Working prototypes that turn real operating problems into products.</p>
+        <div class="prods">
+          <a href="portfolio.html"><svg class="ic" data-lucide="truck"></svg>Transit One</a>
+          <a href="portfolio.html"><svg class="ic" data-lucide="line-chart"></svg>FinBuddy</a>
+          <a href="portfolio.html"><svg class="ic" data-lucide="map"></svg>Crave Command Center</a>
+          <a href="portfolio.html"><svg class="ic" data-lucide="leaf"></svg>Chhatri</a>
+        </div>
+        <a class="btn solid magnet" href="portfolio.html">Explore the products <i data-lucide="arrow-up-right" class="ic"></i></a>
+      </div></div>
+    </article>
+
+    <article class="chap" data-i="5">
+      <div class="wrap"><div class="card">
+        <span class="num">06</span>
+        <div class="stop mono"><i><svg class="ic" data-lucide="flag"></svg></i>Next stop</div>
+        <h3>Your team.</h3>
+        <p class="body">Strategy, marketing, e-commerce or operations. Bring the messy problem.</p>
+        <a class="btn solid magnet biz-card-trigger" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
+      </div></div>
+    </article>
+
+    <nav class="rail" id="rail" aria-label="Journey stops">
+      <button type="button" data-go="0"><span>Delhi</span></button>
+      <button type="button" data-go="1"><span>The fleet</span></button>
+      <button type="button" data-go="2"><span>BITSoM</span></button>
+      <button type="button" data-go="3"><span>BigBasket</span></button>
+      <button type="button" data-go="4"><span>AI products</span></button>
+      <button type="button" data-go="5"><span>Next stop</span></button>
+    </nav>
   </div>
 </section>
 
 <!-- ============ LEADERSHIP ============ -->
-<section class="sec" id="leadership">
-  <div class="wrap">
-    <div class="shead rv" style="--c:var(--purple)">
-      <div>
-        <div class="hud">Squad mode</div>
-        <h2>I lead people,<br>not just projects.</h2>
-        <p>6 squads so far. Here's who I led and what we pulled off.</p>
-      </div>
+<section class="lead-sec" id="leadership">
+  <div class="wrap shead">
+    <div>
+      <div class="eyebrow mono">Leadership</div>
+      <h2 class="stitle split"><span class="ln"><span>People follow</span></span><span class="ln"><span class="grad">clarity.</span></span></h2>
+      <p class="slead reveal">Six teams I've led, and what we pulled off together.</p>
     </div>
-
-    <div class="squad">
-      <article class="sq photo rv" style="--c:var(--teal)">
+    <div class="hint mono reveal"><svg class="ic" data-lucide="move-horizontal"></svg> Scroll to move</div>
+  </div>
+  <div class="hwrap" id="hwrap">
+    <div class="htrack" id="htrack">
+      <article class="lcard photo" style="--c:var(--fix)">
         <img src="roar-event.jpg" alt="Pratham on stage with the team at BITSoM Roar" loading="lazy">
-        <div class="txt">
-          <span class="badge">Sponsorship lead · 2026</span>
+        <div class="in">
+          <div class="role mono">Sponsorship lead · 2026</div>
           <h3>BITSoM Roar &amp; Conclave</h3>
-          <p>Ran a ₹25 lakh budget across 10 teams. Turned 80 leads into ₹12 lakh of sponsorship, with SBI as title sponsor.</p>
-          <div class="party">💰 ₹12 L raised</div>
+          <p>Ran a ₹25 L budget across 10 teams. Turned 80 leads into sponsorship, with SBI as title sponsor.</p>
+          <div class="stat"><b>₹12 L</b><span>raised</span></div>
         </div>
       </article>
-
-      <article class="sq big rv" style="--c:var(--gold)">
-        <span class="badge">Vice President · 2023</span>
+      <article class="lcard" style="--c:var(--gold)">
+        <div class="top"><span class="ico"><svg class="ic" data-lucide="users"></svg></span><span class="yr mono">2023</span></div>
+        <div class="role mono">Vice President</div>
         <h3>Rotaract USME</h3>
-        <p>Led a club of 200+ members through 10+ events. We were named the best club in the district, twice, out of 60+ clubs.</p>
-        <div class="party">👥 200+ members · 🏆 #1 club twice</div>
+        <p>Led a 200+ member club through 10+ events. Named the district's best club, twice, out of 60+.</p>
+        <div class="stat"><b>200+</b><span>members</span></div>
       </article>
-
-      <article class="sq rv" style="--c:var(--pink)">
-        <span class="badge">Team lead</span>
+      <article class="lcard" style="--c:var(--signal)">
+        <div class="top"><span class="ico"><svg class="ic" data-lucide="search"></svg></span><span class="yr mono">Consulting</span></div>
+        <div class="role mono">Team lead</div>
         <h3>Consortico</h3>
-        <p>Led 5 people to find why NGO volunteers quit, and built a 6-month plan to fix it.</p>
-        <div class="party">👥 5-person team</div>
+        <p>Led five people to find out why NGO volunteers quit, then built the six-month plan to fix it.</p>
+        <div class="stat"><b>5</b><span>person team</span></div>
       </article>
-
-      <article class="sq rv" style="--c:var(--purple)">
-        <span class="badge">Senior · 2026</span>
+      <article class="lcard" style="--c:var(--violet)">
+        <div class="top"><span class="ico"><svg class="ic" data-lucide="sparkles"></svg></span><span class="yr mono">2026</span></div>
+        <div class="role mono">Senior</div>
         <h3>PreQL</h3>
         <p>Built an AI campaign tracker and run AI sessions that help classmates crack cases faster.</p>
-        <div class="party">🤖 AI sessions</div>
+        <div class="stat"><b>AI</b><span>sessions for case work</span></div>
       </article>
-
-      <article class="sq rv" style="--c:var(--teal)">
-        <span class="badge">Official mentor · now</span>
+      <article class="lcard" style="--c:var(--fix)">
+        <div class="top"><span class="ico"><svg class="ic" data-lucide="compass"></svg></span><span class="yr mono">Now</span></div>
+        <div class="role mono">Official mentor</div>
         <h3>Thume</h3>
-        <p>Guiding MBA students through their journey, one conversation at a time.</p>
-        <div class="party">🧭 Mentor</div>
+        <p>Guiding MBA students through their learning journey, one conversation at a time.</p>
+        <div class="stat"><b>1:1</b><span>mentoring</span></div>
       </article>
-
-      <article class="sq rv" style="--c:var(--orange)">
-        <span class="badge">Committee · 2026</span>
+      <article class="lcard" style="--c:var(--gold)">
+        <div class="top"><span class="ico"><svg class="ic" data-lucide="store"></svg></span><span class="yr mono">2026</span></div>
+        <div class="role mono">Committee member</div>
         <h3>Marketing &amp; Ops Committee</h3>
-        <p>Handled club marketing and negotiated the stall contracts.</p>
-        <div class="party">📣 Club marketing</div>
+        <p>Ran club marketing and negotiated the stall contracts.</p>
+        <div class="stat"><b>Ops</b><span>marketing &amp; contracts</span></div>
       </article>
     </div>
-
-    <a class="bonus rv" href="portfolio.html">
-      <div>
-        <div class="hud">★ Bonus level</div>
-        <h3>Products I've built</h3>
-        <p>AI tools, marketplaces and live simulations. Try them yourself.</p>
-      </div>
-      <span class="go">Play ↗</span>
-    </a>
   </div>
 </section>
 
-<!-- ============ TROPHIES ============ -->
-<section class="sec" id="trophies">
+<!-- ============ RECOGNITION ============ -->
+<section class="sec" id="recognition">
   <div class="wrap">
-    <div class="shead rv" style="--c:var(--gold)">
+    <div class="shead">
       <div>
-        <div class="hud">Trophy room</div>
-        <h2>Wins, unlocked.</h2>
-        <p>Scroll here and watch them unlock.</p>
+        <div class="eyebrow mono">Recognition</div>
+        <h2 class="stitle split"><span class="ln"><span>Tested against</span></span><span class="ln"><span>thousands.</span></span></h2>
       </div>
     </div>
-
-    <div class="trophies">
-      <div class="tr"><div class="cup">🏆</div><b>#1 club, twice</b><div class="what">Rotaract District 3012</div><div class="of">out of 60+ clubs</div></div>
-      <div class="tr"><div class="cup">🥈</div><b>Semi-finalist ×2</b><div class="what">Flipkart WiRED 9 &amp; 10</div><div class="of">35,000+ registered</div></div>
-      <div class="tr"><div class="cup">🎖️</div><b>Top 13</b><div class="what">Tata Consumer case comp</div><div class="of">out of 14,000+ entries</div></div>
-      <div class="tr"><div class="cup">🏅</div><b>Finalist</b><div class="what">Case Consilium, BITS Goa</div><div class="of">topped the semi-finals</div></div>
-      <div class="tr"><div class="cup">⭐</div><b>Selected</b><div class="what">Rotaract South Asia award</div><div class="of">out of 3,600+ entries</div></div>
-    </div>
-
-    <div class="inv">
-      <div class="slot rv">
-        <div class="hud">Badges equipped</div>
-        <ul>
-          <li><i>🟢</i><div>Lean Six Sigma Green Belt<span>Make a process better, then make it stick</span></div></li>
-          <li><i>🎓</i><div>Wharton: Marketing &amp; go-to-market<span>Brand, customers and launches · 2026</span></div></li>
-        </ul>
+    <div class="wins">
+      <div class="wlist">
+        <div class="wrow"><i><svg class="ic" data-lucide="trophy"></svg></i><div><h4>Rotaract District 3012</h4><div class="sc">Best institutional club · out of 60+ clubs</div></div><div class="rk">#1, twice</div></div>
+        <div class="wrow"><i><svg class="ic" data-lucide="medal"></svg></i><div><h4>Flipkart WiRED 9 &amp; 10</h4><div class="sc">National case competition · 35,000+ registered</div></div><div class="rk">Semi-finalist ×2</div></div>
+        <div class="wrow"><i><svg class="ic" data-lucide="award"></svg></i><div><h4>Tata Consumer, Grow Beyond Better</h4><div class="sc">Case competition · 14,000+ entries</div></div><div class="rk">Top 13</div></div>
+        <div class="wrow"><i><svg class="ic" data-lucide="flag"></svg></i><div><h4>Case Consilium, BITS Goa</h4><div class="sc">Consulting club · first in the semi-finals</div></div><div class="rk">Finalist</div></div>
+        <div class="wrow"><i><svg class="ic" data-lucide="star"></svg></i><div><h4>Rotaract South Asia</h4><div class="sc">Outstanding Professional Development · 3,600+ entries</div></div><div class="rk">Selected</div></div>
       </div>
-      <div class="slot rv">
-        <div class="hud">Save files</div>
-        <ul>
-          <li><i>🏫</i><div>MBA, BITS School of Management<span>Class of 2027</span></div></li>
-          <li><i>📘</i><div>BA (Hons) Economics, DTU<span>2023 · 84.6%</span></div></li>
-        </ul>
-      </div>
+      <aside class="creds reveal">
+        <span class="mono">Education &amp; certificates</span>
+        <div class="cred"><i><svg class="ic" data-lucide="graduation-cap"></svg></i><div><b>MBA, BITS School of Management</b><span>Class of 2027</span></div></div>
+        <div class="cred"><i><svg class="ic" data-lucide="book-open"></svg></i><div><b>BA (Hons) Economics, DTU</b><span>2023 · 84.6%</span></div></div>
+        <div class="cred"><i><svg class="ic" data-lucide="badge-check"></svg></i><div><b>Lean Six Sigma Green Belt</b><span>Make the better way repeatable</span></div></div>
+        <div class="cred"><i><svg class="ic" data-lucide="scroll-text"></svg></i><div><b>Wharton: Marketing</b><span>Brand, customers &amp; go-to-market · 2026</span></div></div>
+      </aside>
     </div>
   </div>
 </section>
 
-<!-- ============ SIDE QUESTS ============ -->
-<section class="sec" id="quests">
+<!-- ============ OFF THE CLOCK ============ -->
+<section class="sec" id="offclock" style="padding-top:0">
   <div class="wrap">
-    <div class="shead rv" style="--c:var(--pink)">
-      <div>
-        <div class="hud">Side quests</div>
-        <h2>Off the clock.</h2>
-      </div>
-    </div>
-    <div class="quests">
-      <div class="q rv" style="--c:var(--pink)"><div class="e">🎤</div><h3>Music &amp; singing</h3><p>A different kind of expression.</p></div>
-      <div class="q rv" style="--c:var(--teal)"><div class="e">🎱</div><h3>Pool</h3><p>Angles, patience and a good game.</p></div>
-      <div class="q rv" style="--c:var(--gold)"><div class="e">🍜</div><h3>New cuisines</h3><p>Always chasing a new flavour.</p></div>
-      <div class="q rv" style="--c:var(--purple)"><div class="e">✈️</div><h3>Travel</h3><p>New places, fresh eyes.</p></div>
+    <div class="shead"><div><div class="eyebrow mono">Off the clock</div><h2 class="stitle split"><span class="ln"><span>Still curious.</span></span></h2></div></div>
+    <div class="off">
+      <div class="ofc reveal" style="--c:var(--signal)"><i><svg class="ic" data-lucide="mic"></svg></i><h4>Music &amp; singing</h4><p>A different kind of expression.</p></div>
+      <div class="ofc reveal" style="--c:var(--fix)"><i><svg class="ic" data-lucide="crosshair"></svg></i><h4>Pool</h4><p>Angles, patience and a good game.</p></div>
+      <div class="ofc reveal" style="--c:var(--gold)"><i><svg class="ic" data-lucide="utensils"></svg></i><h4>New cuisines</h4><p>Always chasing a new flavour.</p></div>
+      <div class="ofc reveal" style="--c:var(--violet)"><i><svg class="ic" data-lucide="plane"></svg></i><h4>Travel</h4><p>New places, fresh perspective.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ FINAL ============ -->
-<section class="final" id="contact">
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
   <div class="wrap">
-    <div class="boss rv">
-      <div class="hud">Player 2, ready?</div>
-      <h2>Got a messy problem? Let's solve it.</h2>
-      <p>Strategy, marketing, e-commerce or operations. Email is fastest.</p>
-      <div class="cta">
-        <a class="btn primary biz-card-trigger" href="javascript:void(0)">Let's connect</a>
-        <a class="btn teal" href="mailto:prathamg329@gmail.com">Email me</a>
-      </div>
-      <div class="contacts">
-        <a href="mailto:prathamg329@gmail.com">prathamg329@gmail.com</a>
-        <a href="tel:+918076878652">+91 80768 78652</a>
-        <a href="https://www.linkedin.com/in/pgupta05" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <button type="button" data-copy="prathamg329@gmail.com">Copy email</button>
-      </div>
+    <div class="eyebrow mono">Next stop</div>
+    <h2 class="split"><span class="ln"><span>Your team.</span></span></h2>
+    <p class="reveal">Got a messy problem in strategy, marketing or operations? Email is fastest.</p>
+    <a class="orb magnet biz-card-trigger" href="javascript:void(0)"><span><svg class="ic" data-lucide="arrow-up-right"></svg>Let's<br>connect</span></a>
+    <div class="clinks reveal">
+      <a href="mailto:prathamg329@gmail.com"><svg class="ic" data-lucide="mail"></svg>prathamg329@gmail.com</a>
+      <a href="tel:+918076878652"><svg class="ic" data-lucide="phone"></svg>+91 80768 78652</a>
+      <a href="https://www.linkedin.com/in/pgupta05" target="_blank" rel="noopener"><svg class="ic" data-lucide="linkedin"></svg>LinkedIn</a>
+      <button type="button" data-copy="prathamg329@gmail.com"><svg class="ic" data-lucide="copy"></svg>Copy email</button>
     </div>
   </div>
 </section>
+</main>
 
-<footer><span class="hud">Pratham Gupta · MBA 2027, BITSoM · Game saved ✓</span></footer>
+<footer><div class="wrap"><span>© 2026 Pratham Gupta</span><span>MBA 2027 · BITSoM · Strategy, marketing &amp; operations</span></div></footer>
 
-<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="biz-overlay" id="biz-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-card-title" aria-hidden="true">
   <div class="biz-card-wrapper">
-    <div class="biz-card" id="biz-card">
+    <div class="biz-card" id="biz-card" data-lenis-prevent>
       <button class="biz-close" id="biz-close" aria-label="Close">&times;</button>
       <div class="biz-content">
         <div class="biz-header">
@@ -760,7 +755,7 @@ footer .hud{font-size:8px}
         <div class="biz-body">
           <span class="biz-eyebrow">Open to opportunities</span>
           <h2 class="biz-name" id="contact-card-title">Strategy, marketing<br>&amp; operations.</h2>
-          <p class="biz-tagline">I fix messy business problems, then make the fix stick.</p>
+          <p class="biz-tagline">I find the friction in messy systems, then fix it for good.</p>
         </div>
         <div class="biz-details">
           <a href="mailto:prathamg329@gmail.com" class="biz-link">EMAIL</a>
@@ -772,88 +767,6 @@ footer .hud{font-size:8px}
   </div>
 </div>
 
-<script>
-"use strict";
-const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-
-/* ---------- achievement toasts ---------- */
-function toast(icon, label, text){
-  const t = document.createElement('div');
-  t.className = 'toast';
-  t.innerHTML = `<span class="ti">${icon}</span><div><span class="hud">${label}</span><b>${text}</b></div>`;
-  $('#toasts').appendChild(t);
-  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('on')));
-  setTimeout(() => { t.classList.remove('on'); setTimeout(() => t.remove(), 500); }, 2600);
-}
-
-/* ---------- XP bar fills as you scroll ---------- */
-let maxed = false;
-function xp(){
-  const h = document.documentElement;
-  const p = Math.min(100, Math.round(h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1) * 100));
-  $('#xpfill').style.width = p + '%';
-  $('#xplab').textContent = p >= 100 ? 'MAX XP' : 'XP ' + p + '%';
-  if (p >= 98 && !maxed) { maxed = true; toast('⭐', 'Achievement unlocked', 'Profile 100% explored'); }
-}
-addEventListener('scroll', xp, {passive:true}); xp();
-
-/* ---------- reveal ---------- */
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-}), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
-$$('.rv').forEach((el, i) => { el.style.transitionDelay = (i % 5) * 60 + 'ms'; io.observe(el); });
-
-/* ---------- one achievement per section ---------- */
-const ACH = {story:['🎮','Story mode'], leadership:['👥','Squad leader'], trophies:['🏆','Trophy hunter'], quests:['🎯','Side quests found']};
-const so = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { const a = ACH[e.target.id]; toast(a[0], 'Achievement unlocked', a[1]); so.unobserve(e.target); }
-}), {threshold:.35});
-Object.keys(ACH).forEach(id => so.observe(document.getElementById(id)));
-
-/* ---------- trophies unlock one by one ---------- */
-const to = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { $$('.tr').forEach((t, i) => setTimeout(() => t.classList.add('got'), RM ? 0 : 180 * i)); to.disconnect(); }
-}), {threshold:.3});
-to.observe($('.trophies'));
-
-/* ---------- flip level cards ---------- */
-$$('.lv:not(.locked)').forEach(card => {
-  const flip = () => { const on = card.classList.toggle('on'); card.setAttribute('aria-pressed', on); };
-  card.addEventListener('click', flip);
-  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
-});
-
-/* ---------- hero stats count up ---------- */
-if (!RM) $$('[data-count]').forEach(el => {
-  const n = +el.dataset.count; let i = 0; el.textContent = 0;
-  const t = setInterval(() => { el.textContent = ++i; if (i >= n) clearInterval(t); }, 1100 / n);
-});
-
-/* ---------- copy email ---------- */
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-copy]'); if (!b) return;
-  (navigator.clipboard ? navigator.clipboard.writeText(b.dataset.copy) : Promise.reject())
-    .then(() => toast('📋', 'Copied', b.dataset.copy)).catch(() => toast('📋', 'Email', b.dataset.copy));
-});
-
-/* ---------- business card ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  const overlay = $('#biz-overlay'), card = $('#biz-card');
-  const reset = () => ['--rx','--ry'].forEach(v => card.style.setProperty(v, 0)) || ['--mx','--my'].forEach(v => card.style.setProperty(v, 50));
-  function openCard(e){ e.preventDefault(); overlay.classList.add('active'); window.profileDialog ? window.profileDialog.open(overlay, e.currentTarget) : overlay.setAttribute('aria-hidden','false'); }
-  function closeCard(){ overlay.classList.remove('active'); window.profileDialog ? window.profileDialog.close() : overlay.setAttribute('aria-hidden','true'); reset(); }
-  $$('.biz-card-trigger').forEach(t => t.addEventListener('click', openCard));
-  $('#biz-close').addEventListener('click', closeCard);
-  overlay.addEventListener('click', e => { if (e.target === overlay || e.target.classList.contains('biz-card-wrapper')) closeCard(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('active')) closeCard(); });
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-    card.style.setProperty('--mx', x / r.width * 100); card.style.setProperty('--my', y / r.height * 100);
-    card.style.setProperty('--rx', (y / r.height - .5) * -5); card.style.setProperty('--ry', (x / r.width - .5) * 5);
-  });
-  card.addEventListener('mouseleave', reset);
-});
-</script>
+<script type="module" src="route.js"></script>
 </body>
 </html>
