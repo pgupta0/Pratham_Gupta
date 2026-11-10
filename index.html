@@ -87,7 +87,8 @@ main,footer,.topbar{position:relative;z-index:2}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 .topbar.solid{background:#070503CC;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 .tb{display:flex;align-items:center;justify-content:space-between;height:72px}
-.brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .nm{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.03em}
 .brand .pg{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:14px;background:linear-gradient(135deg,var(--signal),#ff8a4a);color:#120600}
 .nav{display:flex;align-items:center;gap:30px}
 .nav a{font-size:14px;color:var(--muted);transition:color .2s;position:relative}
@@ -95,7 +96,9 @@ main,footer,.topbar{position:relative;z-index:2}
 .nav a:not(.hire):hover{color:var(--text)}
 .nav a:not(.hire):hover::after{transform:scaleX(1);transform-origin:left}
 .nav a.hire{display:inline-flex;align-items:center;gap:8px;color:#0b0b0b;background:var(--text);padding:10px 16px;border-radius:999px;font-weight:600}
-@media(max-width:760px){.nav a.opt{display:none}.brand .nm{display:none}.nav{gap:18px}}
+@media(max-width:760px){.nav a.opt{display:none}.nav{gap:18px}.brand .nm{font-size:20px}}
+.nav a{white-space:nowrap}
+@media(max-width:420px){.nav{gap:14px}.nav a[href$="#story"]{display:none}.nav a.hire{padding:9px 13px}}
 
 /* ============ BUTTONS ============ */
 .btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid var(--line2);transition:background .25s,border-color .25s,color .25s;will-change:transform}
@@ -170,7 +173,7 @@ main,footer,.topbar{position:relative;z-index:2}
 .kick2 span{color:var(--muted)}
 .ct h3{font-size:clamp(42px,5vw,72px);font-weight:800;letter-spacing:-.035em;line-height:.95;max-width:12ch}
 .ct .role{margin-top:14px;font-size:clamp(17px,1.5vw,21px);font-weight:600;color:#fff;opacity:.92}
-.ct .why{margin-top:22px;padding-left:18px;border-left:2px solid var(--acc);font-size:clamp(16px,1.3vw,19px);line-height:1.5;color:#D9DCE4;max-width:40ch}
+.ct .why{margin-top:18px;padding-left:18px;border-left:2px solid var(--acc);font-size:clamp(16px,1.3vw,19px);line-height:1.5;color:#D9DCE4;max-width:40ch}
 .mets{display:flex;gap:40px;margin-top:30px;flex-wrap:wrap}
 .met b{display:block;font-family:var(--display);font-size:clamp(36px,3.6vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1;color:#fff}
 .met span{display:block;margin-top:6px;font-size:13.5px;color:var(--muted)}
@@ -178,7 +181,15 @@ main,footer,.topbar{position:relative;z-index:2}
 .prods a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;border-bottom:1px solid #ffffff33;padding-bottom:3px;transition:border-color .2s,color .2s}
 .prods a:hover{border-color:var(--acc);color:var(--acc)}
 .prods .ic{width:16px;height:16px;color:var(--acc)}
-.ct .btn{margin-top:30px}
+.ct .btn{margin-top:28px}
+.lab2{display:flex;align-items:center;gap:10px;margin-top:24px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.lab2::after{content:"";height:1px;width:60px;background:linear-gradient(90deg,var(--acc),transparent)}
+.ct .mets{margin-top:12px;gap:34px}
+.ct .met b{font-size:clamp(32px,3.2vw,48px)}
+.ups{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.up{display:inline-flex;align-items:center;gap:7px;padding:7px 13px 7px 10px;border-radius:999px;font-size:13.5px;font-weight:600;color:#fff;text-shadow:none;
+  background:color-mix(in srgb,var(--acc) 16%,#0000);border:1px solid color-mix(in srgb,var(--acc) 45%,transparent)}
+.up::before{content:"+";font-family:var(--mono);font-weight:700;color:var(--acc)}
 
 /* racing HUD: minimap */
 .hud{position:absolute;right:var(--pad);bottom:34px;display:flex;align-items:flex-end;gap:18px}
@@ -203,6 +214,7 @@ main,footer,.topbar{position:relative;z-index:2}
   .mets{gap:28px;margin-top:20px}
   .met b{font-size:34px}
   .jhead{top:82px}.jprog .track{width:100px}
+  .ct h3{font-size:34px}.ct .why{font-size:14.5px;margin-top:12px}.lab2{margin-top:14px;font-size:10px}.ct .mets{gap:18px;margin-top:8px}.ct .met b{font-size:24px}.ct .met span{font-size:12px}.ups{gap:6px;margin-top:8px}.up{font-size:12px;padding:5px 10px 5px 8px}
 }
 @media(max-width:520px){.jhead .lbl{display:none}.kick2{font-size:11.5px}}
 
@@ -490,7 +502,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <header class="topbar" id="topbar">
   <div class="wrap tb">
-    <a class="brand" href="#top" aria-label="Pratham Gupta, back to top"><span class="pg">PG</span><span class="nm">Pratham Gupta</span></a>
+    <a class="brand" href="#top" aria-label="Pratham Gupta, back to top"><span class="nm">Pratham</span></a>
     <nav class="nav" aria-label="Main">
       <a href="#story">Story</a>
       <a class="opt" href="#leadership">Leadership</a>
@@ -535,84 +547,99 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </section>
 
 <!-- ============ THE ROUTE ============ -->
-<section class="journey" id="story" aria-label="My journey, told as a night drive">
+<section class="journey" id="story" aria-label="My journey, told as a race with pit stops">
   <div class="stage" id="stage">
-    <div class="jhead"><div class="wrap"><span class="mono lbl">The route so far</span><div class="jprog mono"><span id="jstop">Stop 01 / 07</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
+    <div class="jhead"><div class="wrap"><span class="mono lbl">The race so far</span><div class="jprog mono"><span id="jstop">Pit 01 / 07</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
 
     <article class="chap" data-i="0" style="--acc:#FF8A3D">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">01</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="graduation-cap"></svg><img src="images/logos/dtu.png" alt="Delhi Technological University logo" onerror="this.remove()"></span><div class="kick2">Stop 01 <span>· until 2023</span></div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="graduation-cap"></svg><img src="images/logos/dtu.png" alt="Delhi Technological University logo" onerror="this.remove()"></span><div class="kick2">Pit stop 01 <span>· until 2023</span></div></div>
         <h3>Delhi Technological University</h3>
         <div class="role">BA (Hons) Economics</div>
-        <p class="why">Economics taught me that every system runs on incentives. I still start every problem by asking who gains and who pays.</p>
+        <p class="why">Every system runs on incentives. I start by asking who gains and who pays.</p>
+        <div class="lab2">Result</div>
         <div class="mets"><div class="met"><b data-to="84.6" data-suf="%" data-dec="1">84.6%</b><span>final score</span></div></div>
+        <div class="lab2">Upgrades fitted</div>
+        <div class="ups"><span class="up">Economic reasoning</span><span class="up">Research</span><span class="up">Data analysis</span></div>
       </div></div>
     </article>
 
     <article class="chap" data-i="1" style="--acc:#FFC23D">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">02</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="bus"></svg><img src="images/logos/himanshu-travel-line.png" alt="Himanshu Travel Line logo" onerror="this.remove()"></span><div class="kick2">Stop 02 <span>· 2023–25</span></div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="bus"></svg><img src="images/logos/himanshu-travel-line.png" alt="Himanshu Travel Line logo" onerror="this.remove()"></span><div class="kick2">Pit stop 02 <span>· 2023–25</span></div></div>
         <h3>Himanshu Travel Line</h3>
         <div class="role">Operations, growth &amp; key accounts</div>
-        <p class="why">Running a bus fleet taught me that customers don't buy the cheapest seat. They buy the bus that shows up.</p>
-        <div class="mets"><div class="met"><b data-to="2.5" data-pre="₹" data-suf=" Cr" data-dec="1">₹2.5 Cr</b><span>new B2B business</span></div><div class="met"><b data-to="26" data-pre="+" data-suf="%">+26%</b><span>more buses ready to run</span></div></div>
+        <p class="why">Customers don't buy the cheapest seat. They buy the bus that shows up.</p>
+        <div class="lab2">Result</div>
+        <div class="mets"><div class="met"><b data-to="2.5" data-pre="₹" data-suf=" Cr" data-dec="1">₹2.5 Cr</b><span>new B2B business</span></div><div class="met"><b data-to="26" data-pre="+" data-suf="%">+26%</b><span>more buses ready to run</span></div><div class="met"><b data-to="7">7</b><span>contracts won or grown</span></div></div>
+        <div class="lab2">Upgrades fitted</div>
+        <div class="ups"><span class="up">B2B sales</span><span class="up">Key accounts</span><span class="up">Fleet operations</span><span class="up">Pricing</span></div>
       </div></div>
     </article>
 
     <article class="chap" data-i="2" style="--acc:#6BE675">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">03</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="badge-check"></svg><img src="images/logos/lean-six-sigma.png" alt="Lean Six Sigma Green Belt badge" onerror="this.remove()"></span><div class="kick2">Stop 03 <span>· certified</span></div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="badge-check"></svg><img src="images/logos/lean-six-sigma.png" alt="Lean Six Sigma Green Belt badge" onerror="this.remove()"></span><div class="kick2">Pit stop 03 <span>· certified</span></div></div>
         <h3>Lean Six Sigma Green Belt</h3>
-        <div class="role">Process improvement, certified</div>
-        <p class="why">It put a name to what I'd been doing by instinct: measure the leak, fix the cause, then make the fix stick.</p>
+        <div class="role">Process improvement</div>
+        <p class="why">Measure the leak, fix the cause, then make the fix stick.</p>
+        <div class="lab2">Result</div>
+        <div class="mets"><div class="met"><b>Green Belt</b><span>certified</span></div></div>
+        <div class="lab2">Upgrades fitted</div>
+        <div class="ups"><span class="up">DMAIC</span><span class="up">Root-cause analysis</span><span class="up">Process mapping</span><span class="up">Statistical control</span></div>
       </div></div>
     </article>
 
     <article class="chap" data-i="3" style="--acc:#FF4F7B">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">04</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="landmark"></svg><img src="images/logos/bitsom.png" alt="BITS School of Management logo" onerror="this.remove()"></span><div class="kick2">Stop 04 <span>· 2025–27</span></div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="landmark"></svg><img src="images/logos/bitsom.png" alt="BITS School of Management logo" onerror="this.remove()"></span><div class="kick2">Pit stop 04 <span>· 2025–27</span></div></div>
         <h3>BITS School of Management</h3>
         <div class="role">MBA · Mumbai</div>
-        <p class="why">Two years among builders and operators: a strategy is only as good as the plan that carries it out.</p>
+        <p class="why">A strategy is only as good as the plan that carries it out.</p>
+        <div class="lab2">Result</div>
+        <div class="mets"><div class="met"><b data-to="2" data-suf="×">2×</b><span>Flipkart WiRED semi-finalist</span></div><div class="met"><b>Top 30</b><span>Tata Imagination</span></div><div class="met"><b data-to="12" data-pre="₹" data-suf=" L">₹12 L</b><span>sponsorship raised</span></div></div>
+        <div class="lab2">Upgrades fitted</div>
+        <div class="ups"><span class="up">Strategy</span><span class="up">Marketing</span><span class="up">E-commerce</span><span class="up">Negotiation</span></div>
       </div></div>
     </article>
 
     <article class="chap" data-i="4" style="--acc:#9B7BFF">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">05</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="warehouse"></svg><img src="images/logos/bigbasket.png" alt="BigBasket logo" onerror="this.remove()"></span><div class="kick2">Stop 05 <span>· Apr–Jun 2026</span></div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="warehouse"></svg><img src="images/logos/bigbasket.png" alt="BigBasket logo" onerror="this.remove()"></span><div class="kick2">Pit stop 05 <span>· Apr–Jun 2026</span></div></div>
         <h3>BigBasket</h3>
         <div class="role">Strategic Initiatives Intern</div>
-        <p class="why">Stock was leaking through returns nobody tracked. One daily view let the team see the loss the same day.</p>
-        <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>stock written off</span></div></div>
+        <p class="why">Stock was leaking through returns nobody tracked.</p>
+        <div class="lab2">Result</div>
+        <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>stock written off</span></div><div class="met"><b>Same day</b><span>to spot a loss, was 2 days</span></div></div>
+        <div class="lab2">Upgrades fitted</div>
+        <div class="ups"><span class="up">Inventory control</span><span class="up">Loss analysis</span><span class="up">Process design</span><span class="up">Stakeholder alignment</span></div>
       </div></div>
     </article>
 
     <article class="chap" data-i="5" style="--acc:#3DA9FF">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">06</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="cpu"></svg></span><div class="kick2">Stop 06 <span>· now</span></div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="cpu"></svg></span><div class="kick2">Pit stop 06 <span>· now</span></div></div>
         <h3>Building with AI</h3>
         <div class="role">Product builder</div>
-        <p class="why">Now I build the fix myself, as products people can actually use.</p>
-        <div class="prods">
-          <a href="portfolio.html"><svg class="ic" data-lucide="truck"></svg>Transit One</a>
-          <a href="portfolio.html"><svg class="ic" data-lucide="line-chart"></svg>FinBuddy</a>
-          <a href="portfolio.html"><svg class="ic" data-lucide="map"></svg>Crave Command Center</a>
-          <a href="portfolio.html"><svg class="ic" data-lucide="leaf"></svg>Chhatri</a>
-        </div>
-        <a class="btn solid magnet" href="portfolio.html">Explore the products <i data-lucide="arrow-up-right" class="ic"></i></a>
+        <p class="why">Now I build the fix myself.</p>
+        <div class="lab2">Result</div>
+        <div class="mets"><div class="met"><b data-to="4">4</b><span>products built</span></div><div class="met"><b data-to="1">1</b><span>live and public</span></div></div>
+        <div class="lab2">Upgrades fitted</div>
+        <div class="ups"><span class="up">Product thinking</span><span class="up">Rapid prototyping</span><span class="up">LLMs &amp; RAG</span><span class="up">UX</span></div>
+        <a class="btn solid magnet" href="portfolio.html">Open the garage <i data-lucide="arrow-up-right" class="ic"></i></a>
       </div></div>
     </article>
 
     <article class="chap" data-i="6" style="--acc:#2EF2C3">
       <div class="wrap"><div class="ct">
         <span class="bignum" aria-hidden="true">07</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="flag"></svg></span><div class="kick2">Next stop</div></div>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="flag"></svg></span><div class="kick2">Next pit stop</div></div>
         <h3>Your team.</h3>
         <div class="role">Strategy, marketing &amp; operations</div>
         <p class="why">Bring the messy problem. I'll find the friction.</p>

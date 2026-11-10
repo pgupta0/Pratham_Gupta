@@ -1,7 +1,8 @@
 /* The Route — Pratham Gupta's journey as a night drive through the city.
    One loop: GSAP's ticker drives Lenis smooth scroll and the three.js render.
-   Scroll picks the stop; a damped camera follows an original street-racing car
-   along an elevated neon highway, with a cinematic shot at every stop. */
+   Scroll picks the stop; a damped camera follows an original open-wheel race car
+   along an elevated neon highway: every stop is a pit stop. After the drive the
+   camera cuts to the garage, where the car comes apart as you scroll. */
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -9,6 +10,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { buildF1Car, buildGarage } from './car.js';
 
 const gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -57,51 +59,6 @@ function glowTexture() {
   r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.22, 'rgba(255,255,255,.7)'); r.addColorStop(1, 'rgba(255,255,255,0)');
   g.fillStyle = r; g.fillRect(0, 0, 64, 64);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
-}
-
-/* An original low-slung street-racing coupe, built from simple shapes. */
-function buildCar() {
-  const car = new THREE.Group(), body = new THREE.Group();
-  const paint = new THREE.MeshPhysicalMaterial({ color: '#D9440F', metalness: .45, roughness: .32, clearcoat: 1, clearcoatRoughness: .06 });
-  const carbon = new THREE.MeshPhysicalMaterial({ color: '#0c0c0e', metalness: .5, roughness: .35, clearcoat: .6 });
-  const glass = new THREE.MeshPhysicalMaterial({ color: '#05070a', metalness: .9, roughness: .05, clearcoat: 1 });
-  const extrude = (pts, depth, mat, bevel = .06) => {
-    const sh = new THREE.Shape(pts.map(([x, y]) => new THREE.Vector2(x, y)));
-    const g = new THREE.ExtrudeGeometry(sh, { depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel * .8, bevelSegments: 4, curveSegments: 8 });
-    g.translate(0, 0, -depth / 2); return new THREE.Mesh(g, mat);
-  };
-  // side profile (x = length, y = height), wedge nose, long hood, short tail
-  body.add(extrude([[2.15, .26], [2.12, .44], [1.7, .55], [.85, .64], [-1.55, .7], [-2.02, .72], [-2.12, .52], [-2.1, .26], [-1.9, .16], [1.95, .16]], 1.72, paint, .09));
-  body.add(extrude([[.95, .62], [.38, .98], [-.62, 1.02], [-1.45, .72], [-1.5, .66], [.95, .62]], 1.36, glass, .07));
-  // stripe over hood and roof
-  const stripe = extrude([[2.05, .5], [1.6, .6], [.88, .67], [.4, 1.02], [-.6, 1.06], [-1.45, .76], [-2.0, .76], [-2.0, .7], [-1.45, .7], [-.6, 1.0], [.38, .96], [.86, .61], [1.6, .54], [2.05, .44]], .26, new THREE.MeshPhysicalMaterial({ color: '#111114', metalness: .3, roughness: .3, clearcoat: 1 }), .02);
-  stripe.position.y = .02; body.add(stripe);
-  // rear wing
-  const wing = new THREE.Mesh(new THREE.BoxGeometry(.42, .05, 1.78), carbon); wing.position.set(-1.92, 1.02, 0);
-  [-.55, .55].forEach(z => { const st = new THREE.Mesh(new THREE.BoxGeometry(.08, .28, .05), carbon); st.position.set(-1.9, .86, z); body.add(st); });
-  // front splitter + side skirts
-  const split = new THREE.Mesh(new THREE.BoxGeometry(.3, .04, 1.84), carbon); split.position.set(2.08, .18, 0);
-  [-.9, .9].forEach(z => { const sk = new THREE.Mesh(new THREE.BoxGeometry(2.6, .1, .06), carbon); sk.position.set(0, .22, z); body.add(sk); });
-  body.add(wing, split);
-  // wheels
-  const tyre = new THREE.MeshStandardMaterial({ color: '#0a0a0b', roughness: .9 });
-  const rim = new THREE.MeshPhysicalMaterial({ color: '#d7d9de', metalness: 1, roughness: .2 });
-  const wheels = [];
-  [[1.32, .86], [1.32, -.86], [-1.38, .86], [-1.38, -.86]].forEach(([x, z]) => {
-    const w = new THREE.Group();
-    const t = new THREE.Mesh(new THREE.CylinderGeometry(.36, .36, .3, 24), tyre); t.rotation.x = Math.PI / 2;
-    const r = new THREE.Mesh(new THREE.CylinderGeometry(.24, .24, .32, 10), rim); r.rotation.x = Math.PI / 2;
-    w.add(t, r); w.position.set(x, .36, z); body.add(w); wheels.push(w);
-  });
-  // lights
-  const head = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ffffff').multiplyScalar(3) });
-  [-.58, .58].forEach(z => { const h = new THREE.Mesh(new THREE.BoxGeometry(.06, .07, .46), head); h.position.set(2.13, .45, z); body.add(h); });
-  const tailMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ff1a12').multiplyScalar(3) });
-  const tail = new THREE.Mesh(new THREE.BoxGeometry(.05, .06, 1.6), tailMat); tail.position.set(-2.13, .6, 0); body.add(tail);
-  body.rotation.y = -Math.PI / 2; // length along +z, so lookAt() points the nose forward
-  body.scale.setScalar(.6);
-  car.add(body);
-  return { car, body, wheels, paint };
 }
 
 function buildScene() {
@@ -170,7 +127,7 @@ function buildScene() {
   const roadFrag = `
     #include <fog_pars_fragment>
     #define NS ${N}
-    uniform float uProgress, uTime, uReveal, uCarU, uMode;
+    uniform float uProgress, uTime, uReveal, uCarU, uMode, uPitHalf;
     uniform vec3 uCols[NS]; uniform float uStops[NS];
     varying vec2 vUv;
     vec3 pal(float x){ vec3 c = uCols[0]; for(int i = 0; i < NS - 1; i++) c = mix(c, uCols[i+1], smoothstep(uStops[i], uStops[i+1], x)); return c; }
@@ -197,6 +154,15 @@ function buildScene() {
         float lane = step(abs(y - 0.5), 0.012) * step(fract(x * 340.0), 0.5);
         c = mix(asphalt, mix(vec3(0.12, 0.11, 0.13), lit, done), edge);
         c = mix(c, mix(vec3(0.2, 0.18, 0.16), vec3(0.95, 0.85, 0.6), done), lane);
+        // pit box at every stop: outlined in the stop's colour, with a faint fill
+        for (int i = 0; i < NS; i++) {
+          float d = abs(x - uStops[i]);
+          if (d < uPitHalf) {
+            float ln = step(uPitHalf - 0.0007, d) + step(abs(y - 0.08), 0.014) + step(abs(y - 0.92), 0.014);
+            float stripe = step(0.5, fract((x - uStops[i]) * 900.0 + y * 6.0)) * step(abs(y - 0.5), 0.3) * 0.08;
+            c = mix(c + uCols[i] * (0.05 + stripe), uCols[i] * 1.3, clamp(ln, 0.0, 1.0));
+          }
+        }
       } else {
         float strip = smoothstep(0.72, 0.86, y);
         c = mix(vec3(0.035, 0.032, 0.034), mix(vec3(0.09, 0.08, 0.1), lit, done), strip);
@@ -207,7 +173,7 @@ function buildScene() {
       #include <fog_fragment>
     }`;
   const roadMat = mode => {
-    const u = THREE.UniformsUtils.merge([THREE.UniformsLib.fog, { uProgress: { value: 0 }, uTime: { value: 0 }, uReveal: { value: 0 }, uCarU: { value: 0 }, uMode: { value: mode } }]);
+    const u = THREE.UniformsUtils.merge([THREE.UniformsLib.fog, { uProgress: { value: 0 }, uTime: { value: 0 }, uReveal: { value: 0 }, uCarU: { value: 0 }, uMode: { value: mode }, uPitHalf: { value: 4 / curve.getLength() } }]);
     u.uCols = { value: ACC }; u.uStops = { value: stopT };
     return new THREE.ShaderMaterial({ uniforms: u, vertexShader: roadVert, fragmentShader: roadFrag, fog: true, side: THREE.DoubleSide });
   };
@@ -272,8 +238,17 @@ function buildScene() {
     g.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tan);
     const mat = new THREE.MeshBasicMaterial({ color: C_JAM.clone() });
     const W = ROAD_W + 1, H = 3.4, T = .09;
-    const parts = [[T, H, T, -W / 2, H / 2], [T, H, T, W / 2, H / 2], [W + T, T, T, 0, H]];
-    parts.forEach(([w, h, d, x, y]) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y, 0); g.add(m); });
+    const frame = [[T, H, T, -W / 2, H / 2], [T, H, T, W / 2, H / 2], [W + T, T, T, 0, H]];
+    frame.forEach(([w, h, d, x, y]) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y, 0); g.add(m); });
+    // start-light gantry: five lights that go red one by one, then out
+    const gantry = new THREE.Mesh(new THREE.BoxGeometry(2.6, .42, .22), new THREE.MeshStandardMaterial({ color: '#0d0c0e', roughness: .6 }));
+    gantry.position.set(0, H + .36, 0); g.add(gantry);
+    const lights = [];
+    for (let k = 0; k < 5; k++) {
+      const lm = new THREE.MeshBasicMaterial({ color: new THREE.Color('#2a0806') });
+      [-1, 1].forEach(face => { const l = new THREE.Mesh(new THREE.CircleGeometry(.13, 20), lm); l.position.set(-1 + k * .5, H + .36, face * .115); if (face < 0) l.rotation.y = Math.PI; g.add(l); });
+      lights.push(lm);
+    }
     const curtain = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.ShaderMaterial({
       transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
       uniforms: { uCol: { value: C_JAM.clone() }, uA: { value: .25 }, uTime: { value: 0 } },
@@ -292,7 +267,7 @@ function buildScene() {
       w.position.y = H / 2; g.add(w); return w;
     });
     g.add(curtain, beam); scene.add(g);
-    return { g, mat, curtain, beam, waves, tan, acc: ACC[i], side: sideAt(stopT[i]), fix: 0, glowNow: 0, kick: 0 };
+    return { g, mat, curtain, beam, waves, lights, seq: false, tan, acc: ACC[i], side: sideAt(stopT[i]), fix: 0, glowNow: 0, kick: 0 };
   });
 
   /* ---- traffic: red brake lights jammed at each stop, which straighten into flowing lanes ---- */
@@ -305,24 +280,28 @@ function buildScene() {
   scene.add(new THREE.Points(jamGeo, new THREE.PointsMaterial({ size: mobile ? .22 : .2, map: sprite, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })));
 
   /* ---- the car ---- */
-  const C = buildCar();
-  const carLight = new THREE.PointLight('#ffd7a0', 14, 12, 2); carLight.position.set(0, .8, 4.2); C.car.add(carLight);
-  const under = new THREE.Mesh(new THREE.PlaneGeometry(2, 3.2), new THREE.MeshBasicMaterial({ map: sprite, color: ACC[0].clone(), transparent: true, opacity: .32, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const F1 = buildF1Car();
+  const C = { car: new THREE.Group(), body: F1.car, wheels: F1.wheels };
+  F1.car.scale.setScalar(.62); C.car.add(F1.car);
+  const carLight = new THREE.PointLight('#ffd7a0', 12, 10, 2); carLight.position.set(0, 1.4, 2.6); C.car.add(carLight);
+  const under = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 3.6), new THREE.MeshBasicMaterial({ map: sprite, color: ACC[0].clone(), transparent: true, opacity: .3, blending: THREE.AdditiveBlending, depthWrite: false }));
   under.rotation.x = -Math.PI / 2; under.position.y = .03; C.car.add(under);
-  const beamMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ffe8c4').multiplyScalar(.06), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
-  const hb = new THREE.Mesh(new THREE.ConeGeometry(1.1, 6, 24, 1, true), beamMat);
-  hb.rotation.x = -Math.PI / 2; hb.position.set(0, .35, 4.4); C.car.add(hb);
   scene.add(C.car);
 
-  // tail-light streaks: two ribbons rebuilt behind the car every frame
+  // light trails: the red rain light in the middle, wing-tip trails in the stop's colour
   const TL = 70;
-  const trail = [-1, 1].map(sd => {
+  const trail = [[0, .22, 1], [-.35, .56, 0], [.35, .56, 0]].map(([off, h, red]) => {
     const g = new THREE.BufferGeometry(), p = new Float32Array((TL + 1) * 2 * 3), c = new Float32Array((TL + 1) * 2 * 3), idx = [];
     for (let i = 0; i < TL; i++) { const k = i * 2; idx.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
     g.setAttribute('position', new THREE.BufferAttribute(p, 3)); g.setAttribute('color', new THREE.BufferAttribute(c, 3)); g.setIndex(idx);
     const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
-    m.frustumCulled = false; scene.add(m); return { g, p, c, sd };
+    m.frustumCulled = false; scene.add(m); return { g, p, c, off, h, red };
   });
+
+  /* ---- the garage, far behind the start line; the camera cuts here after the drive ---- */
+  const GPOS = new THREE.Vector3(0, GROUND + .02, 150);
+  const garage = buildGarage(); garage.position.copy(GPOS); scene.add(garage);
+  const GC = buildF1Car(); GC.car.position.copy(GPOS); GC.car.rotation.y = -.5; scene.add(GC.car);
 
   /* ---- speed lines ---- */
   const SL = mobile ? 70 : 160, slPos = new Float32Array(SL * 6), slCol = new Float32Array(SL * 6), slSeed = [];
@@ -403,21 +382,25 @@ function buildScene() {
 
   function burst(i) {
     const s = stations[i]; if (!s) return;
-    s.kick = 1;
-    s.waves.forEach((w, k) => {
-      gsap.fromTo(w.scale, { x: 1, y: 1, z: 1 }, { x: 5 + k * 3, y: 5 + k * 3, z: 5 + k * 3, duration: 2, delay: k * .2, ease: 'expo.out', overwrite: true });
-      gsap.fromTo(w.material, { opacity: .9 }, { opacity: 0, duration: 2, delay: k * .2, ease: 'power2.out', overwrite: true });
+    // lights: one red at a time... then lights out, and the stop's colour
+    s.seq = true;
+    s.lights.forEach((l, k) => { l.color.set('#2a0806'); gsap.delayedCall(k * .2, () => l.color.set('#ff1a0d').multiplyScalar(2.4)); });
+    gsap.delayedCall(1.3, () => { s.lights.forEach(l => l.color.copy(s.acc).multiplyScalar(2.2)); s.kick = 1; s.seq = false;
+      s.waves.forEach((w, k) => {
+        gsap.fromTo(w.scale, { x: 1, y: 1, z: 1 }, { x: 5 + k * 3, y: 5 + k * 3, z: 5 + k * 3, duration: 2, delay: k * .2, ease: 'expo.out', overwrite: true });
+        gsap.fromTo(w.material, { opacity: .9 }, { opacity: 0, duration: 2, delay: k * .2, ease: 'power2.out', overwrite: true });
+      });
     });
   }
 
-  return { renderer, scene, camera, composer, grade, curve, stopT, sideAt, palAt, stations, roadU, burst, car: C, under, carLight,
+  return { renderer, scene, camera, composer, grade, curve, stopT, sideAt, palAt, stations, roadU, burst, car: C, under, carLight, GPOS, GC,
     jPos, jCol, jamGeo, chaos, phase, PER, trail, TL, slPos, slCol, slGeo, slSeed, SL };
 }
 
 /* =====================================================================
    STATE DRIVEN BY SCROLL
    ===================================================================== */
-const S = { hero: 0, journey: 0, after: 0, mx: 0, my: 0 };
+const S = { hero: 0, journey: 0, after: 0, garage: 0, contact: 0, mx: 0, my: 0 };
 const chaps = $$('.chap');
 const story = $('#story');
 story.style.height = (N * 100 + 100) + 'svh';
@@ -425,6 +408,8 @@ story.style.height = (N * 100 + 100) + 'svh';
 ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom top', onUpdate: s => { S.hero = s.progress; } });
 ScrollTrigger.create({ trigger: story, start: 'top top', end: 'bottom bottom', onUpdate: s => { S.journey = s.progress; } });
 ScrollTrigger.create({ trigger: '#cases', start: 'top bottom', end: 'top 20%', onUpdate: s => { S.after = s.progress; } });
+ScrollTrigger.create({ trigger: '#cases', start: 'top 20%', endTrigger: '#offclock', end: 'bottom bottom', onUpdate: s => { S.garage = s.progress; } });
+ScrollTrigger.create({ trigger: '#contact', start: 'top 55%', end: 'top 10%', onUpdate: s => { S.contact = s.progress; } });
 
 const KX = [0, ...Array.from({ length: N }, (_, i) => i + .45), N];
 function camT(p) {
@@ -473,7 +458,7 @@ function countUp(el) {
 }
 function enterChapter(i) {
   const c = chaps[i]; if (!c) return;
-  const parts = c.querySelectorAll('.brandrow, h3, .role, .why, .met, .prods a, .ct .btn');
+  const parts = c.querySelectorAll('.brandrow, h3, .role, .why, .lab2, .met, .up, .ct .btn');
   gsap.fromTo(parts, { y: 34, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: RM ? 0 : .9, stagger: RM ? 0 : .07, ease: 'expo.out', overwrite: true });
   gsap.fromTo(c.querySelector('.bignum'), { xPercent: -8, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'expo.out' });
   gsap.fromTo(c.querySelector('.logo'), { scale: .5, rotate: -12 }, { scale: 1, rotate: 0, duration: .9, ease: 'back.out(2)' });
@@ -491,7 +476,7 @@ function updateChapters() {
   });
   if (idx !== active) {
     active = idx; enterChapter(idx);
-    $('#jstop').textContent = `Stop ${String(idx + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}`;
+    $('#jstop').textContent = `Pit ${String(idx + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}`;
     if (hudN) { hudN.innerHTML = `${String(idx + 1).padStart(2, '0')}<span> / ${String(N).padStart(2, '0')}</span>`; hudN.style.color = ACC_HEX[idx]; hudName.textContent = STOP_NAMES[idx]; }
     if (miniDone) miniDone.style.stroke = ACC_HEX[idx];
   }
@@ -525,7 +510,7 @@ function frame() {
   let carT = camT(jp);
   if (a > 0) carT = lerp(carT, Math.min(1, gl.stopT[N - 1] + .04), a);
   speed = lerp(speed, Math.abs(carT - lastCarT) / Math.max(dt, 1e-3), 1 - Math.exp(-dt * 6)); lastCarT = carT;
-  const sp = clamp(speed * 9);
+  const sp = S.after >= .5 ? 0 : clamp(speed * 9);
   curve.getPointAt(carT, fP); curve.getTangentAt(clamp(carT, 0, .999), tan); gl.sideAt(carT, side);
 
   // camera: blend the stop's photo-mode shot with a chase cam while driving
@@ -538,10 +523,20 @@ function frame() {
   tgtLook.copy(fP).addScaledVector(UP, .7).lerp(tmp.addScaledVector(UP, .8), 1 - dwell);
   const h = ease(clamp(S.hero));
   if (jp <= 0.0001 && h < 1) { tgtPos.lerpVectors(OVER_P, tgtPos, h); tgtLook.lerpVectors(OVER_L, tgtLook, h); }
-  if (a > 0) { tgtPos.lerp(END_P, a); tgtLook.lerp(END_L, a); }
+  if (a > 0) { tgtPos.lerp(END_P, smooth(0, .5, a)); tgtLook.lerp(END_L, smooth(0, .5, a)); }
+  const inGarage = a >= .5;
+  if (inGarage) {
+    // orbit the car while it comes apart
+    const g = S.garage, th = lerp(-.7, .9, g), r = lerp(10.5, 8.2, smooth(0, .5, g)), G = gl.GPOS;
+    tgtPos.set(G.x + Math.sin(th) * r, G.y + 2.3 + Math.sin(g * Math.PI) * 1.8, G.z + Math.cos(th) * r);
+    tgtLook.set(G.x, G.y + .8, G.z);
+    if (!gl.wasGarage) { camPos.copy(tgtPos); camLook.copy(tgtLook); }
+  }
+  gl.wasGarage = inGarage;
   tgtPos.x += Math.sin(time * .25) * .25 + S.mx * 1.2;
   tgtPos.y += Math.cos(time * .2) * .2 - S.my * .7;
   if (introCam > 0) { tgtPos.y += introCam * 24; tgtPos.z += introCam * 30; }
+  if (inGarage) { tgtPos.x -= S.mx * 1.2 * .6; }
   const k = window.__snap ? 1 : 1 - Math.exp(-dt * (RM ? 60 : 3));
   camPos.lerp(tgtPos, k); camLook.lerp(tgtLook, k);
   camera.position.copy(camPos); camera.lookAt(camLook);
@@ -551,7 +546,7 @@ function frame() {
   camera.rotateZ(roll);
   camera.fov = lerp(camera.fov, 46 + sp * 12, 1 - Math.exp(-dt * 3)); camera.updateProjectionMatrix();
 
-  const wantShift = !isMobile() && jp > 0 && jp < 1 ? .17 * (1 - a) : 0;
+  const wantShift = isMobile() ? 0 : inGarage ? .2 : (jp > 0 && jp < 1 ? .17 * (1 - a) : 0);
   viewShift = lerp(viewShift, wantShift, 1 - Math.exp(-dt * 4));
   const w = innerWidth, hh = innerHeight;
   camera.setViewOffset(w, hh, -w * viewShift, 0, w, hh);
@@ -562,7 +557,13 @@ function frame() {
   Cc.car.lookAt(tmp.copy(fP).add(tan));
   carRoll = lerp(carRoll, clamp(turn * 6, -.08, .08) * sp, 1 - Math.exp(-dt * 4));
   Cc.body.rotation.z = carRoll; Cc.body.position.y = Math.sin(time * 14) * .006 * (1 - sp);
-  Cc.wheels.forEach(wh => { wh.rotation.z -= speed * dt * 900; });
+  Cc.wheels.forEach(wh => { wh.rotation.x += speed * dt * 900; });
+  // garage car: exploded view while you read the sections below the drive
+  const ex = smooth(.1, .45, S.garage) * (1 - ease(clamp(S.contact)));
+  gl.GC.explode(ex, time);
+  gl.GC.car.rotation.y = -.5 + S.garage * .6;
+  scene.fog.density = lerp(.0135, .004, inGarage ? 1 : 0);
+  canvas.style.opacity = a < .5 ? 1 - smooth(0, .45, a) : (isMobile() ? .38 : .62) * smooth(.55, 1, a);
   gl.palAt(carT, palC); gl.under.material.color.copy(palC);
 
   gl.roadU.forEach(U => { U.uProgress.value = carT; U.uTime.value = time; U.uReveal.value = reveal; U.uCarU.value = carT; });
@@ -572,10 +573,11 @@ function frame() {
   gl.trail.forEach(tr => {
     for (let i = 0; i <= gl.TL; i++) {
       const tt = Math.max(0, carT - .0012 - i * len); curve.getPointAt(tt, tmp); gl.sideAt(tt, tmp2);
-      tmp.addScaledVector(tmp2, tr.sd * .48).addScaledVector(UP, .36);
+      tmp.addScaledVector(tmp2, tr.off).addScaledVector(UP, tr.h);
       const f = Math.pow(1 - i / gl.TL, 1.5) * (.25 + sp * 1.6);
       tr.p.set([tmp.x, tmp.y - .035, tmp.z, tmp.x, tmp.y + .035, tmp.z], i * 6);
-      tr.c.set([f * 1.4, f * .08, f * .05, f * 1.4, f * .08, f * .05], i * 6);
+      const cr = tr.red ? 1.4 : palC.r * .7, cg = tr.red ? .08 : palC.g * .7, cb = tr.red ? .05 : palC.b * .7;
+      tr.c.set([f * cr, f * cg, f * cb, f * cr, f * cg, f * cb], i * 6);
     }
     tr.g.attributes.position.needsUpdate = tr.g.attributes.color.needsUpdate = true;
   });
@@ -607,6 +609,7 @@ function frame() {
     s.curtain.material.uniforms.uA.value = .18 + s.glowNow * .25 + s.kick * .6;
     s.curtain.material.uniforms.uTime.value = time;
     s.beam.material.color.copy(col); s.beam.material.opacity = .16 + s.glowNow * .3;
+    if (!s.seq) s.lights.forEach(l => (s.fix > .5 ? l.color.copy(s.acc).multiplyScalar(2.2) : l.color.set('#2a0806')));
   });
 
   // traffic: a red jam at each checkpoint that blows apart, then flows in four lanes
@@ -649,8 +652,6 @@ addEventListener('resize', () => {
 });
 addEventListener('pointermove', e => { S.mx = e.clientX / innerWidth - .5; S.my = e.clientY / innerHeight - .5; }, { passive: true });
 
-// dim the 3D once the drive is done, so the rest of the page reads clean
-gsap.to('#gl', { opacity: .14, ease: 'none', scrollTrigger: { trigger: '#cases', start: 'top 75%', end: 'top 15%', scrub: true } });
 
 /* =====================================================================
    UI MOTION
