@@ -155,20 +155,26 @@ main,footer,.topbar{position:relative;z-index:2}
 .jhead .wrap{display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
 .jprog{display:flex;align-items:center;gap:14px}
 .jprog .track{width:160px;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
-.jprog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--signal),var(--fix))}
+.jprog .fill{height:100%;width:0;background:linear-gradient(90deg,#FF6B2C,#FFB224,#FF4FA3,#9B7BFF,#3DA9FF,#2EF2C3);background-size:160px 100%}
 .chap{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none;visibility:hidden}
 .chap .wrap{display:grid;grid-template-columns:minmax(0,520px) 1fr}
 .card{position:relative;pointer-events:auto;padding:34px 34px 30px;border-radius:24px;background:linear-gradient(160deg,#10131DE6,#0A0C13E6);border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 40px 90px -40px #000}
-.card .num{position:absolute;right:26px;top:14px;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;color:transparent;-webkit-text-stroke:1px #ffffff1c;letter-spacing:-.05em}
-.stop{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:22px}
-.stop i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#ffffff0a;border:1px solid var(--line2);color:var(--fix)}
+.card .num{position:absolute;right:26px;top:14px;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--acc) 45%,transparent);letter-spacing:-.05em}
+.card{border-top:2px solid color-mix(in srgb,var(--acc) 70%,transparent)}
+.stop{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-right:90px}
+.stop i{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;flex:none;color:#07080D;
+  background:linear-gradient(140deg,color-mix(in srgb,var(--acc) 70%,#fff),var(--acc));
+  box-shadow:0 12px 30px -10px var(--acc),inset 0 1px 0 #ffffff80}
+.stop i .ic{width:26px;height:26px;stroke-width:2.1}
+.stop b{display:block;font-family:var(--display);font-size:clamp(20px,1.9vw,26px);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:#fff}
+.stop .mono{display:block;margin-top:7px;font-size:12.5px;color:var(--acc);letter-spacing:.12em}
 .card h3{font-size:clamp(30px,3.2vw,46px);max-width:13ch}
 .card p.body{margin-top:16px;color:#C3C8D4;font-size:16px;max-width:42ch}
 .ff{margin-top:22px;display:grid;gap:10px}
 .ff div{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:baseline;font-size:14.5px;color:#D7DBE5}
 .ff b{font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
 .ff b::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
-.ff .fr b{color:var(--signal)}.ff .fx b{color:var(--fix)}
+.ff .fr b{color:#FF5A5A}.ff .fx b{color:var(--acc)}
 .mets{display:flex;gap:34px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
 .met b{display:block;font-family:var(--display);font-size:clamp(34px,3.4vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1}
 .met span{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
@@ -184,9 +190,9 @@ main,footer,.topbar{position:relative;z-index:2}
 .rail button::before{content:"";position:absolute;right:5px;top:-24px;width:2px;height:48px;background:var(--line2)}
 .rail button:first-child::before{display:none}
 .rail button.on{color:var(--text)}
-.rail button.on::after{border-color:#fff;background:#fff;box-shadow:0 0 0 6px #2EF2C333,0 0 18px #2EF2C3}
+.rail button.on::after{border-color:#fff;background:#fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent),0 0 20px var(--acc)}
 .rail button.done{color:var(--muted)}
-.rail button.done::after{border-color:var(--fix);background:var(--fix)}
+.rail button.done::after{border-color:var(--acc);background:var(--acc)}
 .rail button span{opacity:0;transform:translateX(8px);transition:all .3s}
 .rail:hover button span,.rail button.on span{opacity:1;transform:none}
 @media(max-width:900px){
@@ -201,7 +207,7 @@ main,footer,.topbar{position:relative;z-index:2}
   .mets{gap:24px;margin-top:18px;padding-top:16px}
   .jhead{top:82px}.jprog .track{width:90px}
 }
-@media(max-width:520px){.ff div{grid-template-columns:1fr;gap:2px;font-size:13.5px}.stop{margin-bottom:16px}.jhead .lbl{display:none}.card .num{display:none}}
+@media(max-width:520px){.ff div{grid-template-columns:1fr;gap:2px;font-size:13.5px}.stop{margin-bottom:16px;padding-right:0}.stop i{width:46px;height:46px;border-radius:13px}.stop i .ic{width:22px;height:22px}.stop b{font-size:19px}.jhead .lbl{display:none}.card .num{display:none}}
 
 /* ============ SECTION HEADS ============ */
 .sec{padding:clamp(90px,12vw,160px) 0}
@@ -540,10 +546,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="stage" id="stage">
     <div class="jhead"><div class="wrap"><span class="mono lbl">The route so far</span><div class="jprog mono"><span id="jstop">Stop 01 / 06</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
 
-    <article class="chap" data-i="0">
+    <article class="chap" data-i="0" style="--acc:#FF6B2C">
       <div class="wrap"><div class="card">
         <span class="num">01</span>
-        <div class="stop mono"><i><svg class="ic" data-lucide="graduation-cap"></svg></i>Delhi · until 2023</div>
+        <div class="stop"><i><svg class="ic" data-lucide="graduation-cap"></svg></i><div><b>Delhi Technological University</b><span class="mono">Until 2023 · Economics + Rotaract</span></div></div>
         <h3>Learning how systems, and people, work.</h3>
         <p class="body">Economics at DTU taught me to read a system. Rotaract taught me to run one.</p>
         <div class="ff"><div class="fr"><b>Friction</b>A big club with scattered effort.</div><div class="fx"><b>Fix</b>Clear roles, more events, one direction.</div></div>
@@ -551,10 +557,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div></div>
     </article>
 
-    <article class="chap" data-i="1">
+    <article class="chap" data-i="1" style="--acc:#FFB224">
       <div class="wrap"><div class="card">
         <span class="num">02</span>
-        <div class="stop mono"><i><svg class="ic" data-lucide="bus"></svg></i>Himanshu Travel Line · 2023–25</div>
+        <div class="stop"><i><svg class="ic" data-lucide="bus"></svg></i><div><b>Himanshu Travel Line</b><span class="mono">2023–25 · Fleet operations</span></div></div>
         <h3>Buses were winning on price alone.</h3>
         <p class="body">I ran operations, growth and key accounts for a fleet serving schools, colleges and hospitals.</p>
         <div class="ff"><div class="fr"><b>Friction</b>Price wars and unreliable service.</div><div class="fx"><b>Fix</b>Sell trust: GPS, cameras, on-time buses.</div></div>
@@ -562,10 +568,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div></div>
     </article>
 
-    <article class="chap" data-i="2">
+    <article class="chap" data-i="2" style="--acc:#FF4FA3">
       <div class="wrap"><div class="card">
         <span class="num">03</span>
-        <div class="stop mono"><i><svg class="ic" data-lucide="landmark"></svg></i>BITSoM, Mumbai · 2025–27</div>
+        <div class="stop"><i><svg class="ic" data-lucide="landmark"></svg></i><div><b>BITSoM, Mumbai</b><span class="mono">2025–27 · MBA</span></div></div>
         <h3>Strategy, tested under pressure.</h3>
         <p class="body">Mapped a food-delivery business end to end for Flipkart. Built a launch plan for Tata Consumer. Led sponsorship for the college fest.</p>
         <div class="ff"><div class="fr"><b>Friction</b>Big ideas that never meet the ground.</div><div class="fx"><b>Fix</b>Plans built from the customer to the dark store.</div></div>
@@ -573,10 +579,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div></div>
     </article>
 
-    <article class="chap" data-i="3">
+    <article class="chap" data-i="3" style="--acc:#9B7BFF">
       <div class="wrap"><div class="card">
         <span class="num">04</span>
-        <div class="stop mono"><i><svg class="ic" data-lucide="warehouse"></svg></i>BigBasket · Apr–Jun 2026</div>
+        <div class="stop"><i><svg class="ic" data-lucide="warehouse"></svg></i><div><b>BigBasket</b><span class="mono">Apr–Jun 2026 · Strategy intern</span></div></div>
         <h3>Stock was leaking, quietly.</h3>
         <p class="body">Losses showed up two days late, and nobody could say why. I traced them back to the shelf.</p>
         <div class="ff"><div class="fr"><b>Friction</b>Untracked returns, a two-day blind spot.</div><div class="fx"><b>Fix</b>One daily view of loss, seen the same day.</div></div>
@@ -584,10 +590,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div></div>
     </article>
 
-    <article class="chap" data-i="4">
+    <article class="chap" data-i="4" style="--acc:#3DA9FF">
       <div class="wrap"><div class="card">
         <span class="num">05</span>
-        <div class="stop mono"><i><svg class="ic" data-lucide="cpu"></svg></i>Building with AI · now</div>
+        <div class="stop"><i><svg class="ic" data-lucide="cpu"></svg></i><div><b>Building with AI</b><span class="mono">Now · Product builder</span></div></div>
         <h3>Now I build the fix myself.</h3>
         <p class="body">Working prototypes that turn real operating problems into products.</p>
         <div class="prods">
@@ -600,10 +606,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div></div>
     </article>
 
-    <article class="chap" data-i="5">
+    <article class="chap" data-i="5" style="--acc:#2EF2C3">
       <div class="wrap"><div class="card">
         <span class="num">06</span>
-        <div class="stop mono"><i><svg class="ic" data-lucide="flag"></svg></i>Next stop</div>
+        <div class="stop"><i><svg class="ic" data-lucide="flag"></svg></i><div><b>Next stop</b><span class="mono">Open to roles · 2027</span></div></div>
         <h3>Your team.</h3>
         <p class="body">Strategy, marketing, e-commerce or operations. Bring the messy problem.</p>
         <a class="btn solid magnet biz-card-trigger" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
@@ -611,12 +617,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </article>
 
     <nav class="rail" id="rail" aria-label="Journey stops">
-      <button type="button" data-go="0"><span>Delhi</span></button>
-      <button type="button" data-go="1"><span>The fleet</span></button>
-      <button type="button" data-go="2"><span>BITSoM</span></button>
-      <button type="button" data-go="3"><span>BigBasket</span></button>
-      <button type="button" data-go="4"><span>AI products</span></button>
-      <button type="button" data-go="5"><span>Next stop</span></button>
+      <button type="button" data-go="0" style="--acc:#FF6B2C"><span>Delhi</span></button>
+      <button type="button" data-go="1" style="--acc:#FFB224"><span>The fleet</span></button>
+      <button type="button" data-go="2" style="--acc:#FF4FA3"><span>BITSoM</span></button>
+      <button type="button" data-go="3" style="--acc:#9B7BFF"><span>BigBasket</span></button>
+      <button type="button" data-go="4" style="--acc:#3DA9FF"><span>AI products</span></button>
+      <button type="button" data-go="5" style="--acc:#2EF2C3"><span>Next stop</span></button>
     </nav>
   </div>
 </section>

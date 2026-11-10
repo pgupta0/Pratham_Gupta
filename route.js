@@ -39,6 +39,9 @@ document.addEventListener('click', e => {
    THREE.JS SCENE
    ===================================================================== */
 const C_SIGNAL = new THREE.Color('#FF5A1F'), C_FIX = new THREE.Color('#2EF2C3'), C_INK = new THREE.Color('#05060A');
+const C_JAM = new THREE.Color('#FF3B3B');
+// one colour per stop; the route blends through them, the cards use the same ones
+const ACC = ['#FF6B2C', '#FFB224', '#FF4FA3', '#9B7BFF', '#3DA9FF', '#2EF2C3'].map(c => new THREE.Color(c));
 const UP = new THREE.Vector3(0, 1, 0);
 const canvas = $('#gl');
 let gl = null;
@@ -90,15 +93,57 @@ function buildScene() {
   const nearestT = v => { let b = 0, bd = Infinity; samples.forEach((p, i) => { const d = p.distanceToSquared(v); if (d < bd) { bd = d; b = i; } }); return b / SAMPLES; };
   const stopT = STOPS.map(nearestT);
 
-  const SEG = 1400, RAD = 8;
-  const tubeGeo = new THREE.TubeGeometry(curve, SEG, 0.055, RAD, false);
-  const baseTube = new THREE.Mesh(tubeGeo, new THREE.MeshBasicMaterial({ color: '#7a2a10', transparent: true, opacity: .75 }));
-  const doneTube = new THREE.Mesh(tubeGeo, new THREE.MeshBasicMaterial({ color: C_FIX.clone().multiplyScalar(1.15) }));
-  doneTube.scale.setScalar(1.0); doneTube.renderOrder = 2;
-  scene.add(baseTube, doneTube);
-  // the finished part of the line gets its own copy so its draw range can grow
-  doneTube.geometry = tubeGeo.clone();
-  const drawDone = t => doneTube.geometry.setDrawRange(0, Math.floor(clamp(t) * SEG) * RAD * 6);
+  const routeVert = `
+    #include <fog_pars_vertex>
+    varying vec2 vUv; varying float vFacing;
+    void main(){
+      vUv = uv;
+      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+      vFacing = abs(dot(normalize(normalMatrix * normal), normalize(-mvPosition.xyz)));
+      gl_Position = projectionMatrix * mvPosition;
+      #include <fog_vertex>
+    }`;
+  const routeFrag = `
+    #include <fog_pars_fragment>
+    uniform float uProgress, uTime, uReveal, uHalo;
+    uniform vec3 uIdle; uniform vec3 uCols[6]; uniform float uStops[6];
+    varying vec2 vUv; varying float vFacing;
+    vec3 pal(float x){ vec3 c = uCols[0]; for(int i = 0; i < 5; i++) c = mix(c, uCols[i+1], smoothstep(uStops[i], uStops[i+1], x)); return c; }
+    void main(){
+      float x = vUv.x;
+      float done = 1.0 - smoothstep(uProgress - 0.002, uProgress, x);
+      vec3 col = pal(x);
+      float flow = pow(0.5 + 0.5 * sin(x * 190.0 - uTime * 5.5), 12.0);   // light running forward
+      float head = exp(-pow((x - uProgress) / 0.007, 2.0));                 // white-hot leading edge
+      float dash = step(0.5, fract(x * 260.0 + uTime * 0.4));               // the planned route ahead
+      float shown = step(x, uReveal);
+      vec3 c; float a;
+      if (uHalo > 0.5) {
+        float soft = pow(vFacing, 1.8);
+        c = col * (1.0 + flow * 1.4) + vec3(1.0) * head * 1.6;
+        a = soft * (done * (0.22 + flow * 0.4) + head);
+      } else {
+        vec3 lit = col * (1.2 + flow * 1.3) + vec3(1.0) * head * 2.2;
+        c = mix(uIdle * (0.5 + 0.5 * dash), lit, done);
+        a = mix((0.25 + 0.55 * dash) * shown, 1.0, done);
+      }
+      gl_FragColor = vec4(c, a);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+      #include <fog_fragment>
+    }`;
+  const routeMat = halo => {
+    const u = THREE.UniformsUtils.merge([THREE.UniformsLib.fog, { uProgress: { value: 0 }, uTime: { value: 0 }, uReveal: { value: 0 }, uHalo: { value: halo ? 1 : 0 }, uIdle: { value: new THREE.Color('#4A54B8') } }]);
+    u.uCols = { value: ACC }; u.uStops = { value: stopT };
+    return new THREE.ShaderMaterial({ uniforms: u, vertexShader: routeVert, fragmentShader: routeFrag, fog: true, transparent: true,
+      depthWrite: !halo, blending: halo ? THREE.AdditiveBlending : THREE.NormalBlending });
+  };
+  const routeCore = new THREE.Mesh(new THREE.TubeGeometry(curve, 1400, .065, 10, false), routeMat(false));
+  const routeHalo = new THREE.Mesh(new THREE.TubeGeometry(curve, 1400, .3, 12, false), routeMat(true));
+  routeHalo.renderOrder = 3;
+  scene.add(routeCore, routeHalo);
+  const routeU = [routeCore.material.uniforms, routeHalo.material.uniforms];
+  const palAt = (x, out) => { out.copy(ACC[0]); for (let i = 0; i < 5; i++) out.lerp(ACC[i + 1], smooth(stopT[i], stopT[i + 1], x)); return out; };
 
   // dotted rail ties under the line, like a transit map
   const tieGeo = new THREE.BufferGeometry(), ties = [];
@@ -110,7 +155,7 @@ function buildScene() {
   const stations = STOPS.map((p, i) => {
     const g = new THREE.Group(); g.position.copy(p);
     const tan = curve.getTangentAt(stopT[i]);
-    const ringMat = new THREE.MeshBasicMaterial({ color: C_SIGNAL.clone(), transparent: true, opacity: .95 });
+    const ringMat = new THREE.MeshBasicMaterial({ color: C_JAM.clone(), transparent: true, opacity: .95 });
     const ring = new THREE.Mesh(new THREE.TorusGeometry(1.25, .035, 8, 72), ringMat);
     ring.lookAt(p.clone().add(tan)); ring.position.set(0, 0, 0);
     ring.quaternion.copy(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), tan));
@@ -122,8 +167,14 @@ function buildScene() {
     beam.position.y = 20;
     const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: sprite, color: C_SIGNAL.clone(), transparent: true, opacity: .55, blending: THREE.AdditiveBlending, depthWrite: false }));
     halo.scale.setScalar(2.4);
+    // shockwaves fired when you arrive at this stop
+    const waves = [0, 1].map(() => {
+      const w = new THREE.Mesh(new THREE.RingGeometry(1.2, 1.32, 96),
+        new THREE.MeshBasicMaterial({ color: ACC[i].clone(), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+      w.quaternion.copy(ring.quaternion); g.add(w); return w;
+    });
     g.add(ring, ring2, core, beam, halo); scene.add(g);
-    return { g, ring, ring2, ringMat, beam, halo, tan, fix: 0, glowNow: 0 };
+    return { g, ring, ring2, ringMat, beam, halo, waves, tan, acc: ACC[i], fix: 0, glowNow: 0, kick: 0 };
   });
 
   /* ---- friction particles: a jam at every stop that straightens into lanes ---- */
@@ -143,7 +194,7 @@ function buildScene() {
   stations.forEach(s => { s.side = sideOf(s.tan); });
 
   /* ---- traffic pulses on the line ---- */
-  const PN = 46, pT = [], pS = [];
+  const PN = mobile ? 50 : 90, pT = [], pS = [];
   const pPos = new Float32Array(PN * 3), pCol = new Float32Array(PN * 3);
   for (let k = 0; k < PN; k++) { pT.push(Math.random()); pS.push(.006 + Math.random() * .012); }
   const pulseGeo = new THREE.BufferGeometry();
@@ -155,11 +206,11 @@ function buildScene() {
   const pod = new THREE.Group();
   const podBody = new THREE.Mesh(new THREE.CapsuleGeometry(.2, .75, 6, 16), new THREE.MeshBasicMaterial({ color: '#E9FFF9' }));
   podBody.rotation.x = Math.PI / 2;
-  const podHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: sprite, color: C_FIX, transparent: true, opacity: .9, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const podHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: sprite, color: C_FIX.clone(), transparent: true, opacity: .9, blending: THREE.AdditiveBlending, depthWrite: false }));
   podHalo.scale.setScalar(1.3);
-  const podLight = new THREE.PointLight(C_FIX, 26, 16, 2);
+  const podLight = new THREE.PointLight(C_FIX.clone(), 30, 16, 2);
   pod.add(podBody, podHalo, podLight); scene.add(pod);
-  const TRAIL = 60, trailPos = new Float32Array(TRAIL * 3), trailCol = new Float32Array(TRAIL * 3);
+  const TRAIL = 90, trailPos = new Float32Array(TRAIL * 3), trailCol = new Float32Array(TRAIL * 3);
   const trailGeo = new THREE.BufferGeometry();
   trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
   trailGeo.setAttribute('color', new THREE.BufferAttribute(trailCol, 3));
@@ -221,7 +272,16 @@ function buildScene() {
     composer.addPass(new OutputPass());
   }
 
-  return { renderer, scene, camera, composer, curve, stopT, stations, drawDone, jPos, jCol, jamGeo, chaos, phase, PER,
+  function burst(i) {
+    const s = stations[i]; if (!s) return;
+    s.kick = 1;
+    s.waves.forEach((w, k) => {
+      gsap.fromTo(w.scale, { x: 1, y: 1, z: 1 }, { x: 6 + k * 3, y: 6 + k * 3, z: 6 + k * 3, duration: 2, delay: k * .2, ease: 'expo.out', overwrite: true });
+      gsap.fromTo(w.material, { opacity: .9 }, { opacity: 0, duration: 2, delay: k * .2, ease: 'power2.out', overwrite: true });
+    });
+  }
+
+  return { renderer, scene, camera, composer, curve, stopT, stations, routeU, palAt, burst, podHalo, jPos, jCol, jamGeo, chaos, phase, PER,
     pT, pS, pPos, pCol, pulseGeo, pod, podLight, trailPos, trailCol, trailGeo, TRAIL, stars };
 }
 
@@ -265,6 +325,8 @@ function enterChapter(i) {
   gsap.fromTo(parts, { y: 26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: RM ? 0 : .7, stagger: RM ? 0 : .05, ease: 'power3.out', overwrite: true });
   gsap.fromTo(c.querySelector('.num'), { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .9, ease: 'power3.out' });
   c.querySelectorAll('[data-to]').forEach(countUp);
+  if (gl && !RM && introDone) gl.burst(i);
+  gsap.fromTo(c.querySelector('.card'), { rotationY: -8, rotationX: 4, scale: .96, transformPerspective: 1000 }, { rotationY: 0, rotationX: 0, scale: 1, duration: 1.1, ease: 'expo.out' });
 }
 function updateChapters() {
   const p = S.journey;
@@ -293,7 +355,8 @@ railBtns.forEach(b => b.addEventListener('click', () => {
 const camPos = new THREE.Vector3(26, 34, 44), camLook = new THREE.Vector3(0, -2, -40);
 const tgtPos = new THREE.Vector3(), tgtLook = new THREE.Vector3();
 const fP = new THREE.Vector3(), fL = new THREE.Vector3(), tmp = new THREE.Vector3(), tan = new THREE.Vector3();
-let viewShift = 0, last = performance.now(), introCam = 1;
+let viewShift = 0, last = performance.now(), introCam = 1, introDone = false, roll = 0, reveal = 0;
+const bankA = new THREE.Vector3(), bankB = new THREE.Vector3(), palC = new THREE.Color();
 const OVER_P = new THREE.Vector3(24, 30, 46), OVER_L = new THREE.Vector3(-2, -3, -38);
 const END_P = new THREE.Vector3(-38, 46, -18), END_L = new THREE.Vector3(1, 0, -52);
 
@@ -332,6 +395,11 @@ function frame() {
   const k = 1 - Math.exp(-dt * (RM ? 60 : 3.2));
   camPos.lerp(tgtPos, k); camLook.lerp(tgtLook, k);
   camera.position.copy(camPos); camera.lookAt(camLook);
+  // lean into the turns a little, like a train on a curve
+  curve.getTangentAt(clamp(t, 0, .999), bankA); curve.getTangentAt(clamp(t + .025, 0, .999), bankB);
+  const wantRoll = jp > 0 && jp < 1 && !RM ? clamp(-bankA.cross(bankB).y * 3, -.08, .08) * (1 - a) : 0;
+  roll = lerp(roll, wantRoll, 1 - Math.exp(-dt * 2.5));
+  camera.rotateZ(roll);
 
   // push the 3D to the right while a chapter card sits on the left (desktop)
   const wantShift = !isMobile() && jp > 0 && jp < 1 ? .2 * (1 - a) : 0;
@@ -343,12 +411,15 @@ function frame() {
   const podT = Math.min(1, t + .006) + (a > 0 ? (1 - Math.min(1, t + .006)) * a : 0);
   curve.getPointAt(Math.min(podT, 1), tmp); gl.pod.position.copy(tmp);
   curve.getTangentAt(Math.min(podT, .999), tan); gl.pod.lookAt(tmp.clone().add(tan));
-  gl.drawDone(podT);
-  // trail
+  gl.routeU.forEach(u => { u.uProgress.value = podT; u.uTime.value = time; u.uReveal.value = reveal; });
+  gl.palAt(clamp(podT), palC);
+  gl.podHalo.material.color.copy(palC); gl.podLight.color.copy(palC);
+  // comet trail in the route's colours
   for (let i = 0; i < gl.TRAIL; i++) {
-    const tt = Math.max(0, podT - i * .0016); curve.getPointAt(tt, tmp);
+    const tt = Math.max(0, podT - i * .0012); curve.getPointAt(tt, tmp);
     gl.trailPos.set([tmp.x, tmp.y, tmp.z], i * 3);
-    const f = (1 - i / gl.TRAIL) * .8; gl.trailCol.set([.18 * f, .95 * f, .76 * f], i * 3);
+    const f = Math.pow(1 - i / gl.TRAIL, 1.6) * 1.1; gl.palAt(tt, palC);
+    gl.trailCol.set([palC.r * f, palC.g * f, palC.b * f], i * 3);
   }
   gl.trailGeo.attributes.position.needsUpdate = gl.trailGeo.attributes.color.needsUpdate = true;
 
@@ -359,10 +430,11 @@ function frame() {
     s.fix = lerp(s.fix, target, 1 - Math.exp(-dt * 2.2));
     const here = a > .5 ? 0 : clamp(1 - Math.abs(x - (i + .45)) * 1.4);
     s.glowNow = lerp(s.glowNow, here, 1 - Math.exp(-dt * 5));
-    const col = C_SIGNAL.clone().lerp(C_FIX, s.fix);
+    s.kick = lerp(s.kick, 0, 1 - Math.exp(-dt * 1.6));
+    const col = C_JAM.clone().multiplyScalar(.7).lerp(s.acc, s.fix);
     s.ringMat.color.copy(col).multiplyScalar(.85 + s.glowNow * .35);
     s.beam.material.color.copy(col); s.beam.material.opacity = .18 + s.glowNow * .35;
-    s.halo.material.color.copy(col); s.halo.scale.setScalar(2.2 + s.glowNow * 1.1 + Math.sin(time * 2 + i) * .12);
+    s.halo.material.color.copy(col); s.halo.scale.setScalar(2.2 + s.glowNow * 1.1 + s.kick * 3 + Math.sin(time * 2 + i) * .12);
     s.ring.scale.setScalar(1 + s.glowNow * .15);
     s.ring2.rotation.z = time * .3 + i; s.ring2.scale.setScalar(1 + s.glowNow * .5);
   });
@@ -371,7 +443,7 @@ function frame() {
   const { jPos, jCol, chaos, phase, PER } = gl;
   for (let si = 0; si < stations.length; si++) {
     const s = stations[si], m = ease(clamp(s.fix)), base = s.g.position;
-    const cJ = C_SIGNAL, cF = C_FIX;
+    const cJ = C_JAM, cF = s.acc, kick = s.kick * 2.2;
     for (let j = 0; j < PER; j++) {
       const kk = si * PER + j, c = chaos[kk], ph = phase[kk];
       const jx = base.x + c.x + Math.sin(time * 2.1 + ph) * .22, jy = base.y + c.y + Math.cos(time * 1.7 + ph) * .22, jz = base.z + c.z + Math.sin(time * 1.3 + ph * 2) * .22;
@@ -380,18 +452,20 @@ function frame() {
       const lx = base.x + s.tan.x * along + s.side.x * (lane - 1.5) * .34;
       const ly = base.y - .9 + s.tan.y * along;
       const lz = base.z + s.tan.z * along + s.side.z * (lane - 1.5) * .34;
-      jPos[kk * 3] = lerp(jx, lx, m); jPos[kk * 3 + 1] = lerp(jy, ly, m); jPos[kk * 3 + 2] = lerp(jz, lz, m);
+      // on arrival the swarm blows outward, then settles into lanes
+      jPos[kk * 3] = lerp(jx, lx, m) + c.x * kick; jPos[kk * 3 + 1] = lerp(jy, ly, m) + c.y * kick; jPos[kk * 3 + 2] = lerp(jz, lz, m) + c.z * kick;
       const fl = .55 + .45 * Math.sin(time * 6 + ph) * (1 - m);
       jCol[kk * 3] = lerp(cJ.r * fl, cF.r, m); jCol[kk * 3 + 1] = lerp(cJ.g * fl, cF.g, m); jCol[kk * 3 + 2] = lerp(cJ.b * fl, cF.b, m);
     }
   }
   gl.jamGeo.attributes.position.needsUpdate = gl.jamGeo.attributes.color.needsUpdate = true;
 
-  // traffic pulses: teal behind the pod, orange ahead of it
+  // traffic pulses: bright in the route's colours behind the pod, dim ahead of it
   for (let i = 0; i < gl.pT.length; i++) {
     gl.pT[i] = (gl.pT[i] + gl.pS[i] * dt * (RM ? 0 : 1)) % 1;
     curve.getPointAt(gl.pT[i], tmp); gl.pPos.set([tmp.x, tmp.y, tmp.z], i * 3);
-    const c = gl.pT[i] < podT ? C_FIX : C_SIGNAL; gl.pCol.set([c.r * .9, c.g * .9, c.b * .9], i * 3);
+    if (gl.pT[i] < podT) { gl.palAt(gl.pT[i], palC); gl.pCol.set([palC.r * 1.2, palC.g * 1.2, palC.b * 1.2], i * 3); }
+    else gl.pCol.set([.2, .24, .5], i * 3);
   }
   gl.pulseGeo.attributes.position.needsUpdate = gl.pulseGeo.attributes.color.needsUpdate = true;
   gl.stars.rotation.y = time * .004;
@@ -512,9 +586,12 @@ function intro() {
     .from('.hero .reveal', { y: 30, autoAlpha: 0, duration: .9, ease: 'power3.out', stagger: .08 }, '-=.8')
     .from('#portrait', { scale: .9, autoAlpha: 0, duration: 1.3, ease: 'power3.out' }, '-=1.2')
     .from('.chip', { scale: .6, autoAlpha: 0, duration: .7, ease: 'back.out(2)', stagger: .09 }, '-=.7');
-  const camIn = () => gsap.to({ v: 1 }, { v: 0, duration: RM ? 0 : 2.6, ease: 'power3.out', onUpdate() { introCam = this.targets()[0].v; } });
+  const camIn = () => {
+    gsap.to({ v: 1 }, { v: 0, duration: RM ? 0 : 2.6, ease: 'power3.out', onUpdate() { introCam = this.targets()[0].v; }, onComplete: () => { introDone = true; } });
+    gsap.to({ v: 0 }, { v: 1, duration: RM ? 0 : 3.2, ease: 'power2.inOut', onUpdate() { reveal = this.targets()[0].v; } });
+  };
 
-  if (RM) { $('#loader').remove(); introCam = 0; heroIn.progress(1); return; }
+  if (RM) { $('#loader').remove(); introCam = 0; reveal = 1; introDone = true; heroIn.progress(1); return; }
   lenis && lenis.stop();
   const o = { v: 0 }, lc = $('#lcount'), lb = $('#lbar');
   const ready = Promise.race([Promise.all([document.fonts ? document.fonts.ready : 0, new Promise(r => (document.readyState === 'complete' ? r() : addEventListener('load', r)))]), new Promise(r => setTimeout(r, 3500))]);
