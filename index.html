@@ -9,7 +9,7 @@
 <link rel="canonical" href="https://prathamgupta.vercel.app/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
-<meta name="theme-color" content="#05060A">
+<meta name="theme-color" content="#070503">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://prathamgupta.vercel.app/">
 <meta property="og:title" content="Pratham Gupta / The Route">
@@ -36,7 +36,7 @@
 <script src="profile-ui.js" defer></script>
 <style>
 :root{
-  --ink:#05060A;--ink2:#0B0D14;--glass:#0E111ACC;--line:#ffffff14;--line2:#ffffff24;
+  --ink:#070503;--ink2:#0E0A07;--glass:#120D09CC;--line:#ffffff14;--line2:#ffffff24;
   --text:#F2F4F8;--muted:#9AA1B2;--dim:#5F6678;
   --signal:#FF5A1F;--fix:#2EF2C3;--violet:#8B7CFF;--gold:#FFC857;
   --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
@@ -59,11 +59,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ic{width:18px;height:18px;stroke-width:1.75;flex:none}
 h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;line-height:.98}
 em{font-style:normal}
-.grad{background:linear-gradient(100deg,var(--signal),#FF9A5A 40%,var(--fix));-webkit-background-clip:text;background-clip:text;color:transparent}
+.grad{background:linear-gradient(100deg,#FF5A1F,#FF9A3D 45%,#FFC23D);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* WebGL stage behind everything */
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .6s}
-.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 60% 40%,transparent 50%,#05060Acc 100%)}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 60% 40%,transparent 50%,#070503cc 100%)}
 main,footer,.topbar{position:relative;z-index:2}
 
 /* ============ LOADER ============ */
@@ -85,7 +85,7 @@ main,footer,.topbar{position:relative;z-index:2}
 
 /* ============ TOPBAR ============ */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
-.topbar.solid{background:#05060ACC;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.topbar.solid{background:#070503CC;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 .tb{display:flex;align-items:center;justify-content:space-between;height:72px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
 .brand .pg{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:14px;background:linear-gradient(135deg,var(--signal),#ff8a4a);color:#120600}
@@ -106,7 +106,7 @@ main,footer,.topbar{position:relative;z-index:2}
 
 /* ============ HERO ============ */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:110px 0 60px}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#05060AF0 0%,#05060AB0 38%,#05060A30 70%,transparent),linear-gradient(0deg,#05060A 0%,transparent 30%);pointer-events:none}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070503F0 0%,#070503B0 38%,#07050330 70%,transparent),linear-gradient(0deg,#070503 0%,transparent 30%);pointer-events:none}
 .hero .hgrid{position:relative}
 .hgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(30px,5vw,80px);align-items:center}
 .kick{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:28px;flex-wrap:wrap}
@@ -148,136 +148,129 @@ main,footer,.topbar{position:relative;z-index:2}
 @media(max-width:520px){.chip{font-size:12px;padding:8px 10px 8px 8px}.chip i{width:26px;height:26px}.chip small{display:none}.facts{gap:14px}
   .chip[style*="left:"]{left:0!important}.chip[style*="right:"]{right:0!important}}
 
-/* ============ JOURNEY ============ */
+/* ============ JOURNEY (no boxes: type floats over the city) ============ */
 .journey{position:relative}
 .stage{position:sticky;top:0;height:100svh;overflow:hidden}
+.stage::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#070503D9 0%,#07050399 32%,transparent 60%)}
 .jhead{position:absolute;top:96px;left:0;right:0}
 .jhead .wrap{display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
 .jprog{display:flex;align-items:center;gap:14px}
-.jprog .track{width:160px;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
-.jprog .fill{height:100%;width:0;background:linear-gradient(90deg,#FF6B2C,#FFB224,#FF4FA3,#9B7BFF,#3DA9FF,#2EF2C3);background-size:160px 100%}
+.jprog .track{width:180px;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
+.jprog .fill{height:100%;width:0;background:linear-gradient(90deg,#FF8A3D,#FFC23D,#6BE675,#FF4F7B,#9B7BFF,#3DA9FF,#2EF2C3);background-size:180px 100%}
 .chap{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none;visibility:hidden}
-.chap .wrap{display:grid;grid-template-columns:minmax(0,520px) 1fr}
-.card{position:relative;pointer-events:auto;padding:34px 34px 30px;border-radius:24px;background:linear-gradient(160deg,#10131DE6,#0A0C13E6);border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 40px 90px -40px #000}
-.card .num{position:absolute;right:26px;top:14px;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--acc) 45%,transparent);letter-spacing:-.05em}
-.card{border-top:2px solid color-mix(in srgb,var(--acc) 70%,transparent)}
-.stop{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-right:90px}
-.stop i{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;flex:none;color:#07080D;
-  background:linear-gradient(140deg,color-mix(in srgb,var(--acc) 70%,#fff),var(--acc));
-  box-shadow:0 12px 30px -10px var(--acc),inset 0 1px 0 #ffffff80}
-.stop i .ic{width:26px;height:26px;stroke-width:2.1}
-.stop b{display:block;font-family:var(--display);font-size:clamp(20px,1.9vw,26px);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:#fff}
-.stop .mono{display:block;margin-top:7px;font-size:12.5px;color:var(--acc);letter-spacing:.12em}
-.card h3{font-size:clamp(30px,3.2vw,46px);max-width:13ch}
-.card p.body{margin-top:16px;color:#C3C8D4;font-size:16px;max-width:42ch}
-.ff{margin-top:22px;display:grid;gap:10px}
-.ff div{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:baseline;font-size:14.5px;color:#D7DBE5}
-.ff b{font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
-.ff b::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
-.ff .fr b{color:#FF5A5A}.ff .fx b{color:var(--acc)}
-.mets{display:flex;gap:34px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
-.met b{display:block;font-family:var(--display);font-size:clamp(34px,3.4vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1}
-.met span{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
-.prods{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.prods a{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;border:1px solid var(--line2);font-size:13.5px;transition:border-color .2s,background .2s}
-.prods a:hover{border-color:var(--fix);background:#2EF2C312}
-.prods .ic{width:15px;height:15px;color:var(--fix)}
-.card .btn{margin-top:26px}
-/* the route rail */
-.rail{position:absolute;right:var(--pad);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0}
-.rail button{display:flex;align-items:center;justify-content:flex-end;gap:14px;height:48px;color:var(--dim);font-size:13px;position:relative;text-align:right}
-.rail button::after{content:"";width:12px;height:12px;border-radius:50%;border:2px solid currentColor;background:var(--ink);flex:none;transition:all .3s;position:relative;z-index:1}
-.rail button::before{content:"";position:absolute;right:5px;top:-24px;width:2px;height:48px;background:var(--line2)}
-.rail button:first-child::before{display:none}
-.rail button.on{color:var(--text)}
-.rail button.on::after{border-color:#fff;background:#fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent),0 0 20px var(--acc)}
-.rail button.done{color:var(--muted)}
-.rail button.done::after{border-color:var(--acc);background:var(--acc)}
-.rail button span{opacity:0;transform:translateX(8px);transition:all .3s}
-.rail:hover button span,.rail button.on span{opacity:1;transform:none}
+.chap .wrap{position:relative}
+.ct{position:relative;max-width:560px;pointer-events:auto;text-shadow:0 2px 24px #000a}
+.bignum{position:absolute;left:-.06em;top:50%;transform:translateY(-58%);z-index:-1;font-family:var(--display);font-weight:800;font-size:clamp(200px,26vw,380px);line-height:.8;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--acc) 30%,transparent);pointer-events:none;text-shadow:none}
+.brandrow{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.logo{position:relative;width:64px;height:64px;border-radius:18px;flex:none;display:grid;place-items:center;color:#0a0806;overflow:hidden;
+  background:linear-gradient(140deg,color-mix(in srgb,var(--acc) 65%,#fff),var(--acc));box-shadow:0 14px 34px -12px var(--acc),inset 0 1px 0 #ffffff90}
+.logo .ic{width:28px;height:28px;stroke-width:2.1}
+.logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:9px;background:#fff}
+.kick2{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.kick2 span{color:var(--muted)}
+.ct h3{font-size:clamp(42px,5vw,72px);font-weight:800;letter-spacing:-.035em;line-height:.95;max-width:12ch}
+.ct .role{margin-top:14px;font-size:clamp(17px,1.5vw,21px);font-weight:600;color:#fff;opacity:.92}
+.ct .why{margin-top:22px;padding-left:18px;border-left:2px solid var(--acc);font-size:clamp(16px,1.3vw,19px);line-height:1.5;color:#D9DCE4;max-width:40ch}
+.mets{display:flex;gap:40px;margin-top:30px;flex-wrap:wrap}
+.met b{display:block;font-family:var(--display);font-size:clamp(36px,3.6vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1;color:#fff}
+.met span{display:block;margin-top:6px;font-size:13.5px;color:var(--muted)}
+.prods{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px}
+.prods a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;border-bottom:1px solid #ffffff33;padding-bottom:3px;transition:border-color .2s,color .2s}
+.prods a:hover{border-color:var(--acc);color:var(--acc)}
+.prods .ic{width:16px;height:16px;color:var(--acc)}
+.ct .btn{margin-top:30px}
+
+/* racing HUD: minimap */
+.hud{position:absolute;right:var(--pad);bottom:34px;display:flex;align-items:flex-end;gap:18px}
+.hud .hl{text-align:right}
+.hud .hl b{display:block;font-family:var(--display);font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.hud .hl b span{font-size:18px;color:var(--muted);font-weight:600}
+.hud .hl small{display:block;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mini{width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,#140d0899,#07050399);border:1px solid #ffffff22;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);position:relative;overflow:hidden}
+.mini::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 300deg,#ffffff14 360deg);animation:sweep 4s linear infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+.mini svg{position:absolute;inset:0;width:100%;height:100%}
+.mini .stopdot{cursor:pointer}
 @media(max-width:900px){
-  .rail{display:none}
-  .chap{align-items:flex-end;padding-bottom:22px}
-  .chap .wrap{grid-template-columns:1fr}
-  .card{padding:24px 22px 22px;border-radius:20px}
-  .card .num{font-size:64px;right:18px}
-  .card h3{font-size:30px}
-  .card p.body{font-size:15px;margin-top:12px}
-  .ff{margin-top:16px}
-  .mets{gap:24px;margin-top:18px;padding-top:16px}
-  .jhead{top:82px}.jprog .track{width:90px}
+  .hud{display:none}
+  .stage::before{background:linear-gradient(0deg,#070503F2 0%,#070503B0 42%,transparent 70%)}
+  .chap{align-items:flex-end;padding-bottom:34px}
+  .bignum{display:none}
+  .brandrow{margin-bottom:18px}
+  .logo{width:52px;height:52px;border-radius:15px}
+  .ct h3{font-size:40px}
+  .ct .why{margin-top:16px;font-size:15.5px}
+  .mets{gap:28px;margin-top:20px}
+  .met b{font-size:34px}
+  .jhead{top:82px}.jprog .track{width:100px}
 }
-@media(max-width:520px){.ff div{grid-template-columns:1fr;gap:2px;font-size:13.5px}.stop{margin-bottom:16px;padding-right:0}.stop i{width:46px;height:46px;border-radius:13px}.stop i .ic{width:22px;height:22px}.stop b{font-size:19px}.jhead .lbl{display:none}.card .num{display:none}}
+@media(max-width:520px){.jhead .lbl{display:none}.kick2{font-size:11.5px}}
 
 /* ============ SECTION HEADS ============ */
 .sec{padding:clamp(90px,12vw,160px) 0}
 .eyebrow{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:24px}
 .eyebrow::before{content:"";width:28px;height:1px;background:var(--signal)}
-.stitle{font-size:clamp(40px,6vw,88px);font-weight:800;max-width:14ch}
+.stitle{font-size:clamp(40px,6vw,88px);font-weight:800;max-width:15ch}
 .stitle .ln{display:block;overflow:hidden;padding-bottom:.06em}
 .stitle .ln>span{display:inline-block}
 .slead{margin-top:22px;color:var(--muted);font-size:18px;max-width:46ch}
 .shead{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:56px}
 
-/* ============ LEADERSHIP (horizontal) ============ */
-.lead-sec{padding-top:clamp(96px,11vh,130px);min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-bottom:40px}
-.lead-sec .shead{margin-bottom:clamp(24px,4vh,44px)}
-.lead-sec .stitle{font-size:clamp(40px,5vw,72px)}
-.hwrap{overflow:hidden}
-.htrack{display:flex;gap:20px;padding:0 var(--pad);width:max-content;will-change:transform}
-.lcard{position:relative;width:min(380px,80vw);min-height:clamp(330px,44vh,420px);border-radius:24px;background:linear-gradient(170deg,#11141F,#0A0C13);border:1px solid var(--line2);padding:30px;display:flex;flex-direction:column;overflow:hidden;transition:border-color .3s}
-.lcard:hover{border-color:#ffffff44}
-.lcard .top{display:flex;justify-content:space-between;align-items:center}
-.lcard .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#ffffff0a;border:1px solid var(--line2);color:var(--c)}
-.lcard .ico .ic{width:22px;height:22px}
-.lcard .yr{color:var(--dim)}
-.lcard .role{margin-top:auto;padding-top:36px;color:var(--c)}
-.lcard h3{font-size:30px;margin-top:10px}
-.lcard p{margin-top:14px;color:#C3C8D4;font-size:15px}
-.lcard .stat{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
-.lcard .stat b{font-family:var(--display);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1}
-.lcard .stat span{color:var(--muted);font-size:13px}
-.lcard.photo{width:min(520px,86vw);padding:0;justify-content:flex-end}
-.lcard.photo img{position:relative;width:100%;flex:1 1 150px;min-height:130px;object-fit:cover;object-position:50% 93%}
-.lcard.photo .in{position:relative;z-index:2;padding:24px 30px 30px}
-.lcard.photo .role{margin-top:0;padding-top:0}
-.hint{display:flex;align-items:center;gap:10px;color:var(--dim)}
+/* ============ CASE COMPETITIONS: a race results board ============ */
+.board{border-top:1px solid var(--line2)}
+.bhead,.brow{display:grid;grid-template-columns:150px 64px minmax(0,1fr) minmax(0,260px);gap:24px;align-items:center}
+.bhead{padding:14px 0;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line)}
+.brow{position:relative;padding:30px 0;border-bottom:1px solid var(--line);overflow:hidden}
+.brow::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 16%,transparent),transparent 70%);transform:translateX(-101%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.brow:hover::before{transform:none}
+.brow>*{position:relative}
+.pos{font-family:var(--display);font-weight:800;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.02em;line-height:1;color:var(--acc)}
+.pos small{display:block;margin-top:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:400}
+.brow .logo{width:56px;height:56px;border-radius:15px}
+.brow .logo .ic{width:24px;height:24px}
+.brow h4{font-family:var(--display);font-size:clamp(22px,2.4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
+.brow .org{margin-top:6px;color:var(--muted);font-size:14.5px}
+.brow .sc{text-align:right;font-size:15px;color:#D9DCE4}
+.brow .sc b{display:block;font-family:var(--display);font-size:24px;font-weight:700;color:#fff}
 @media(max-width:900px){
-  .htrack{flex-direction:column;width:auto}
-  .lcard,.lcard.photo{width:100%;min-height:0}
-  .lcard .role{margin-top:30px}
-  .lcard.photo{min-height:480px}
-  .hint{display:none}
+  .bhead{display:none}
+  .brow{grid-template-columns:52px minmax(0,1fr);gap:8px 16px;padding:24px 0}
+  .brow .logo{grid-row:span 2;width:48px;height:48px}
+  .pos{grid-column:2;font-size:22px}.pos small{display:inline;margin-left:8px}
+  .brow .info{grid-column:2}
+  .brow .sc{grid-column:2;text-align:left;font-size:14px}.brow .sc b{display:inline;font-size:18px;margin-right:6px}
 }
 
-/* ============ RECOGNITION ============ */
-.wins{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;align-items:start}
-.wlist{border-top:1px solid var(--line)}
-.wrow{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:20px;padding:24px 4px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-.wrow::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#FF5A1F14,transparent 60%);transform:translateX(-101%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.wrow:hover::before{transform:none}
-.wrow i{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line2);color:var(--gold);position:relative}
-.wrow h4{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em;position:relative}
-.wrow .sc{color:var(--muted);font-size:14px;margin-top:2px;position:relative}
-.wrow .rk{font-family:var(--display);font-size:clamp(22px,2.4vw,32px);font-weight:800;letter-spacing:-.02em;text-align:right;position:relative;white-space:nowrap}
-.creds{border-radius:24px;border:1px solid var(--line2);background:linear-gradient(170deg,#11141F,#0A0C13);padding:28px}
-.creds .mono{color:var(--muted);margin-bottom:18px;display:block}
-.cred{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
-.cred:first-of-type{border-top:0;padding-top:0}
-.cred i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#ffffff0a;color:var(--fix);flex:none}
-.cred b{display:block;font-weight:600}
-.cred span{font-size:13.5px;color:var(--muted)}
-@media(max-width:900px){.wins{grid-template-columns:1fr}.wrow{grid-template-columns:44px minmax(0,1fr);gap:14px}.wrow i{width:40px;height:40px}.wrow .rk{grid-column:2;text-align:left;font-size:20px}}
-
-/* ============ OFF THE CLOCK ============ */
-.off{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.ofc{border-radius:20px;border:1px solid var(--line);padding:26px;background:#0B0D14;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s}
-.ofc:hover{transform:translateY(-6px);border-color:var(--line2)}
-.ofc i{color:var(--c);display:block;margin-bottom:40px}
-.ofc i .ic{width:26px;height:26px;stroke-width:1.5}
-.ofc h4{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em}
-.ofc p{color:var(--muted);font-size:14px;margin-top:6px}
-@media(max-width:900px){.off{grid-template-columns:1fr 1fr}}
+/* ============ LEADERSHIP & STILL CURIOUS: photo frames, no boxes ============ */
+.lead-sec{padding-top:clamp(96px,11vh,130px);min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-bottom:40px}
+.lead-sec .shead{margin-bottom:clamp(24px,4vh,40px)}
+.lead-sec .stitle{font-size:clamp(38px,4.4vw,64px)}
+.lead-sec .frame::before{font-size:80px}
+.hwrap{overflow:hidden}
+.htrack{display:flex;gap:36px;padding:0 var(--pad);width:max-content;will-change:transform}
+.fr{width:clamp(220px,17vw,270px);flex:none}
+.frame{position:relative;aspect-ratio:4/4.6;border-radius:20px;overflow:hidden;background:
+  radial-gradient(120% 80% at 30% 0%,color-mix(in srgb,var(--acc) 38%,transparent),transparent 60%),
+  linear-gradient(170deg,#1a120c,#0b0806)}
+.frame::before{content:attr(data-mono);position:absolute;left:18px;bottom:6px;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--acc) 60%,transparent)}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.fr:hover .frame img{transform:scale(1.05)}
+.frame .idx{position:absolute;top:16px;left:16px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#fff;background:#00000066;backdrop-filter:blur(6px);padding:6px 10px;border-radius:999px}
+.fr .role{margin-top:20px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.fr h3{margin-top:10px;font-size:clamp(24px,2vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
+.fr p{margin-top:10px;color:#C9CDD6;font-size:15px;line-height:1.5}
+.fr .award{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;font-weight:600;color:var(--gold)}
+.fr .award .ic{width:16px;height:16px}
+.hint{display:flex;align-items:center;gap:10px;color:var(--dim)}
+@media(max-width:900px){
+  .htrack{flex-direction:column;width:auto;gap:56px}
+  .fr{width:100%}
+  .frame{aspect-ratio:4/3}
+  .hint{display:none}
+}
+.curious{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.curious .fr{width:auto}
+@media(max-width:900px){.curious{grid-template-columns:1fr 1fr;gap:36px 18px}.curious .frame{aspect-ratio:4/5}.curious .frame::before{font-size:64px}}
 
 /* ============ CONTACT ============ */
 .contact{padding:clamp(100px,14vw,200px) 0 60px;text-align:center}
@@ -542,60 +535,70 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </section>
 
 <!-- ============ THE ROUTE ============ -->
-<section class="journey" id="story" aria-label="My journey, told as a route">
+<section class="journey" id="story" aria-label="My journey, told as a night drive">
   <div class="stage" id="stage">
-    <div class="jhead"><div class="wrap"><span class="mono lbl">The route so far</span><div class="jprog mono"><span id="jstop">Stop 01 / 06</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
+    <div class="jhead"><div class="wrap"><span class="mono lbl">The route so far</span><div class="jprog mono"><span id="jstop">Stop 01 / 07</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
 
-    <article class="chap" data-i="0" style="--acc:#FF6B2C">
-      <div class="wrap"><div class="card">
-        <span class="num">01</span>
-        <div class="stop"><i><svg class="ic" data-lucide="graduation-cap"></svg></i><div><b>Delhi Technological University</b><span class="mono">Until 2023 · Economics + Rotaract</span></div></div>
-        <h3>Learning how systems, and people, work.</h3>
-        <p class="body">Economics at DTU taught me to read a system. Rotaract taught me to run one.</p>
-        <div class="ff"><div class="fr"><b>Friction</b>A big club with scattered effort.</div><div class="fx"><b>Fix</b>Clear roles, more events, one direction.</div></div>
-        <div class="mets"><div class="met"><b data-to="200" data-suf="+">200+</b><span>members led as VP</span></div><div class="met"><b>#1</b><span>club in the district, twice</span></div></div>
+    <article class="chap" data-i="0" style="--acc:#FF8A3D">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">01</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="graduation-cap"></svg><img src="images/logos/dtu.png" alt="Delhi Technological University logo" onerror="this.remove()"></span><div class="kick2">Stop 01 <span>· until 2023</span></div></div>
+        <h3>Delhi Technological University</h3>
+        <div class="role">BA (Hons) Economics</div>
+        <p class="why">Economics taught me that every system runs on incentives. I still start every problem by asking who gains and who pays.</p>
+        <div class="mets"><div class="met"><b data-to="84.6" data-suf="%" data-dec="1">84.6%</b><span>final score</span></div></div>
       </div></div>
     </article>
 
-    <article class="chap" data-i="1" style="--acc:#FFB224">
-      <div class="wrap"><div class="card">
-        <span class="num">02</span>
-        <div class="stop"><i><svg class="ic" data-lucide="bus"></svg></i><div><b>Himanshu Travel Line</b><span class="mono">2023–25 · Fleet operations</span></div></div>
-        <h3>Buses were winning on price alone.</h3>
-        <p class="body">I ran operations, growth and key accounts for a fleet serving schools, colleges and hospitals.</p>
-        <div class="ff"><div class="fr"><b>Friction</b>Price wars and unreliable service.</div><div class="fx"><b>Fix</b>Sell trust: GPS, cameras, on-time buses.</div></div>
-        <div class="mets"><div class="met"><b data-to="2.5" data-pre="₹" data-suf=" Cr" data-dec="1">₹2.5 Cr</b><span>in new B2B contracts</span></div><div class="met"><b data-to="26" data-pre="+" data-suf="%">+26%</b><span>more buses ready to run</span></div></div>
+    <article class="chap" data-i="1" style="--acc:#FFC23D">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">02</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="bus"></svg><img src="images/logos/himanshu-travel-line.png" alt="Himanshu Travel Line logo" onerror="this.remove()"></span><div class="kick2">Stop 02 <span>· 2023–25</span></div></div>
+        <h3>Himanshu Travel Line</h3>
+        <div class="role">Operations, growth &amp; key accounts</div>
+        <p class="why">Running a bus fleet taught me that customers don't buy the cheapest seat. They buy the bus that shows up.</p>
+        <div class="mets"><div class="met"><b data-to="2.5" data-pre="₹" data-suf=" Cr" data-dec="1">₹2.5 Cr</b><span>new B2B business</span></div><div class="met"><b data-to="26" data-pre="+" data-suf="%">+26%</b><span>more buses ready to run</span></div></div>
       </div></div>
     </article>
 
-    <article class="chap" data-i="2" style="--acc:#FF4FA3">
-      <div class="wrap"><div class="card">
-        <span class="num">03</span>
-        <div class="stop"><i><svg class="ic" data-lucide="landmark"></svg></i><div><b>BITSoM, Mumbai</b><span class="mono">2025–27 · MBA</span></div></div>
-        <h3>Strategy, tested under pressure.</h3>
-        <p class="body">Mapped a food-delivery business end to end for Flipkart. Built a launch plan for Tata Consumer. Led sponsorship for the college fest.</p>
-        <div class="ff"><div class="fr"><b>Friction</b>Big ideas that never meet the ground.</div><div class="fx"><b>Fix</b>Plans built from the customer to the dark store.</div></div>
-        <div class="mets"><div class="met"><b data-to="2" data-suf="×">2×</b><span>national semi-finalist, Flipkart WiRED</span></div><div class="met"><b data-to="12" data-pre="₹" data-suf=" L">₹12 L</b><span>raised in sponsorship</span></div></div>
+    <article class="chap" data-i="2" style="--acc:#6BE675">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">03</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="badge-check"></svg><img src="images/logos/lean-six-sigma.png" alt="Lean Six Sigma Green Belt badge" onerror="this.remove()"></span><div class="kick2">Stop 03 <span>· certified</span></div></div>
+        <h3>Lean Six Sigma Green Belt</h3>
+        <div class="role">Process improvement, certified</div>
+        <p class="why">It put a name to what I'd been doing by instinct: measure the leak, fix the cause, then make the fix stick.</p>
       </div></div>
     </article>
 
-    <article class="chap" data-i="3" style="--acc:#9B7BFF">
-      <div class="wrap"><div class="card">
-        <span class="num">04</span>
-        <div class="stop"><i><svg class="ic" data-lucide="warehouse"></svg></i><div><b>BigBasket</b><span class="mono">Apr–Jun 2026 · Strategy intern</span></div></div>
-        <h3>Stock was leaking, quietly.</h3>
-        <p class="body">Losses showed up two days late, and nobody could say why. I traced them back to the shelf.</p>
-        <div class="ff"><div class="fr"><b>Friction</b>Untracked returns, a two-day blind spot.</div><div class="fx"><b>Fix</b>One daily view of loss, seen the same day.</div></div>
-        <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>less stock written off</span></div></div>
+    <article class="chap" data-i="3" style="--acc:#FF4F7B">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">04</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="landmark"></svg><img src="images/logos/bitsom.png" alt="BITS School of Management logo" onerror="this.remove()"></span><div class="kick2">Stop 04 <span>· 2025–27</span></div></div>
+        <h3>BITS School of Management</h3>
+        <div class="role">MBA · Mumbai</div>
+        <p class="why">Two years among builders and operators: a strategy is only as good as the plan that carries it out.</p>
       </div></div>
     </article>
 
-    <article class="chap" data-i="4" style="--acc:#3DA9FF">
-      <div class="wrap"><div class="card">
-        <span class="num">05</span>
-        <div class="stop"><i><svg class="ic" data-lucide="cpu"></svg></i><div><b>Building with AI</b><span class="mono">Now · Product builder</span></div></div>
-        <h3>Now I build the fix myself.</h3>
-        <p class="body">Working prototypes that turn real operating problems into products.</p>
+    <article class="chap" data-i="4" style="--acc:#9B7BFF">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">05</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="warehouse"></svg><img src="images/logos/bigbasket.png" alt="BigBasket logo" onerror="this.remove()"></span><div class="kick2">Stop 05 <span>· Apr–Jun 2026</span></div></div>
+        <h3>BigBasket</h3>
+        <div class="role">Strategic Initiatives Intern</div>
+        <p class="why">Stock was leaking through returns nobody tracked. One daily view let the team see the loss the same day.</p>
+        <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>stock written off</span></div></div>
+      </div></div>
+    </article>
+
+    <article class="chap" data-i="5" style="--acc:#3DA9FF">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">06</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="cpu"></svg></span><div class="kick2">Stop 06 <span>· now</span></div></div>
+        <h3>Building with AI</h3>
+        <div class="role">Product builder</div>
+        <p class="why">Now I build the fix myself, as products people can actually use.</p>
         <div class="prods">
           <a href="portfolio.html"><svg class="ic" data-lucide="truck"></svg>Transit One</a>
           <a href="portfolio.html"><svg class="ic" data-lucide="line-chart"></svg>FinBuddy</a>
@@ -606,24 +609,61 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div></div>
     </article>
 
-    <article class="chap" data-i="5" style="--acc:#2EF2C3">
-      <div class="wrap"><div class="card">
-        <span class="num">06</span>
-        <div class="stop"><i><svg class="ic" data-lucide="flag"></svg></i><div><b>Next stop</b><span class="mono">Open to roles · 2027</span></div></div>
+    <article class="chap" data-i="6" style="--acc:#2EF2C3">
+      <div class="wrap"><div class="ct">
+        <span class="bignum" aria-hidden="true">07</span>
+        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="flag"></svg></span><div class="kick2">Next stop</div></div>
         <h3>Your team.</h3>
-        <p class="body">Strategy, marketing, e-commerce or operations. Bring the messy problem.</p>
+        <div class="role">Strategy, marketing &amp; operations</div>
+        <p class="why">Bring the messy problem. I'll find the friction.</p>
         <a class="btn solid magnet biz-card-trigger" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
       </div></div>
     </article>
 
-    <nav class="rail" id="rail" aria-label="Journey stops">
-      <button type="button" data-go="0" style="--acc:#FF6B2C"><span>Delhi</span></button>
-      <button type="button" data-go="1" style="--acc:#FFB224"><span>The fleet</span></button>
-      <button type="button" data-go="2" style="--acc:#FF4FA3"><span>BITSoM</span></button>
-      <button type="button" data-go="3" style="--acc:#9B7BFF"><span>BigBasket</span></button>
-      <button type="button" data-go="4" style="--acc:#3DA9FF"><span>AI products</span></button>
-      <button type="button" data-go="5" style="--acc:#2EF2C3"><span>Next stop</span></button>
-    </nav>
+    <div class="hud" aria-hidden="false">
+      <div class="hl"><b id="hudn">01<span> / 07</span></b><small id="hudname">Delhi</small></div>
+      <div class="mini"><svg id="minimap" viewBox="0 0 190 190" role="img" aria-label="Route map, click a stop to jump there"></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE COMPETITIONS ============ -->
+<section class="sec" id="cases">
+  <div class="wrap">
+    <div class="shead">
+      <div>
+        <div class="eyebrow mono">Industry problem solving</div>
+        <h2 class="stitle split"><span class="ln"><span>Real briefs.</span></span><span class="ln"><span>Real rankings.</span></span></h2>
+        <p class="slead reveal">Case competitions where companies hand you their actual problem.</p>
+      </div>
+    </div>
+    <div class="board">
+      <div class="bhead"><span>Result</span><span></span><span>Competition</span><span style="text-align:right">Field</span></div>
+      <div class="brow" style="--acc:#FFC23D">
+        <div class="pos">Top 30<small>Finalist</small></div>
+        <span class="logo"><svg class="ic" data-lucide="lightbulb"></svg><img src="images/logos/tata-imagination.png" alt="Tata Imagination Challenge logo" onerror="this.remove()"></span>
+        <div class="info"><h4>Tata Imagination Challenge</h4><div class="org">Tata Group</div></div>
+        <div class="sc"><b>Finalist</b>one of the top 30 teams</div>
+      </div>
+      <div class="brow" style="--acc:#3DA9FF">
+        <div class="pos">SF ×2<small>Semi-finalist</small></div>
+        <span class="logo"><svg class="ic" data-lucide="shopping-cart"></svg><img src="images/logos/flipkart.png" alt="Flipkart logo" onerror="this.remove()"></span>
+        <div class="info"><h4>Flipkart WiRED 9 &amp; 10</h4><div class="org">Flipkart</div></div>
+        <div class="sc"><b>35,000+</b>registered, two years running</div>
+      </div>
+      <div class="brow" style="--acc:#FF8A3D">
+        <div class="pos">Top 13<small>National</small></div>
+        <span class="logo"><svg class="ic" data-lucide="package"></svg><img src="images/logos/tcpl.png" alt="Tata Consumer Products logo" onerror="this.remove()"></span>
+        <div class="info"><h4>TCPL Grow Beyond Better</h4><div class="org">Tata Consumer Products</div></div>
+        <div class="sc"><b>14,000+</b>entries</div>
+      </div>
+      <div class="brow" style="--acc:#FF4F7B">
+        <div class="pos">Final<small>Finalist</small></div>
+        <span class="logo"><svg class="ic" data-lucide="flag"></svg><img src="images/logos/bits-goa.png" alt="BITS Pilani Goa logo" onerror="this.remove()"></span>
+        <div class="info"><h4>Case Consilium</h4><div class="org">BITS Pilani, Goa campus</div></div>
+        <div class="sc"><b>1st</b>in the semi-finals</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -633,97 +673,67 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div>
       <div class="eyebrow mono">Leadership</div>
       <h2 class="stitle split"><span class="ln"><span>People follow</span></span><span class="ln"><span class="grad">clarity.</span></span></h2>
-      <p class="slead reveal">Six teams I've led, and what we pulled off together.</p>
     </div>
     <div class="hint mono reveal"><svg class="ic" data-lucide="move-horizontal"></svg> Scroll to move</div>
   </div>
   <div class="hwrap" id="hwrap">
     <div class="htrack" id="htrack">
-      <article class="lcard photo" style="--c:var(--fix)">
-        <img src="roar-event.jpg" alt="Pratham on stage with the team at BITSoM Roar" loading="lazy">
-        <div class="in">
-          <div class="role mono">Sponsorship lead · 2026</div>
-          <h3>BITSoM Roar &amp; Conclave</h3>
-          <p>Ran a ₹25 L budget across 10 teams. Turned 80 leads into sponsorship, with SBI as title sponsor.</p>
-          <div class="stat"><b>₹12 L</b><span>raised</span></div>
-        </div>
+      <article class="fr" style="--acc:#FF8A3D">
+        <div class="frame" data-mono="R&amp;C"><span class="idx">01</span><img src="roar-event.jpg" alt="Pratham on stage at BITSoM Roar" style="object-position:50% 92%" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">Sponsorship Head</div>
+        <h3>Roar &amp; Conclave</h3>
+        <p>BITSoM's flagship event. Ran a ₹25 L budget across 10 teams and raised ₹12 L, with SBI as title sponsor.</p>
       </article>
-      <article class="lcard" style="--c:var(--gold)">
-        <div class="top"><span class="ico"><svg class="ic" data-lucide="users"></svg></span><span class="yr mono">2023</span></div>
-        <div class="role mono">Vice President</div>
-        <h3>Rotaract USME</h3>
-        <p>Led a 200+ member club through 10+ events. Named the district's best club, twice, out of 60+.</p>
-        <div class="stat"><b>200+</b><span>members</span></div>
+      <article class="fr" style="--acc:#FFC23D">
+        <div class="frame" data-mono="AIDC"><span class="idx">02</span><img src="images/leadership/deans-conference.jpg" alt="All India Deans Conference" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">BITSoM</div>
+        <h3>All India Deans Conference</h3>
+        <p>Part of the team that brought deans from across India to BITSoM.</p>
       </article>
-      <article class="lcard" style="--c:var(--signal)">
-        <div class="top"><span class="ico"><svg class="ic" data-lucide="search"></svg></span><span class="yr mono">Consulting</span></div>
-        <div class="role mono">Team lead</div>
-        <h3>Consortico</h3>
-        <p>Led five people to find out why NGO volunteers quit, then built the six-month plan to fix it.</p>
-        <div class="stat"><b>5</b><span>person team</span></div>
+      <article class="fr" style="--acc:#FF4F7B">
+        <div class="frame" data-mono="M&amp;O"><span class="idx">03</span><img src="images/leadership/marketing-ops.jpg" alt="Marketing and Operations Committee, BITSoM" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">Committee member</div>
+        <h3>Marketing &amp; Operations Committee</h3>
+        <p>BITSoM's marketing and ops committee. Ran club marketing and negotiated stall contracts.</p>
       </article>
-      <article class="lcard" style="--c:var(--violet)">
-        <div class="top"><span class="ico"><svg class="ic" data-lucide="sparkles"></svg></span><span class="yr mono">2026</span></div>
-        <div class="role mono">Senior</div>
+      <article class="fr" style="--acc:#9B7BFF">
+        <div class="frame" data-mono="PQ"><span class="idx">04</span><img src="images/leadership/preql.jpg" alt="PreQL, BITSoM AI and Analytics Club" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">Senior</div>
         <h3>PreQL</h3>
-        <p>Built an AI campaign tracker and run AI sessions that help classmates crack cases faster.</p>
-        <div class="stat"><b>AI</b><span>sessions for case work</span></div>
+        <p>BITSoM's AI &amp; Analytics Club. Built an AI campaign tracker; run sessions that help classmates crack cases faster.</p>
       </article>
-      <article class="lcard" style="--c:var(--fix)">
-        <div class="top"><span class="ico"><svg class="ic" data-lucide="compass"></svg></span><span class="yr mono">Now</span></div>
-        <div class="role mono">Official mentor</div>
-        <h3>Thume</h3>
-        <p>Guiding MBA students through their learning journey, one conversation at a time.</p>
-        <div class="stat"><b>1:1</b><span>mentoring</span></div>
+      <article class="fr" style="--acc:#3DA9FF">
+        <div class="frame" data-mono="TH"><span class="idx">05</span><img src="images/leadership/theomi.jpg" alt="Theomi mentoring" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">Mentor</div>
+        <h3>Theomi</h3>
+        <p>Mentoring MBA aspirants on their way to business school.</p>
       </article>
-      <article class="lcard" style="--c:var(--gold)">
-        <div class="top"><span class="ico"><svg class="ic" data-lucide="store"></svg></span><span class="yr mono">2026</span></div>
-        <div class="role mono">Committee member</div>
-        <h3>Marketing &amp; Ops Committee</h3>
-        <p>Ran club marketing and negotiated the stall contracts.</p>
-        <div class="stat"><b>Ops</b><span>marketing &amp; contracts</span></div>
+      <article class="fr" style="--acc:#6BE675">
+        <div class="frame" data-mono="TSW"><span class="idx">06</span><img src="images/leadership/techstars.jpg" alt="Techstars Startup Weekend" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">Startup Weekend</div>
+        <h3>Techstars Startup Weekend</h3>
+        <div class="award"><svg class="ic" data-lucide="award"></svg>Outstanding Professional Development Award</div>
+      </article>
+      <article class="fr" style="--acc:#2EF2C3">
+        <div class="frame" data-mono="RC"><span class="idx">07</span><img src="images/leadership/rotaract.jpg" alt="Rotaract Club of USME" loading="lazy" onerror="this.remove()"></div>
+        <div class="role">Vice President · 2023</div>
+        <h3>Rotaract Club of USME</h3>
+        <p>Led a club of 200+ members through 10+ events.</p>
+        <!-- Rotaract award: add an <div class="award">…</div> line here -->
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============ RECOGNITION ============ -->
-<section class="sec" id="recognition">
-  <div class="wrap">
-    <div class="shead">
-      <div>
-        <div class="eyebrow mono">Recognition</div>
-        <h2 class="stitle split"><span class="ln"><span>Tested against</span></span><span class="ln"><span>thousands.</span></span></h2>
-      </div>
-    </div>
-    <div class="wins">
-      <div class="wlist">
-        <div class="wrow"><i><svg class="ic" data-lucide="trophy"></svg></i><div><h4>Rotaract District 3012</h4><div class="sc">Best institutional club · out of 60+ clubs</div></div><div class="rk">#1, twice</div></div>
-        <div class="wrow"><i><svg class="ic" data-lucide="medal"></svg></i><div><h4>Flipkart WiRED 9 &amp; 10</h4><div class="sc">National case competition · 35,000+ registered</div></div><div class="rk">Semi-finalist ×2</div></div>
-        <div class="wrow"><i><svg class="ic" data-lucide="award"></svg></i><div><h4>Tata Consumer, Grow Beyond Better</h4><div class="sc">Case competition · 14,000+ entries</div></div><div class="rk">Top 13</div></div>
-        <div class="wrow"><i><svg class="ic" data-lucide="flag"></svg></i><div><h4>Case Consilium, BITS Goa</h4><div class="sc">Consulting club · first in the semi-finals</div></div><div class="rk">Finalist</div></div>
-        <div class="wrow"><i><svg class="ic" data-lucide="star"></svg></i><div><h4>Rotaract South Asia</h4><div class="sc">Outstanding Professional Development · 3,600+ entries</div></div><div class="rk">Selected</div></div>
-      </div>
-      <aside class="creds reveal">
-        <span class="mono">Education &amp; certificates</span>
-        <div class="cred"><i><svg class="ic" data-lucide="graduation-cap"></svg></i><div><b>MBA, BITS School of Management</b><span>Class of 2027</span></div></div>
-        <div class="cred"><i><svg class="ic" data-lucide="book-open"></svg></i><div><b>BA (Hons) Economics, DTU</b><span>2023 · 84.6%</span></div></div>
-        <div class="cred"><i><svg class="ic" data-lucide="badge-check"></svg></i><div><b>Lean Six Sigma Green Belt</b><span>Make the better way repeatable</span></div></div>
-        <div class="cred"><i><svg class="ic" data-lucide="scroll-text"></svg></i><div><b>Wharton: Marketing</b><span>Brand, customers &amp; go-to-market · 2026</span></div></div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ============ OFF THE CLOCK ============ -->
-<section class="sec" id="offclock" style="padding-top:0">
+<!-- ============ STILL CURIOUS ============ -->
+<section class="sec" id="offclock">
   <div class="wrap">
     <div class="shead"><div><div class="eyebrow mono">Off the clock</div><h2 class="stitle split"><span class="ln"><span>Still curious.</span></span></h2></div></div>
-    <div class="off">
-      <div class="ofc reveal" style="--c:var(--signal)"><i><svg class="ic" data-lucide="mic"></svg></i><h4>Music &amp; singing</h4><p>A different kind of expression.</p></div>
-      <div class="ofc reveal" style="--c:var(--fix)"><i><svg class="ic" data-lucide="crosshair"></svg></i><h4>Pool</h4><p>Angles, patience and a good game.</p></div>
-      <div class="ofc reveal" style="--c:var(--gold)"><i><svg class="ic" data-lucide="utensils"></svg></i><h4>New cuisines</h4><p>Always chasing a new flavour.</p></div>
-      <div class="ofc reveal" style="--c:var(--violet)"><i><svg class="ic" data-lucide="plane"></svg></i><h4>Travel</h4><p>New places, fresh perspective.</p></div>
+    <div class="curious">
+      <article class="fr reveal" style="--acc:#FF8A3D"><div class="frame" data-mono="01"><img src="images/curious/music.jpg" alt="Music and singing" loading="lazy" onerror="this.remove()"></div><h3>Music &amp; singing</h3><p>A different kind of expression.</p></article>
+      <article class="fr reveal" style="--acc:#2EF2C3"><div class="frame" data-mono="02"><img src="images/curious/pool.jpg" alt="Pool" loading="lazy" onerror="this.remove()"></div><h3>Pool</h3><p>Angles, patience and a good game.</p></article>
+      <article class="fr reveal" style="--acc:#FFC23D"><div class="frame" data-mono="03"><img src="images/curious/cuisines.jpg" alt="Trying new cuisines" loading="lazy" onerror="this.remove()"></div><h3>New cuisines</h3><p>Always chasing a new flavour.</p></article>
+      <article class="fr reveal" style="--acc:#9B7BFF"><div class="frame" data-mono="04"><img src="images/curious/travel.jpg" alt="Travel" loading="lazy" onerror="this.remove()"></div><h3>Travel</h3><p>New places, fresh perspective.</p></article>
     </div>
   </div>
 </section>
