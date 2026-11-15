@@ -309,6 +309,51 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .loader{display:none}
 }
 
+/* ---- view switch (Race view / Clean view) ---- */
+.seg{display:inline-flex;padding:3px;border-radius:999px;border:1px solid var(--line2);background:#ffffff0a}
+.seg a{font-size:13px;font-weight:600;padding:6px 13px;border-radius:999px;color:var(--muted);transition:color .2s,background .2s}
+.seg a::after{display:none}
+.seg a:hover{color:var(--text)}
+.seg a.on{background:var(--text);color:#0b0b0b}
+@media(max-width:760px){.nav .seg{display:none}}
+.viewlab{margin-top:34px;color:var(--muted)}
+.hero .hcta{margin-top:14px}
+.btn small{font-weight:400;font-size:12.5px;opacity:.7;margin-left:2px}
+
+/* ---- alignment pass ---- */
+.scrollcue{display:none}
+.bignum{display:none}
+.slead,.hero .sub,.contact p,.fr p{text-wrap:pretty}
+.slead{max-width:52ch}
+/* every pit stop starts on the same line, under the header */
+.chap{align-items:flex-start;padding-top:clamp(138px,19vh,190px)}
+.ct{max-width:640px}
+.ct h3{font-size:clamp(40px,4.4vw,64px);max-width:none;text-wrap:balance}
+.hero .sub{max-width:46ch}
+.brandrow{margin-bottom:22px}
+.ct .mets{gap:36px;row-gap:14px}
+.ct .met{min-width:0}
+.ct .met span{max-width:24ch;line-height:1.35;text-wrap:balance}
+@media(min-width:901px){#jstop{display:none}.jprog .track{width:220px}}
+@media(min-width:901px) and (max-height:780px){
+  .chap{padding-top:120px}.logo{width:52px;height:52px;border-radius:15px}.brandrow{margin-bottom:14px}
+  .ct h3{font-size:clamp(34px,3.6vw,50px)}.ct .why{margin-top:12px}.lab2{margin-top:16px}.ct .met b{font-size:34px}.ct .btn{margin-top:18px;height:46px}
+}
+@media(max-width:900px){.chap{align-items:flex-end;padding-top:0}}
+@media(max-width:900px){.ct .mets{display:grid;grid-template-columns:repeat(3,minmax(0,auto));justify-content:start;gap:8px 18px}.ct .met span{max-width:13ch}}
+.kick .live{flex:none;margin:0 4px 0 3px}
+/* filmstrip starts on the page grid, not the screen edge */
+.htrack{padding:0 max(var(--pad),calc((100vw - 1320px)/2 + var(--pad)))}
+.fr h3{text-wrap:balance}
+.fr .role{min-height:1.5em}
+/* results board: numbers share one baseline grid */
+.bhead,.brow{grid-template-columns:170px 56px minmax(0,1fr) minmax(0,280px)}
+.brow .sc b{margin-bottom:2px}
+@media(max-width:900px){.brow{grid-template-columns:52px minmax(0,1fr)}}
+/* hero: chips sit on two clean columns */
+.facts{grid-template-columns:repeat(3,minmax(0,auto));margin-top:44px}
+@media(max-width:900px){.htrack{padding:0 var(--pad)}}
+
 
 /* Business Card Modal */
 .biz-overlay {
@@ -464,9 +509,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .biz-link:first-child{background:var(--chill);color:#07100c;border-color:var(--chill)}
 .biz-close{width:40px;height:40px;right:8px;top:8px}
 @media(max-width:520px){.biz-content{padding:26px 22px;gap:24px}.biz-card{min-height:0}.biz-header{display:block}.biz-logo{font-size:18px}.biz-sku{display:inline-block;margin-top:8px}.biz-name{font-size:30px}.biz-tagline{max-width:none}.biz-details{gap:8px}}
-
 @media(prefers-reduced-motion:reduce){.biz-card{transform:none!important}}
-
 </style>
 <script type="application/ld+json">
 {
@@ -507,6 +550,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#story">Story</a>
       <a class="opt" href="#leadership">Leadership</a>
       <a href="portfolio.html">Products</a>
+      <span class="seg" role="group" aria-label="Choose a view"><a class="on" href="index.html" aria-current="page">Race</a><a href="clean.html">Clean</a></span>
       <a class="hire biz-card-trigger magnet" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
     </nav>
   </div>
@@ -519,10 +563,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div>
       <div class="kick mono reveal"><span class="live"></span> MBA 2027 · BITSoM · Open to roles</div>
       <h1 class="split"><span class="ln"><span>I find the</span></span><span class="ln"><span><em class="grad">friction.</em></span></span><span class="ln"><span>Then I fix it.</span></span></h1>
-      <p class="sub reveal">Strategy, marketing and operations. From bus depots to warehouses to AI products. Scroll to ride the route.</p>
-      <div class="hcta reveal">
-        <a class="btn solid magnet" href="#story">Start the journey <i data-lucide="arrow-down" class="ic"></i></a>
-        <a class="btn magnet biz-card-trigger" href="javascript:void(0)">Let's connect</a>
+      <p class="sub reveal">I grew a bus business, stopped a warehouse leak and now build AI products. Strategy, marketing and operations.</p>
+      <div class="viewlab mono reveal">Two ways to read this</div>
+      <div class="hcta reveal" role="group" aria-label="Choose a view">
+        <a class="btn solid magnet" href="#story"><i data-lucide="flag" class="ic"></i>Race view <small>the 3D story</small></a>
+        <a class="btn magnet" href="clean.html"><i data-lucide="file-text" class="ic"></i>Clean view <small>the short read</small></a>
       </div>
       <div class="facts reveal">
         <div class="fact"><b>₹2.5 Cr</b><span>new business won</span></div>
@@ -537,13 +582,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </svg>
       <div class="glow"></div>
       <div class="pimg" id="pimg"><img src="images/pratham.webp" alt="Pratham Gupta in a black suit, arms crossed" width="589" height="900"></div>
-      <div class="chip" style="--c:var(--signal);top:12%;left:-4%"><i><svg class="ic" data-lucide="target"></svg></i><div>Strategy<small>Find the leverage</small></div></div>
-      <div class="chip" style="--c:var(--violet);top:30%;right:-6%"><i><svg class="ic" data-lucide="megaphone"></svg></i><div>Marketing<small>Go-to-market</small></div></div>
-      <div class="chip" style="--c:var(--gold);bottom:30%;left:-8%"><i><svg class="ic" data-lucide="settings-2"></svg></i><div>Operations<small>Make it run</small></div></div>
-      <div class="chip" style="--c:var(--fix);bottom:12%;right:-2%"><i><svg class="ic" data-lucide="cpu"></svg></i><div>AI products<small>Build the fix</small></div></div>
+      <div class="chip" style="--c:var(--signal);top:13%;left:-6%"><i><svg class="ic" data-lucide="target"></svg></i><div>Strategy<small>Find the leverage</small></div></div>
+      <div class="chip" style="--c:var(--violet);top:31%;right:-6%"><i><svg class="ic" data-lucide="megaphone"></svg></i><div>Marketing<small>Go-to-market</small></div></div>
+      <div class="chip" style="--c:var(--gold);bottom:29%;left:-6%"><i><svg class="ic" data-lucide="settings-2"></svg></i><div>Operations<small>Make it run</small></div></div>
+      <div class="chip" style="--c:var(--fix);bottom:11%;right:-6%"><i><svg class="ic" data-lucide="cpu"></svg></i><div>AI products<small>Build the fix</small></div></div>
     </div>
   </div>
-  <div class="scrollcue mono"><span>Scroll</span><div class="bar"></div></div>
 </section>
 
 <!-- ============ THE ROUTE ============ -->
@@ -613,7 +657,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="warehouse"></svg><img src="images/logos/bigbasket.png" alt="BigBasket logo" onerror="this.remove()"></span><div class="kick2">Pit stop 05 <span>· Apr–Jun 2026</span></div></div>
         <h3>BigBasket</h3>
         <div class="role">Strategic Initiatives Intern</div>
-        <p class="why">Stock was leaking through returns nobody tracked.</p>
+        <p class="why">Stock was leaking through returns nobody tracked. Now they are.</p>
         <div class="lab2">Result</div>
         <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>stock written off</span></div><div class="met"><b>Same day</b><span>to spot a loss, was 2 days</span></div></div>
         <div class="lab2">Upgrades fitted</div>
@@ -627,7 +671,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="cpu"></svg></span><div class="kick2">Pit stop 06 <span>· now</span></div></div>
         <h3>Building with AI</h3>
         <div class="role">Product builder</div>
-        <p class="why">Now I build the fix myself.</p>
+        <p class="why">I used to hand the fix to someone else. Now I build it myself.</p>
         <div class="lab2">Result</div>
         <div class="mets"><div class="met"><b data-to="4">4</b><span>products built</span></div><div class="met"><b data-to="1">1</b><span>live and public</span></div></div>
         <div class="lab2">Upgrades fitted</div>
@@ -661,16 +705,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div>
         <div class="eyebrow mono">Industry problem solving</div>
         <h2 class="stitle split"><span class="ln"><span>Real briefs.</span></span><span class="ln"><span>Real rankings.</span></span></h2>
-        <p class="slead reveal">Case competitions where companies hand you their actual problem.</p>
+        <p class="slead reveal">Case competitions where a company hands over a real problem and ranks the answers.</p>
       </div>
     </div>
     <div class="board">
       <div class="bhead"><span>Result</span><span></span><span>Competition</span><span style="text-align:right">Field</span></div>
       <div class="brow" style="--acc:#FFC23D">
-        <div class="pos">Top 30<small>Finalist</small></div>
+        <div class="pos">Top 30<small>Teams</small></div>
         <span class="logo"><svg class="ic" data-lucide="lightbulb"></svg><img src="images/logos/tata-imagination.png" alt="Tata Imagination Challenge logo" onerror="this.remove()"></span>
         <div class="info"><h4>Tata Imagination Challenge</h4><div class="org">Tata Group</div></div>
-        <div class="sc"><b>Finalist</b>one of the top 30 teams</div>
+        <div class="sc"><b>Finalist</b>reached the final round</div>
       </div>
       <div class="brow" style="--acc:#3DA9FF">
         <div class="pos">SF ×2<small>Semi-finalist</small></div>
@@ -685,7 +729,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="sc"><b>14,000+</b>entries</div>
       </div>
       <div class="brow" style="--acc:#FF4F7B">
-        <div class="pos">Final<small>Finalist</small></div>
+        <div class="pos">Finalist<small>Final round</small></div>
         <span class="logo"><svg class="ic" data-lucide="flag"></svg><img src="images/logos/bits-goa.png" alt="BITS Pilani Goa logo" onerror="this.remove()"></span>
         <div class="info"><h4>Case Consilium</h4><div class="org">BITS Pilani, Goa campus</div></div>
         <div class="sc"><b>1st</b>in the semi-finals</div>
@@ -713,7 +757,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </article>
       <article class="fr" style="--acc:#FFC23D">
         <div class="frame" data-mono="AIDC"><span class="idx">02</span><img src="images/leadership/deans-conference.jpg" alt="All India Deans Conference" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">BITSoM</div>
+        <div class="role">Organising team</div>
         <h3>All India Deans Conference</h3>
         <p>Part of the team that brought deans from across India to BITSoM.</p>
       </article>
@@ -725,7 +769,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </article>
       <article class="fr" style="--acc:#9B7BFF">
         <div class="frame" data-mono="PQ"><span class="idx">04</span><img src="images/leadership/preql.jpg" alt="PreQL, BITSoM AI and Analytics Club" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Senior</div>
+        <div class="role">Senior member</div>
         <h3>PreQL</h3>
         <p>BITSoM's AI &amp; Analytics Club. Built an AI campaign tracker; run sessions that help classmates crack cases faster.</p>
       </article>
@@ -737,7 +781,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </article>
       <article class="fr" style="--acc:#6BE675">
         <div class="frame" data-mono="TSW"><span class="idx">06</span><img src="images/leadership/techstars.jpg" alt="Techstars Startup Weekend" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Startup Weekend</div>
+        <div class="role">Award winner</div>
         <h3>Techstars Startup Weekend</h3>
         <div class="award"><svg class="ic" data-lucide="award"></svg>Outstanding Professional Development Award</div>
       </article>
