@@ -69,7 +69,7 @@ p{text-wrap:pretty}
 .focus.l{text-align:right;align-items:flex-end}.focus.r{text-align:left;align-items:flex-start}
 .focus b{display:block;font-size:clamp(19px,2vw,24px);font-weight:600;letter-spacing:-.02em}
 .focus span{font-size:15px;color:var(--mute)}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:8px}
 .fact{padding:34px 12px;text-align:center}
 .fact+.fact{border-left:1px solid var(--hair)}
 .fact b{display:block;font-size:clamp(32px,4.4vw,56px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
@@ -80,7 +80,10 @@ p{text-wrap:pretty}
   .focus{gap:18px;padding:0 10px;grid-row:1}
   .focus.l,.focus.r{text-align:center;align-items:center}
   .focus span{font-size:13px}
-  .fact{padding:24px 6px}.fact span{font-size:13px}
+  .facts{grid-template-columns:1fr 1fr}
+  .fact{padding:22px 6px}.fact span{font-size:13px}
+  .fact b{white-space:nowrap;font-size:28px}
+  .fact:nth-child(3){border-left:0}.fact:nth-child(n+3){border-top:1px solid var(--hair)}
 }
 
 /* sections */
@@ -192,6 +195,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <a class="opt" href="#story">Story</a>
       <a class="opt" href="#leadership">Leadership</a>
       <a class="opt" href="portfolio.html">Products</a>
+      <a href="index.html?play">Play</a>
       <span class="seg" role="group" aria-label="Choose a view"><a href="index.html">Race</a><a class="on" href="clean.html" aria-current="page">Clean</a></span>
       <a class="pill sm" href="#contact">Let's connect</a>
     </nav>
@@ -226,6 +230,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <div class="fact"><b>₹2.5 Cr</b><span>new business won</span></div>
       <div class="fact"><b>~₹20 L</b><span>losses stopped</span></div>
       <div class="fact"><b>200+</b><span>people led</span></div>
+      <div class="fact"><b>Top 30 team</b><span>Tata Imagination finals</span></div>
     </div>
   </div>
 </section>
@@ -274,7 +279,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <div class="role">MBA · Mumbai</div>
         <p class="why">A strategy is only as good as the plan that carries it out.</p>
         <div class="lab">Result</div>
-        <div class="mets"><div class="met"><b>2×</b><span>Flipkart WiRED semi-finalist</span></div><div class="met"><b>Top 30</b><span>Tata Imagination</span></div><div class="met"><b>₹12 L</b><span>sponsorship raised</span></div></div>
+        <div class="mets"><div class="met"><b>2×</b><span>Flipkart WiRED semi-finalist</span></div><div class="met"><b>Top 30</b><span>team, Tata Imagination finals</span></div><div class="met"><b>₹12 L</b><span>sponsorship raised</span></div></div>
         <div class="lab">Skills gained</div>
         <div class="skills"><span>Strategy</span><span>Marketing</span><span>E-commerce</span><span>Negotiation</span></div>
       </article>
@@ -320,10 +325,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <div class="board rv">
       <div class="brow bhead"><span>Result</span><span></span><span>Competition</span><span style="text-align:right">Field</span></div>
       <div class="brow" style="--c:#c98a00">
-        <div class="pos">Top 30<small>Teams</small></div>
+        <div class="pos">Top 30<small>Team</small></div>
         <span class="logo"><svg class="ic" data-lucide="lightbulb"></svg><img src="images/logos/tata-imagination.png" alt="Tata Imagination Challenge logo" onerror="this.remove()"></span>
         <div class="info"><h4>Tata Imagination Challenge</h4><div class="org">Tata Group</div></div>
-        <div class="sc"><b>Finalist</b>reached the final round</div>
+        <div class="sc"><b>Finals</b>one of the top 30 teams</div>
       </div>
       <div class="brow" style="--c:#1f86d6">
         <div class="pos">SF ×2<small>Semi-finalist</small></div>

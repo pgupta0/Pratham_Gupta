@@ -98,7 +98,7 @@ main,footer,.topbar{position:relative;z-index:2}
 .nav a.hire{display:inline-flex;align-items:center;gap:8px;color:#0b0b0b;background:var(--text);padding:10px 16px;border-radius:999px;font-weight:600}
 @media(max-width:760px){.nav a.opt{display:none}.nav{gap:18px}.brand .nm{font-size:20px}}
 .nav a{white-space:nowrap}
-@media(max-width:420px){.nav{gap:14px}.nav a[href$="#story"]{display:none}.nav a.hire{padding:9px 13px}}
+@media(max-width:420px){.nav{gap:14px}.nav a[href$="#story"],.nav a[href="portfolio.html"]{display:none}.nav a.hire{padding:9px 13px}}
 
 /* ============ BUTTONS ============ */
 .btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid var(--line2);transition:background .25s,border-color .25s,color .25s;will-change:transform}
@@ -351,8 +351,49 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .brow .sc b{margin-bottom:2px}
 @media(max-width:900px){.brow{grid-template-columns:52px minmax(0,1fr)}}
 /* hero: chips sit on two clean columns */
-.facts{grid-template-columns:repeat(3,minmax(0,auto));margin-top:44px}
+.facts{grid-template-columns:repeat(4,minmax(0,auto));margin-top:44px}
+@media(max-width:900px){.facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}.fact b{white-space:nowrap}}
 @media(max-width:900px){.htrack{padding:0 var(--pad)}}
+
+/* ---- welcome: play or visit ---- */
+.gate{position:fixed;inset:0;z-index:350;display:grid;place-items:center;padding:clamp(16px,4vw,40px);overflow:auto;background:radial-gradient(110% 80% at 50% 0%,#1d1009f0 0%,#070503f5 60%);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:opacity .5s,visibility .5s}
+.gate[hidden]{display:none}
+.gate.out{opacity:0;visibility:hidden}
+html.gated,html.gated body{overflow:hidden}
+.gate .gin{width:min(1040px,100%);text-align:center}
+.gate .gk{color:var(--signal)}
+.gate h2{margin-top:16px;font-size:clamp(44px,7.4vw,96px);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.gate h2 em{font-style:normal;background:linear-gradient(90deg,var(--signal),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.gate .gsub{margin:18px auto 0;max-width:44ch;color:#C3C8D4;font-size:clamp(16px,1.4vw,19px)}
+.gopts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(30px,5vh,52px);text-align:left}
+.gopt{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:26px 24px 24px;border-radius:24px;background:#ffffff08;border:1px solid var(--line2);overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s;text-align:left;width:100%}
+.gopt::before{content:"";position:absolute;inset:auto -30% -60% -30%;height:120%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 30%,transparent),transparent);opacity:.0;transition:opacity .35s}
+.gopt:hover,.gopt:focus-visible{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 70%,transparent);background:#ffffff0d}
+.gopt:hover::before,.gopt:focus-visible::before{opacity:1}
+.gopt>*{position:relative}
+.gopt .gi{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--c);color:#0b0907;margin-bottom:14px}
+.gopt .gi .ic{width:26px;height:26px;stroke-width:2}
+.gopt.visit .gi{background:#ffffff14;color:var(--text);border:1px solid var(--line2)}
+.gopt b{font-family:var(--display);font-size:clamp(26px,2.4vw,32px);font-weight:700;letter-spacing:-.03em;line-height:1}
+.gopt>span{color:#C3C8D4;font-size:15px;line-height:1.45}
+.gopt em{margin-top:auto;padding-top:16px;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.gopt.visit em{color:var(--muted)}
+.gopt .go{position:absolute;right:22px;top:26px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);transition:background .3s,color .3s,border-color .3s}
+.gopt:hover .go{background:var(--c);color:#0b0907;border-color:transparent}
+.gopt.visit:hover .go{color:#0b0907}
+.gate .gfoot2{margin-top:24px;font-size:14px;color:var(--muted)}
+.gate .gfoot2 a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.gate .tp{display:none}
+@media(hover:none),(pointer:coarse){.gate .kb{display:none}.gate .tp{display:inline}}
+@media(max-width:820px){
+  .gopts{grid-template-columns:1fr;gap:10px}
+  .gopt{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:16px;row-gap:3px;padding:18px 56px 18px 18px;border-radius:20px}
+  .gopt .gi{grid-row:span 3;width:48px;height:48px;margin:0;border-radius:14px}
+  .gopt b{font-size:22px}.gopt>span{font-size:14px}.gopt em{padding-top:4px}
+  .gopt .go{top:50%;transform:translateY(-50%);right:16px}
+}
+.nav a.play{display:inline-flex;align-items:center;gap:6px;color:var(--text)}
+.nav a.play .ic{width:16px;height:16px;color:var(--signal)}
 
 
 /* Business Card Modal */
@@ -539,6 +580,78 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="lbar" id="lbar"></div>
 </div>
 
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT" data-lenis-prevent hidden>
+  <div class="gin">
+    <div class="mono gk">Pratham Gupta · MBA 2027 · BITSoM</div>
+    <h2 id="gateT">Play, or just <em>visit?</em></h2>
+    <p class="gsub">Two quick games tell my story: every chapter, result and skill. Or skip the games and go straight to the site.</p>
+    <div class="gopts">
+      <a class="gopt" href="drive.html" style="--c:#FF5A1F" data-gate-go>
+        <span class="gi"><i data-lucide="car-front" class="ic"></i></span>
+        <b>Drive it</b>
+        <span>Take the F1 car round a night circuit. Each glowing gate opens a chapter.</span>
+        <em><span class="kb">Arrow keys</span><span class="tp">Touch</span> · 2 min</em>
+        <span class="go" aria-hidden="true"><i data-lucide="arrow-right" class="ic"></i></span>
+      </a>
+      <a class="gopt" href="jump.html" style="--c:#2EF2C3" data-gate-go>
+        <span class="gi"><i data-lucide="gamepad-2" class="ic"></i></span>
+        <b>Jump it</b>
+        <span>Run and jump through eight zones. Hit the glowing blocks, grab the skills.</span>
+        <em><span class="kb">Arrows + space</span><span class="tp">Touch</span> · 3 min</em>
+        <span class="go" aria-hidden="true"><i data-lucide="arrow-right" class="ic"></i></span>
+      </a>
+      <button class="gopt visit" type="button" style="--c:#F2F4F8" data-gate-visit>
+        <span class="gi"><i data-lucide="compass" class="ic"></i></span>
+        <b>Just visit</b>
+        <span>Scroll the 3D story: the race, the results and how to reach me.</span>
+        <em>No controls · scroll</em>
+        <span class="go" aria-hidden="true"><i data-lucide="arrow-down" class="ic"></i></span>
+      </button>
+    </div>
+    <p class="gfoot2">Short on time? <a href="clean.html">Read the clean version</a></p>
+  </div>
+</div>
+<script>
+/* Welcome screen: shown on a first visit; ?visit or a #link skips it, ?play forces it */
+(function () {
+  var gate = document.getElementById('gate'), html = document.documentElement, done;
+  window.__gate = new Promise(function (r) { done = r; });
+  var seen = false; try { seen = sessionStorage.getItem('pg-gate') === '1'; } catch (e) {}
+  var q = location.search, force = /[?&]play\b/.test(q), skip = /[?&]visit\b/.test(q) || (location.hash && location.hash !== '#top');
+  var remember = function () { try { sessionStorage.setItem('pg-gate', '1'); } catch (e) {} };
+  var lastFocus = null;
+  function stopScroll() { html.classList.add('gated'); var n = 0, t = setInterval(function () { if (window.__lenis) { window.__lenis.stop(); } if (++n > 30 || window.__lenis) clearInterval(t); }, 100); }
+  function open() {
+    lastFocus = document.activeElement;
+    gate.hidden = false; gate.classList.remove('out'); stopScroll();
+    setTimeout(function () { var f = gate.querySelector('.gopt'); f && f.focus({ preventScroll: true }); }, 60);
+    document.addEventListener('keydown', onKey, true);
+  }
+  function close() {
+    remember(); gate.classList.add('out'); html.classList.remove('gated');
+    document.removeEventListener('keydown', onKey, true);
+    if (window.__lenis && !document.getElementById('loader')) window.__lenis.start();
+    setTimeout(function () { gate.hidden = true; }, 500);
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    done();
+  }
+  function onKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'Tab') {
+      var f = Array.prototype.slice.call(gate.querySelectorAll('a,button')), i = f.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    }
+  }
+  gate.querySelector('[data-gate-visit]').addEventListener('click', close);
+  Array.prototype.forEach.call(gate.querySelectorAll('[data-gate-go]'), function (a) { a.addEventListener('click', remember); });
+  window.openGate = open;
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('[data-play]'); if (a) { e.preventDefault(); open(); } });
+  if (force || (!seen && !skip)) open(); else done();
+  if (/[?&](visit|play)\b/.test(q) && history.replaceState) history.replaceState(null, '', location.pathname + location.hash);
+})();
+</script>
+
 <canvas id="gl" aria-hidden="true"></canvas>
 <div class="vignette" aria-hidden="true"></div>
 <div class="cur" id="cur" aria-hidden="true"><div class="ring"></div><div class="dot"></div></div>
@@ -550,6 +663,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#story">Story</a>
       <a class="opt" href="#leadership">Leadership</a>
       <a href="portfolio.html">Products</a>
+      <a class="play" href="index.html?play" data-play><i data-lucide="gamepad-2" class="ic"></i>Play</a>
       <span class="seg" role="group" aria-label="Choose a view"><a class="on" href="index.html" aria-current="page">Race</a><a href="clean.html">Clean</a></span>
       <a class="hire biz-card-trigger magnet" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
     </nav>
@@ -573,6 +687,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="fact"><b>₹2.5 Cr</b><span>new business won</span></div>
         <div class="fact"><b>~₹20 L</b><span>losses stopped</span></div>
         <div class="fact"><b>200+</b><span>people led</span></div>
+        <div class="fact"><b>Top 30 team</b><span>Tata Imagination finals</span></div>
       </div>
     </div>
 
@@ -645,7 +760,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="role">MBA · Mumbai</div>
         <p class="why">A strategy is only as good as the plan that carries it out.</p>
         <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b data-to="2" data-suf="×">2×</b><span>Flipkart WiRED semi-finalist</span></div><div class="met"><b>Top 30</b><span>Tata Imagination</span></div><div class="met"><b data-to="12" data-pre="₹" data-suf=" L">₹12 L</b><span>sponsorship raised</span></div></div>
+        <div class="mets"><div class="met"><b data-to="2" data-suf="×">2×</b><span>Flipkart WiRED semi-finalist</span></div><div class="met"><b>Top 30</b><span>team, Tata Imagination finals</span></div><div class="met"><b data-to="12" data-pre="₹" data-suf=" L">₹12 L</b><span>sponsorship raised</span></div></div>
         <div class="lab2">Upgrades fitted</div>
         <div class="ups"><span class="up">Strategy</span><span class="up">Marketing</span><span class="up">E-commerce</span><span class="up">Negotiation</span></div>
       </div></div>
@@ -711,10 +826,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="board">
       <div class="bhead"><span>Result</span><span></span><span>Competition</span><span style="text-align:right">Field</span></div>
       <div class="brow" style="--acc:#FFC23D">
-        <div class="pos">Top 30<small>Teams</small></div>
+        <div class="pos">Top 30<small>Team</small></div>
         <span class="logo"><svg class="ic" data-lucide="lightbulb"></svg><img src="images/logos/tata-imagination.png" alt="Tata Imagination Challenge logo" onerror="this.remove()"></span>
         <div class="info"><h4>Tata Imagination Challenge</h4><div class="org">Tata Group</div></div>
-        <div class="sc"><b>Finalist</b>reached the final round</div>
+        <div class="sc"><b>Finals</b>one of the top 30 teams</div>
       </div>
       <div class="brow" style="--acc:#3DA9FF">
         <div class="pos">SF ×2<small>Semi-finalist</small></div>

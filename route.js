@@ -758,7 +758,8 @@ function intro() {
   const ready = Promise.race([Promise.all([document.fonts ? document.fonts.ready : 0, new Promise(r => (document.readyState === 'complete' ? r() : addEventListener('load', r)))]), new Promise(r => setTimeout(r, 3500))]);
   gsap.to(o, { v: 86, duration: 1.4, ease: 'power2.out', onUpdate: () => { lc.textContent = Math.round(o.v); lb.style.width = o.v + '%'; } });
   gsap.from('.loader .lname span', { yPercent: 110, duration: 1, ease: 'power4.out', stagger: .08 });
-  Promise.all([ready, new Promise(r => setTimeout(r, 1500))]).then(() => {
+  // wait for the welcome screen too, so the curtain lifts once the visitor has chosen
+  Promise.all([ready, new Promise(r => setTimeout(r, 1500)), window.__gate || 0]).then(() => {
     gsap.timeline()
       .to(o, { v: 100, duration: .35, ease: 'power1.in', onUpdate: () => { lc.textContent = Math.round(o.v); lb.style.width = o.v + '%'; } })
       .to('.loader .lname span, .loader .lrow', { yPercent: -110, autoAlpha: 0, duration: .6, ease: 'power3.in', stagger: .04 })
