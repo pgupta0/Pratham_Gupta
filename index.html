@@ -2,973 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pratham Gupta / The Route</title>
-<meta name="description" content="Pratham Gupta, BITSoM MBA 2027. Strategy, marketing and operations. I find the friction in messy systems, then fix it for good.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pratham Gupta · Pratham's Town</title>
+<meta name="description" content="Pratham Gupta, MBA 2027 at BITSoM: strategy, marketing and operations. Walk around a small 3D town where every building is a chapter of his career: a bus depot, a grocery store, two campuses and an AI lab.">
 <meta name="author" content="Pratham Gupta">
 <link rel="canonical" href="https://prathamgupta.vercel.app/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/favicon.svg">
-<meta name="theme-color" content="#070503">
+<meta name="theme-color" content="#d7e9f4">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://prathamgupta.vercel.app/">
-<meta property="og:title" content="Pratham Gupta / The Route">
-<meta property="og:description" content="From bus depots to warehouses to AI products. I find the friction, then fix it for good.">
+<meta property="og:title" content="Pratham Gupta · Pratham's Town">
+<meta property="og:description" content="I find the friction. Then I fix it. Walk around the town of my career.">
 <meta property="og:image" content="https://prathamgupta.vercel.app/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_IN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pratham Gupta / The Route">
-<meta name="twitter:description" content="From bus depots to warehouses to AI products.">
-<meta name="twitter:image" content="https://prathamgupta.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="images/pratham.webp">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<link rel="modulepreload" href="world/main.js">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.454.0/dist/umd/lucide.min.js" defer></script>
-<script src="profile-ui.js" defer></script>
-<style>
-:root{
-  --ink:#070503;--ink2:#0E0A07;--glass:#120D09CC;--line:#ffffff14;--line2:#ffffff24;
-  --text:#F2F4F8;--muted:#9AA1B2;--dim:#5F6678;
-  --signal:#FF5A1F;--fix:#2EF2C3;--violet:#8B7CFF;--gold:#FFC857;
-  --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
-  --pad:clamp(20px,4vw,56px);
-  /* names the business card styles use */
-  --chill:var(--fix);--preql:var(--violet);--frost:#fff;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-padding-top:80px}
-html.lenis,html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto!important}
-.lenis.lenis-stopped{overflow:hidden}
-body{background:var(--ink);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-img,svg{display:block}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-:focus-visible{outline:2px solid var(--fix);outline-offset:3px;border-radius:4px}
-.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 var(--pad)}
-.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
-.ic{width:18px;height:18px;stroke-width:1.75;flex:none}
-h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;line-height:.98}
-em{font-style:normal}
-.grad{background:linear-gradient(100deg,#FF5A1F,#FF9A3D 45%,#FFC23D);-webkit-background-clip:text;background-clip:text;color:transparent}
-
-/* WebGL stage behind everything */
-#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .6s}
-.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 60% 40%,transparent 50%,#070503cc 100%)}
-main,footer,.topbar{position:relative;z-index:2}
-
-/* ============ LOADER ============ */
-.loader{position:fixed;inset:0;z-index:300;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:var(--pad)}
-.loader .lname{font-family:var(--display);font-weight:800;font-size:clamp(48px,11vw,170px);letter-spacing:-.05em;line-height:.85;overflow:hidden}
-.loader .lname span{display:inline-block}
-.lrow{display:flex;justify-content:space-between;align-items:flex-end;margin-top:20px;color:var(--muted)}
-.lcount{font-family:var(--display);font-size:clamp(40px,7vw,96px);font-weight:700;color:var(--text);line-height:1}
-.lbar{position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,var(--signal),var(--fix))}
-.no-js .loader{display:none}
-
-/* ============ CURSOR ============ */
-.cur{position:fixed;left:0;top:0;z-index:400;pointer-events:none;display:none;opacity:0;transition:opacity .3s}
-.cur.on{opacity:1}
-.cur .dot{position:absolute;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff}
-.cur .ring{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;border:1px solid #ffffff70;transition:width .25s,height .25s,margin .25s,background .25s,border-color .25s}
-.cur.big .ring{width:70px;height:70px;margin:-35px 0 0 -35px;background:#ffffff12;border-color:#ffffffaa}
-@media(pointer:fine){.cur{display:block}}
-
-/* ============ TOPBAR ============ */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
-.topbar.solid{background:#070503CC;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
-.tb{display:flex;align-items:center;justify-content:space-between;height:72px}
-.brand{display:flex;align-items:center;gap:12px}
-.brand .nm{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.03em}
-.brand .pg{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:14px;background:linear-gradient(135deg,var(--signal),#ff8a4a);color:#120600}
-.nav{display:flex;align-items:center;gap:30px}
-.nav a{font-size:14px;color:var(--muted);transition:color .2s;position:relative}
-.nav a:not(.hire)::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--text);transform:scaleX(0);transform-origin:right;transition:transform .35s}
-.nav a:not(.hire):hover{color:var(--text)}
-.nav a:not(.hire):hover::after{transform:scaleX(1);transform-origin:left}
-.nav a.hire{display:inline-flex;align-items:center;gap:8px;color:#0b0b0b;background:var(--text);padding:10px 16px;border-radius:999px;font-weight:600}
-@media(max-width:760px){.nav a.opt{display:none}.nav{gap:18px}.brand .nm{font-size:20px}}
-.nav a{white-space:nowrap}
-@media(max-width:420px){.nav{gap:14px}.nav a[href$="#story"],.nav a[href="portfolio.html"]{display:none}.nav a.hire{padding:9px 13px}}
-
-/* ============ BUTTONS ============ */
-.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid var(--line2);transition:background .25s,border-color .25s,color .25s;will-change:transform}
-.btn:hover{border-color:#ffffff55}
-.btn.solid{background:var(--signal);border-color:var(--signal);color:#130700}
-.btn.solid:hover{background:#ff7a45}
-.btn .ic{width:17px;height:17px}
-
-/* ============ HERO ============ */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:110px 0 60px}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070503F0 0%,#070503B0 38%,#07050330 70%,transparent),linear-gradient(0deg,#070503 0%,transparent 30%);pointer-events:none}
-.hero .hgrid{position:relative}
-.hgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(30px,5vw,80px);align-items:center}
-.kick{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:28px;flex-wrap:wrap}
-.kick .live{width:8px;height:8px;border-radius:50%;background:var(--fix);box-shadow:0 0 0 0 #2EF2C380;animation:ping 2s infinite}
-@keyframes ping{70%{box-shadow:0 0 0 10px #2EF2C300}100%{box-shadow:0 0 0 0 #2EF2C300}}
-.hero h1{font-size:clamp(50px,7.4vw,118px);font-weight:800}
-.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
-.hero h1 .ln>span{display:inline-block}
-.hero .sub{margin-top:28px;font-size:clamp(17px,1.4vw,20px);color:#C3C8D4;max-width:40ch}
-.hcta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
-.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:clamp(20px,3.5vw,52px);margin-top:54px;padding-top:28px;border-top:1px solid var(--line)}
-.fact b{display:block;font-family:var(--display);font-size:clamp(26px,2.6vw,36px);font-weight:700;letter-spacing:-.02em}
-.fact span{font-size:13px;color:var(--muted)}
-
-.portrait{position:relative;aspect-ratio:1/1.12;max-width:560px;width:100%;justify-self:end}
-.orbit{position:absolute;inset:-4% -2% 6%;pointer-events:none}
-.orbit circle{fill:none;stroke-width:1}
-.orbit .o1{stroke:#ffffff22;stroke-dasharray:2 7;transform-origin:50% 50%;animation:spin 60s linear infinite}
-.orbit .o2{stroke:#FF5A1F55;stroke-dasharray:120 900;stroke-width:1.5;transform-origin:50% 50%;animation:spin 14s linear infinite}
-.orbit .o3{stroke:#2EF2C340;stroke-dasharray:60 500;stroke-width:1.5;transform-origin:50% 50%;animation:spin 22s linear infinite reverse}
-@keyframes spin{to{transform:rotate(360deg)}}
-.glow{position:absolute;left:12%;right:12%;top:10%;bottom:16%;border-radius:50%;background:radial-gradient(circle,#FF5A1F38,#8B7CFF22 45%,transparent 70%);filter:blur(30px)}
-.pimg{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;transform-style:preserve-3d;will-change:transform}
-.pimg img{height:100%;width:auto;max-width:none;object-fit:contain;-webkit-mask-image:linear-gradient(#000 78%,transparent 99%);mask-image:linear-gradient(#000 78%,transparent 99%)}
-.chip{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 10px;border-radius:14px;background:var(--glass);border:1px solid var(--line2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:13.5px;font-weight:500;white-space:nowrap;box-shadow:0 20px 40px -20px #000}
-.chip i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#ffffff0d;color:var(--c)}
-.chip i .ic{width:16px;height:16px}
-.chip small{display:block;font-size:11px;color:var(--muted);font-weight:400}
-.scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--dim)}
-.scrollcue .bar{width:1px;height:46px;background:linear-gradient(var(--muted),transparent);overflow:hidden;position:relative}
-.scrollcue .bar::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:#fff;animation:drip 1.8s ease-in-out infinite}
-@keyframes drip{to{top:110%}}
-@media(max-width:900px){
-  .hgrid{grid-template-columns:1fr}
-  .portrait{justify-self:center;max-width:420px;order:-1;margin-top:10px}
-  .facts{grid-template-columns:repeat(3,1fr)}
-  .scrollcue{display:none}
-}
-@media(max-width:520px){.chip{font-size:12px;padding:8px 10px 8px 8px}.chip i{width:26px;height:26px}.chip small{display:none}.facts{gap:14px}
-  .chip[style*="left:"]{left:0!important}.chip[style*="right:"]{right:0!important}}
-
-/* ============ JOURNEY (no boxes: type floats over the city) ============ */
-.journey{position:relative}
-.stage{position:sticky;top:0;height:100svh;overflow:hidden}
-.stage::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#070503D9 0%,#07050399 32%,transparent 60%)}
-.jhead{position:absolute;top:96px;left:0;right:0}
-.jhead .wrap{display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
-.jprog{display:flex;align-items:center;gap:14px}
-.jprog .track{width:180px;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
-.jprog .fill{height:100%;width:0;background:linear-gradient(90deg,#FF8A3D,#FFC23D,#6BE675,#FF4F7B,#9B7BFF,#3DA9FF,#2EF2C3);background-size:180px 100%}
-.chap{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none;visibility:hidden}
-.chap .wrap{position:relative}
-.ct{position:relative;max-width:560px;pointer-events:auto;text-shadow:0 2px 24px #000a}
-.bignum{position:absolute;left:-.06em;top:50%;transform:translateY(-58%);z-index:-1;font-family:var(--display);font-weight:800;font-size:clamp(200px,26vw,380px);line-height:.8;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--acc) 30%,transparent);pointer-events:none;text-shadow:none}
-.brandrow{display:flex;align-items:center;gap:16px;margin-bottom:26px}
-.logo{position:relative;width:64px;height:64px;border-radius:18px;flex:none;display:grid;place-items:center;color:#0a0806;overflow:hidden;
-  background:linear-gradient(140deg,color-mix(in srgb,var(--acc) 65%,#fff),var(--acc));box-shadow:0 14px 34px -12px var(--acc),inset 0 1px 0 #ffffff90}
-.logo .ic{width:28px;height:28px;stroke-width:2.1}
-.logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:9px;background:#fff}
-.kick2{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
-.kick2 span{color:var(--muted)}
-.ct h3{font-size:clamp(42px,5vw,72px);font-weight:800;letter-spacing:-.035em;line-height:.95;max-width:12ch}
-.ct .role{margin-top:14px;font-size:clamp(17px,1.5vw,21px);font-weight:600;color:#fff;opacity:.92}
-.ct .why{margin-top:18px;padding-left:18px;border-left:2px solid var(--acc);font-size:clamp(16px,1.3vw,19px);line-height:1.5;color:#D9DCE4;max-width:40ch}
-.mets{display:flex;gap:40px;margin-top:30px;flex-wrap:wrap}
-.met b{display:block;font-family:var(--display);font-size:clamp(36px,3.6vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1;color:#fff}
-.met span{display:block;margin-top:6px;font-size:13.5px;color:var(--muted)}
-.prods{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px}
-.prods a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;border-bottom:1px solid #ffffff33;padding-bottom:3px;transition:border-color .2s,color .2s}
-.prods a:hover{border-color:var(--acc);color:var(--acc)}
-.prods .ic{width:16px;height:16px;color:var(--acc)}
-.ct .btn{margin-top:28px}
-.lab2{display:flex;align-items:center;gap:10px;margin-top:24px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.lab2::after{content:"";height:1px;width:60px;background:linear-gradient(90deg,var(--acc),transparent)}
-.ct .mets{margin-top:12px;gap:34px}
-.ct .met b{font-size:clamp(32px,3.2vw,48px)}
-.ups{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.up{display:inline-flex;align-items:center;gap:7px;padding:7px 13px 7px 10px;border-radius:999px;font-size:13.5px;font-weight:600;color:#fff;text-shadow:none;
-  background:color-mix(in srgb,var(--acc) 16%,#0000);border:1px solid color-mix(in srgb,var(--acc) 45%,transparent)}
-.up::before{content:"+";font-family:var(--mono);font-weight:700;color:var(--acc)}
-
-/* racing HUD: minimap */
-.hud{position:absolute;right:var(--pad);bottom:34px;display:flex;align-items:flex-end;gap:18px}
-.hud .hl{text-align:right}
-.hud .hl b{display:block;font-family:var(--display);font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
-.hud .hl b span{font-size:18px;color:var(--muted);font-weight:600}
-.hud .hl small{display:block;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.mini{width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,#140d0899,#07050399);border:1px solid #ffffff22;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);position:relative;overflow:hidden}
-.mini::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 300deg,#ffffff14 360deg);animation:sweep 4s linear infinite}
-@keyframes sweep{to{transform:rotate(360deg)}}
-.mini svg{position:absolute;inset:0;width:100%;height:100%}
-.mini .stopdot{cursor:pointer}
-@media(max-width:900px){
-  .hud{display:none}
-  .stage::before{background:linear-gradient(0deg,#070503F2 0%,#070503B0 42%,transparent 70%)}
-  .chap{align-items:flex-end;padding-bottom:34px}
-  .bignum{display:none}
-  .brandrow{margin-bottom:18px}
-  .logo{width:52px;height:52px;border-radius:15px}
-  .ct h3{font-size:40px}
-  .ct .why{margin-top:16px;font-size:15.5px}
-  .mets{gap:28px;margin-top:20px}
-  .met b{font-size:34px}
-  .jhead{top:82px}.jprog .track{width:100px}
-  .ct h3{font-size:34px}.ct .why{font-size:14.5px;margin-top:12px}.lab2{margin-top:14px;font-size:10px}.ct .mets{gap:18px;margin-top:8px}.ct .met b{font-size:24px}.ct .met span{font-size:12px}.ups{gap:6px;margin-top:8px}.up{font-size:12px;padding:5px 10px 5px 8px}
-}
-@media(max-width:520px){.jhead .lbl{display:none}.kick2{font-size:11.5px}}
-
-/* ============ SECTION HEADS ============ */
-.sec{padding:clamp(90px,12vw,160px) 0}
-.eyebrow{display:flex;align-items:center;gap:12px;color:var(--muted);margin-bottom:24px}
-.eyebrow::before{content:"";width:28px;height:1px;background:var(--signal)}
-.stitle{font-size:clamp(40px,6vw,88px);font-weight:800;max-width:15ch}
-.stitle .ln{display:block;overflow:hidden;padding-bottom:.06em}
-.stitle .ln>span{display:inline-block}
-.slead{margin-top:22px;color:var(--muted);font-size:18px;max-width:46ch}
-.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:56px}
-
-/* ============ CASE COMPETITIONS: a race results board ============ */
-.board{border-top:1px solid var(--line2)}
-.bhead,.brow{display:grid;grid-template-columns:150px 64px minmax(0,1fr) minmax(0,260px);gap:24px;align-items:center}
-.bhead{padding:14px 0;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line)}
-.brow{position:relative;padding:30px 0;border-bottom:1px solid var(--line);overflow:hidden}
-.brow::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 16%,transparent),transparent 70%);transform:translateX(-101%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-.brow:hover::before{transform:none}
-.brow>*{position:relative}
-.pos{font-family:var(--display);font-weight:800;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.02em;line-height:1;color:var(--acc)}
-.pos small{display:block;margin-top:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:400}
-.brow .logo{width:56px;height:56px;border-radius:15px}
-.brow .logo .ic{width:24px;height:24px}
-.brow h4{font-family:var(--display);font-size:clamp(22px,2.4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
-.brow .org{margin-top:6px;color:var(--muted);font-size:14.5px}
-.brow .sc{text-align:right;font-size:15px;color:#D9DCE4}
-.brow .sc b{display:block;font-family:var(--display);font-size:24px;font-weight:700;color:#fff}
-@media(max-width:900px){
-  .bhead{display:none}
-  .brow{grid-template-columns:52px minmax(0,1fr);gap:8px 16px;padding:24px 0}
-  .brow .logo{grid-row:span 2;width:48px;height:48px}
-  .pos{grid-column:2;font-size:22px}.pos small{display:inline;margin-left:8px}
-  .brow .info{grid-column:2}
-  .brow .sc{grid-column:2;text-align:left;font-size:14px}.brow .sc b{display:inline;font-size:18px;margin-right:6px}
-}
-
-/* ============ LEADERSHIP & STILL CURIOUS: photo frames, no boxes ============ */
-.lead-sec{padding-top:clamp(96px,11vh,130px);min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-bottom:40px}
-.lead-sec .shead{margin-bottom:clamp(24px,4vh,40px)}
-.lead-sec .stitle{font-size:clamp(38px,4.4vw,64px)}
-.lead-sec .frame::before{font-size:80px}
-.hwrap{overflow:hidden}
-.htrack{display:flex;gap:36px;padding:0 var(--pad);width:max-content;will-change:transform}
-.fr{width:clamp(220px,17vw,270px);flex:none}
-.frame{position:relative;aspect-ratio:4/4.6;border-radius:20px;overflow:hidden;background:
-  radial-gradient(120% 80% at 30% 0%,color-mix(in srgb,var(--acc) 38%,transparent),transparent 60%),
-  linear-gradient(170deg,#1a120c,#0b0806)}
-.frame::before{content:attr(data-mono);position:absolute;left:18px;bottom:6px;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--acc) 60%,transparent)}
-.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.fr:hover .frame img{transform:scale(1.05)}
-.frame .idx{position:absolute;top:16px;left:16px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#fff;background:#00000066;backdrop-filter:blur(6px);padding:6px 10px;border-radius:999px}
-.fr .role{margin-top:20px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
-.fr h3{margin-top:10px;font-size:clamp(24px,2vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
-.fr p{margin-top:10px;color:#C9CDD6;font-size:15px;line-height:1.5}
-.fr .award{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;font-weight:600;color:var(--gold)}
-.fr .award .ic{width:16px;height:16px}
-.hint{display:flex;align-items:center;gap:10px;color:var(--dim)}
-@media(max-width:900px){
-  .htrack{flex-direction:column;width:auto;gap:56px}
-  .fr{width:100%}
-  .frame{aspect-ratio:4/3}
-  .hint{display:none}
-}
-.curious{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-.curious .fr{width:auto}
-@media(max-width:900px){.curious{grid-template-columns:1fr 1fr;gap:36px 18px}.curious .frame{aspect-ratio:4/5}.curious .frame::before{font-size:64px}}
-
-/* ============ CONTACT ============ */
-.contact{padding:clamp(100px,14vw,200px) 0 60px;text-align:center}
-.contact .eyebrow{justify-content:center}
-.contact h2{font-size:clamp(52px,10vw,160px);font-weight:800;letter-spacing:-.05em}
-.contact h2 .ln{display:block;overflow:hidden;padding-bottom:.05em}
-.contact h2 .ln>span{display:inline-block}
-.contact p{color:var(--muted);font-size:18px;margin:24px auto 0;max-width:40ch}
-.orb{margin:54px auto 0;width:168px;height:168px;border-radius:50%;display:grid;place-items:center;text-align:center;background:var(--signal);color:#130700;font-weight:700;font-size:16px;line-height:1.2;will-change:transform;box-shadow:0 30px 80px -20px #FF5A1F88;transition:background .3s}
-.orb:hover{background:#ff7a45}
-.orb span{display:flex;flex-direction:column;align-items:center;gap:8px}
-.clinks{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:54px}
-.clinks a,.clinks button{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border-radius:999px;border:1px solid var(--line2);font-size:14.5px;transition:border-color .2s,background .2s}
-.clinks a:hover,.clinks button:hover{border-color:#ffffff55;background:#ffffff08}
-footer{border-top:1px solid var(--line);padding:26px 0 34px;color:var(--dim);font-size:13px}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-
-/* toast */
-.toast{position:fixed;left:50%;bottom:28px;z-index:250;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text);color:#0b0b0b;padding:12px 18px;border-radius:999px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;transition:opacity .3s,transform .3s}
-.toast.on{opacity:1;transform:translate(-50%,0)}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .loader{display:none}
-}
-
-/* ---- view switch (Race view / Clean view) ---- */
-.seg{display:inline-flex;padding:3px;border-radius:999px;border:1px solid var(--line2);background:#ffffff0a}
-.seg a{font-size:13px;font-weight:600;padding:6px 13px;border-radius:999px;color:var(--muted);transition:color .2s,background .2s}
-.seg a::after{display:none}
-.seg a:hover{color:var(--text)}
-.seg a.on{background:var(--text);color:#0b0b0b}
-@media(max-width:760px){.nav .seg{display:none}}
-.viewlab{margin-top:34px;color:var(--muted)}
-.hero .hcta{margin-top:14px}
-.btn small{font-weight:400;font-size:12.5px;opacity:.7;margin-left:2px}
-
-/* ---- alignment pass ---- */
-.scrollcue{display:none}
-.bignum{display:none}
-.slead,.hero .sub,.contact p,.fr p{text-wrap:pretty}
-.slead{max-width:52ch}
-/* every pit stop starts on the same line, under the header */
-.chap{align-items:flex-start;padding-top:clamp(138px,19vh,190px)}
-.ct{max-width:640px}
-.ct h3{font-size:clamp(40px,4.4vw,64px);max-width:none;text-wrap:balance}
-.hero .sub{max-width:46ch}
-.brandrow{margin-bottom:22px}
-.ct .mets{gap:36px;row-gap:14px}
-.ct .met{min-width:0}
-.ct .met span{max-width:24ch;line-height:1.35;text-wrap:balance}
-@media(min-width:901px){#jstop{display:none}.jprog .track{width:220px}}
-@media(min-width:901px) and (max-height:780px){
-  .chap{padding-top:120px}.logo{width:52px;height:52px;border-radius:15px}.brandrow{margin-bottom:14px}
-  .ct h3{font-size:clamp(34px,3.6vw,50px)}.ct .why{margin-top:12px}.lab2{margin-top:16px}.ct .met b{font-size:34px}.ct .btn{margin-top:18px;height:46px}
-}
-@media(max-width:900px){.chap{align-items:flex-end;padding-top:0}}
-@media(max-width:900px){.ct .mets{display:grid;grid-template-columns:repeat(3,minmax(0,auto));justify-content:start;gap:8px 18px}.ct .met span{max-width:13ch}}
-.kick .live{flex:none;margin:0 4px 0 3px}
-/* filmstrip starts on the page grid, not the screen edge */
-.htrack{padding:0 max(var(--pad),calc((100vw - 1320px)/2 + var(--pad)))}
-.fr h3{text-wrap:balance}
-.fr .role{min-height:1.5em}
-/* results board: numbers share one baseline grid */
-.bhead,.brow{grid-template-columns:170px 56px minmax(0,1fr) minmax(0,280px)}
-.brow .sc b{margin-bottom:2px}
-@media(max-width:900px){.brow{grid-template-columns:52px minmax(0,1fr)}}
-/* hero: chips sit on two clean columns */
-.facts{grid-template-columns:repeat(4,minmax(0,auto));margin-top:44px}
-@media(max-width:900px){.facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}.fact b{white-space:nowrap}}
-@media(max-width:900px){.htrack{padding:0 var(--pad)}}
-
-/* ---- welcome: play or visit ---- */
-.gate{position:fixed;inset:0;z-index:350;display:grid;place-items:center;padding:clamp(16px,4vw,40px);overflow:auto;background:radial-gradient(110% 80% at 50% 0%,#1d1009f0 0%,#070503f5 60%);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:opacity .5s,visibility .5s}
-.gate[hidden]{display:none}
-.gate.out{opacity:0;visibility:hidden}
-html.gated,html.gated body{overflow:hidden}
-.gate .gin{width:min(1040px,100%);text-align:center}
-.gate .gk{color:var(--signal)}
-.gate h2{margin-top:16px;font-size:clamp(44px,7.4vw,96px);font-weight:800;letter-spacing:-.045em;line-height:.95}
-.gate h2 em{font-style:normal;background:linear-gradient(90deg,var(--signal),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
-.gate .gsub{margin:18px auto 0;max-width:44ch;color:#C3C8D4;font-size:clamp(16px,1.4vw,19px)}
-.gopts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(30px,5vh,52px);text-align:left}
-.gopt{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:26px 24px 24px;border-radius:24px;background:#ffffff08;border:1px solid var(--line2);overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s;text-align:left;width:100%}
-.gopt::before{content:"";position:absolute;inset:auto -30% -60% -30%;height:120%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 30%,transparent),transparent);opacity:.0;transition:opacity .35s}
-.gopt:hover,.gopt:focus-visible{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 70%,transparent);background:#ffffff0d}
-.gopt:hover::before,.gopt:focus-visible::before{opacity:1}
-.gopt>*{position:relative}
-.gopt .gi{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--c);color:#0b0907;margin-bottom:14px}
-.gopt .gi .ic{width:26px;height:26px;stroke-width:2}
-.gopt.visit .gi{background:#ffffff14;color:var(--text);border:1px solid var(--line2)}
-.gopt b{font-family:var(--display);font-size:clamp(26px,2.4vw,32px);font-weight:700;letter-spacing:-.03em;line-height:1}
-.gopt>span{color:#C3C8D4;font-size:15px;line-height:1.45}
-.gopt em{margin-top:auto;padding-top:16px;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
-.gopt.visit em{color:var(--muted)}
-.gopt .go{position:absolute;right:22px;top:26px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);transition:background .3s,color .3s,border-color .3s}
-.gopt:hover .go{background:var(--c);color:#0b0907;border-color:transparent}
-.gopt.visit:hover .go{color:#0b0907}
-.gate .gfoot2{margin-top:24px;font-size:14px;color:var(--muted)}
-.gate .gfoot2 a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
-.gate .tp{display:none}
-@media(hover:none),(pointer:coarse){.gate .kb{display:none}.gate .tp{display:inline}}
-@media(max-width:820px){
-  .gopts{grid-template-columns:1fr;gap:10px}
-  .gopt{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:16px;row-gap:3px;padding:18px 56px 18px 18px;border-radius:20px}
-  .gopt .gi{grid-row:span 3;width:48px;height:48px;margin:0;border-radius:14px}
-  .gopt b{font-size:22px}.gopt>span{font-size:14px}.gopt em{padding-top:4px}
-  .gopt .go{top:50%;transform:translateY(-50%);right:16px}
-}
-.nav a.play{display:inline-flex;align-items:center;gap:6px;color:var(--text)}
-.nav a.play .ic{width:16px;height:16px;color:var(--signal)}
-
-
-/* Business Card Modal */
-.biz-overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 9999;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  perspective: 1500px;
-}
-.biz-overlay.active { opacity: 1; pointer-events: auto; }
-
-.biz-card-wrapper {
-  position: relative;
-  width: 90%;
-  max-width: 480px;
-  transform-style: preserve-3d;
-  transform: rotateX(40deg) rotateY(-20deg) translateZ(-200px) scale(0.6);
-  opacity: 0;
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease-out;
-}
-.biz-overlay.active .biz-card-wrapper {
-  transform: rotateX(0deg) rotateY(0deg) translateZ(0) scale(1);
-  opacity: 1;
-}
-
-.biz-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.6 / 1;
-  background: linear-gradient(135deg, #18191c, #0a0b0d);
-  border-radius: 20px;
-  box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8), inset 0 1px 0px rgba(255,255,255,0.2), inset 0 0 40px rgba(0,0,0,0.8);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transform-style: preserve-3d;
-  /* Mouse variables set via JS */
-  transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg));
-  transition: transform 0.1s ease-out;
-}
-.biz-card::before {
-  content: "";
-  position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(circle at calc(var(--mx, 50) * 1%) calc(var(--my, 50) * 1%), rgba(255, 255, 255, 0.15) 0%, transparent 40%);
-  pointer-events: none;
-  z-index: 5;
-  mix-blend-mode: screen;
-}
-.biz-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(110deg, transparent 20%, rgba(0, 255, 204, 0.1) 40%, rgba(179, 136, 255, 0.1) 60%, transparent 80%);
-  background-size: 200% 200%;
-  background-position: calc(var(--mx, 50) * 1%) calc(var(--my, 50) * 1%);
-  pointer-events: none;
-  z-index: 4;
-}
-
-.biz-close {
-  position: absolute; top: 15px; right: 20px;
-  background: transparent; border: none; color: var(--muted);
-  font-size: 28px; cursor: pointer; transition: 0.2s;
-  z-index: 10; padding: 0;
-}
-.biz-close:hover { color: #fff; transform: scale(1.2) rotate(90deg); }
-
-.biz-content {
-  padding: 40px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transform: translateZ(40px); /* 3D pop out */
-  position: relative;
-  z-index: 6;
-}
-
-.biz-header {
-  display: flex; justify-content: space-between; align-items: center;
-}
-.biz-logo {
-  font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700;
-  color: #fff; letter-spacing: 0.1em;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-.biz-sku {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
-  color: var(--dim); padding: 4px 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
-}
-
-.biz-body {
-  transform: translateZ(30px);
-}
-.biz-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;color:var(--chill);text-transform:uppercase;display:block;margin-bottom:10px}
-.biz-name {
-  font-size: clamp(29px, 4vw, 38px);
-  color: #fff;
-  line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em;
-}
-.biz-tagline {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: #b6c8be;
-  text-transform: none;
-  letter-spacing: 0.02em;
-  text-shadow: none;
-  max-width:31ch;
-  line-height:1.55;
-}
-
-.biz-details {
-  display: flex; gap: 20px;
-  transform: translateZ(20px);
-}
-.biz-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; color: var(--muted);
-  text-decoration: none; position: relative;
-  transition: 0.3s;
-}
-.biz-link::before {
-  content: ""; position: absolute; bottom: -4px; left: 0;
-  width: 0%; height: 1px; background: var(--preql);
-  transition: 0.3s;
-}
-.biz-link:hover { color: #fff; }
-.biz-link:hover::before { width: 100%; }
-
-/* Button press animation */
-.biz-card-trigger {
-  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-.biz-card-trigger:active {
-  transform: scale(0.92) !important;
-}
-
-.biz-overlay{visibility:hidden;padding:18px;height:100dvh;transition:opacity .25s,visibility .25s}
-.biz-overlay.active{visibility:visible}
-.biz-card-wrapper{width:100%;max-width:520px;transform:translateY(12px);transition:opacity .25s,transform .25s}
-.biz-card{aspect-ratio:auto;max-height:calc(100dvh - 36px);overflow-y:auto;scrollbar-width:thin;min-height:330px}
-.biz-content{height:auto;padding:30px;gap:30px;transform:none}
-.biz-header{padding-right:26px;gap:12px;flex-wrap:wrap}.biz-logo{text-shadow:none;letter-spacing:.04em}
-.biz-sku{color:#b6c8be;letter-spacing:.08em}
-.biz-details{gap:10px;flex-wrap:wrap;transform:none}
-.biz-link{padding:11px 14px;border:1px solid #ffffff24;border-radius:4px;color:#e2ece6;font-size:11px;min-height:44px}
-.biz-link:first-child{background:var(--chill);color:#07100c;border-color:var(--chill)}
-.biz-close{width:40px;height:40px;right:8px;top:8px}
-@media(max-width:520px){.biz-content{padding:26px 22px;gap:24px}.biz-card{min-height:0}.biz-header{display:block}.biz-logo{font-size:18px}.biz-sku{display:inline-block;margin-top:8px}.biz-name{font-size:30px}.biz-tagline{max-width:none}.biz-details{gap:8px}}
-@media(prefers-reduced-motion:reduce){.biz-card{transform:none!important}}
-</style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Pratham Gupta",
-  "url": "https://prathamgupta.vercel.app/",
-  "email": "mailto:prathamg329@gmail.com",
-  "telephone": "+918076878652",
-  "jobTitle": "Strategy, Marketing & Operations",
-  "image": "https://prathamgupta.vercel.app/images/pratham.webp",
-  "sameAs": ["https://www.linkedin.com/in/pgupta05"],
-  "alumniOf": [
-    {"@type": "CollegeOrUniversity", "name": "BITS School of Management"},
-    {"@type": "CollegeOrUniversity", "name": "Delhi Technological University"}
-  ],
-  "address": {"@type": "PostalAddress", "addressCountry": "IN"}
-}
-</script>
+<link rel="stylesheet" href="world/world.css">
 </head>
 <body>
-<script>document.documentElement.classList.add('js')</script>
+<script>if (matchMedia('(hover: none), (pointer: coarse)').matches) document.documentElement.classList.add('touch'); if (/[?&](cam|noui)\b/.test(location.search)) document.documentElement.classList.add('shot');</script>
+<h1 class="sr">Pratham Gupta: strategy, marketing and operations. MBA 2027, BITS School of Management.</h1>
 
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="lname"><span>Pratham</span> <span>Gupta</span></div>
-  <div class="lrow"><span class="mono">Loading the route</span><span class="lcount" id="lcount">0</span></div>
-  <div class="lbar" id="lbar"></div>
-</div>
+<canvas id="world" tabindex="-1" aria-label="A 3D town. Each building is a chapter of Pratham's career. Use the Map button or the list view to reach every chapter without the 3D view."></canvas>
+<div class="markers" id="markers" aria-label="Places you can open"></div>
 
-<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT" data-lenis-prevent hidden>
-  <div class="gin">
-    <div class="mono gk">Pratham Gupta · MBA 2027 · BITSoM</div>
-    <h2 id="gateT">Play, or just <em>visit?</em></h2>
-    <p class="gsub">Two quick games tell my story: every chapter, result and skill. Or skip the games and go straight to the site.</p>
-    <div class="gopts">
-      <a class="gopt" href="drive.html" style="--c:#FF5A1F" data-gate-go>
-        <span class="gi"><i data-lucide="car-front" class="ic"></i></span>
-        <b>Drive it</b>
-        <span>Take the F1 car round a night circuit. Each glowing gate opens a chapter.</span>
-        <em><span class="kb">Arrow keys</span><span class="tp">Touch</span> · 2 min</em>
-        <span class="go" aria-hidden="true"><i data-lucide="arrow-right" class="ic"></i></span>
-      </a>
-      <a class="gopt" href="jump.html" style="--c:#2EF2C3" data-gate-go>
-        <span class="gi"><i data-lucide="gamepad-2" class="ic"></i></span>
-        <b>Jump it</b>
-        <span>Run and jump through eight zones. Hit the glowing blocks, grab the skills.</span>
-        <em><span class="kb">Arrows + space</span><span class="tp">Touch</span> · 3 min</em>
-        <span class="go" aria-hidden="true"><i data-lucide="arrow-right" class="ic"></i></span>
-      </a>
-      <button class="gopt visit" type="button" style="--c:#F2F4F8" data-gate-visit>
-        <span class="gi"><i data-lucide="compass" class="ic"></i></span>
-        <b>Just visit</b>
-        <span>Scroll the 3D story: the race, the results and how to reach me.</span>
-        <em>No controls · scroll</em>
-        <span class="go" aria-hidden="true"><i data-lucide="arrow-down" class="ic"></i></span>
-      </button>
-    </div>
-    <p class="gfoot2">Short on time? <a href="clean.html">Read the clean version</a></p>
-  </div>
-</div>
-<script>
-/* Welcome screen: shown on a first visit; ?visit or a #link skips it, ?play forces it */
-(function () {
-  var gate = document.getElementById('gate'), html = document.documentElement, done;
-  window.__gate = new Promise(function (r) { done = r; });
-  var seen = false; try { seen = sessionStorage.getItem('pg-gate') === '1'; } catch (e) {}
-  var q = location.search, force = /[?&]play\b/.test(q), skip = /[?&]visit\b/.test(q) || (location.hash && location.hash !== '#top');
-  var remember = function () { try { sessionStorage.setItem('pg-gate', '1'); } catch (e) {} };
-  var lastFocus = null;
-  function stopScroll() { html.classList.add('gated'); var n = 0, t = setInterval(function () { if (window.__lenis) { window.__lenis.stop(); } if (++n > 30 || window.__lenis) clearInterval(t); }, 100); }
-  function open() {
-    lastFocus = document.activeElement;
-    gate.hidden = false; gate.classList.remove('out'); stopScroll();
-    setTimeout(function () { var f = gate.querySelector('.gopt'); f && f.focus({ preventScroll: true }); }, 60);
-    document.addEventListener('keydown', onKey, true);
-  }
-  function close() {
-    remember(); gate.classList.add('out'); html.classList.remove('gated');
-    document.removeEventListener('keydown', onKey, true);
-    if (window.__lenis && !document.getElementById('loader')) window.__lenis.start();
-    setTimeout(function () { gate.hidden = true; }, 500);
-    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
-    done();
-  }
-  function onKey(e) {
-    if (e.key === 'Escape') { e.preventDefault(); close(); }
-    else if (e.key === 'Tab') {
-      var f = Array.prototype.slice.call(gate.querySelectorAll('a,button')), i = f.indexOf(document.activeElement);
-      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
-      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
-    }
-  }
-  gate.querySelector('[data-gate-visit]').addEventListener('click', close);
-  Array.prototype.forEach.call(gate.querySelectorAll('[data-gate-go]'), function (a) { a.addEventListener('click', remember); });
-  window.openGate = open;
-  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('[data-play]'); if (a) { e.preventDefault(); open(); } });
-  if (force || (!seen && !skip)) open(); else done();
-  if (/[?&](visit|play)\b/.test(q) && history.replaceState) history.replaceState(null, '', location.pathname + location.hash);
-})();
-</script>
-
-<canvas id="gl" aria-hidden="true"></canvas>
-<div class="vignette" aria-hidden="true"></div>
-<div class="cur" id="cur" aria-hidden="true"><div class="ring"></div><div class="dot"></div></div>
-
-<header class="topbar" id="topbar">
-  <div class="wrap tb">
-    <a class="brand" href="#top" aria-label="Pratham Gupta, back to top"><span class="nm">Pratham</span></a>
-    <nav class="nav" aria-label="Main">
-      <a href="#story">Story</a>
-      <a class="opt" href="#leadership">Leadership</a>
-      <a href="portfolio.html">Products</a>
-      <a class="play" href="index.html?play" data-play><i data-lucide="gamepad-2" class="ic"></i>Play</a>
-      <span class="seg" role="group" aria-label="Choose a view"><a class="on" href="index.html" aria-current="page">Race</a><a href="clean.html">Clean</a></span>
-      <a class="hire biz-card-trigger magnet" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
-    </nav>
-  </div>
+<!-- top bar -->
+<header class="top">
+  <div class="who glassy"><img src="images/pratham.webp" alt="" width="38" height="38"><div><b>Pratham Gupta</b><span>MBA 2027 · Strategy, marketing &amp; ops</span></div></div>
+  <nav class="tools" aria-label="Town">
+    <button class="tbtn glassy" id="btn-map" type="button"><i data-lucide="map" class="ic"></i><span class="lbl">Map</span><kbd>M</kbd></button>
+    <button class="tbtn dark" id="btn-contact" type="button"><i data-lucide="send" class="ic"></i><span class="lbl">Contact</span></button>
+  </nav>
 </header>
 
-<main>
-<!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="wrap hgrid">
-    <div>
-      <div class="kick mono reveal"><span class="live"></span> MBA 2027 · BITSoM · Open to roles</div>
-      <h1 class="split"><span class="ln"><span>I find the</span></span><span class="ln"><span><em class="grad">friction.</em></span></span><span class="ln"><span>Then I fix it.</span></span></h1>
-      <p class="sub reveal">I grew a bus business, stopped a warehouse leak and now build AI products. Strategy, marketing and operations.</p>
-      <div class="viewlab mono reveal">Two ways to read this</div>
-      <div class="hcta reveal" role="group" aria-label="Choose a view">
-        <a class="btn solid magnet" href="#story"><i data-lucide="flag" class="ic"></i>Race view <small>the 3D story</small></a>
-        <a class="btn magnet" href="clean.html"><i data-lucide="file-text" class="ic"></i>Clean view <small>the short read</small></a>
-      </div>
-      <div class="facts reveal">
-        <div class="fact"><b>₹2.5 Cr</b><span>new business won</span></div>
-        <div class="fact"><b>~₹20 L</b><span>losses stopped</span></div>
-        <div class="fact"><b>200+</b><span>people led</span></div>
-        <div class="fact"><b>Top 30 team</b><span>Tata Imagination finals</span></div>
-      </div>
-    </div>
+<div class="found glassy" id="found" role="button" tabindex="0" aria-label="Spots found. Open the map">
+  <canvas width="192" height="192"></canvas>
+  <div><b>0 / 0</b><span>spots found</span></div>
+</div>
 
-    <div class="portrait" id="portrait">
-      <svg class="orbit" viewBox="0 0 100 100" aria-hidden="true">
-        <circle class="o1" cx="50" cy="50" r="46"/><circle class="o2" cx="50" cy="50" r="40"/><circle class="o3" cx="50" cy="50" r="33"/>
-      </svg>
-      <div class="glow"></div>
-      <div class="pimg" id="pimg"><img src="images/pratham.webp" alt="Pratham Gupta in a black suit, arms crossed" width="589" height="900"></div>
-      <div class="chip" style="--c:var(--signal);top:13%;left:-6%"><i><svg class="ic" data-lucide="target"></svg></i><div>Strategy<small>Find the leverage</small></div></div>
-      <div class="chip" style="--c:var(--violet);top:31%;right:-6%"><i><svg class="ic" data-lucide="megaphone"></svg></i><div>Marketing<small>Go-to-market</small></div></div>
-      <div class="chip" style="--c:var(--gold);bottom:29%;left:-6%"><i><svg class="ic" data-lucide="settings-2"></svg></i><div>Operations<small>Make it run</small></div></div>
-      <div class="chip" style="--c:var(--fix);bottom:11%;right:-6%"><i><svg class="ic" data-lucide="cpu"></svg></i><div>AI products<small>Build the fix</small></div></div>
-    </div>
-  </div>
-</section>
+<div class="hint glassy" id="hint">
+  <span class="kb"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk</span>
+  <span class="kb opt"><kbd>Shift</kbd> run</span>
+  <span class="kb">Click the ground to walk there</span>
+  <span class="kb opt">Drag to look · Scroll to zoom</span>
+  <span class="kb"><kbd>M</kbd> map</span>
+  <span class="tp">Joystick to walk · tap the ground to go there · drag to look · pinch to zoom</span>
+</div>
 
-<!-- ============ THE ROUTE ============ -->
-<section class="journey" id="story" aria-label="My journey, told as a race with pit stops">
-  <div class="stage" id="stage">
-    <div class="jhead"><div class="wrap"><span class="mono lbl">The race so far</span><div class="jprog mono"><span id="jstop">Pit 01 / 07</span><div class="track"><div class="fill" id="jfill"></div></div></div></div></div>
+<div class="prompt glassy" id="prompt" aria-live="polite">
+  <span class="dot" style="background:var(--c)"></span>
+  <span><b></b><small></small></span>
+  <button type="button">Open <kbd>E</kbd></button>
+</div>
 
-    <article class="chap" data-i="0" style="--acc:#FF8A3D">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">01</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="graduation-cap"></svg><img src="images/logos/dtu.png" alt="Delhi Technological University logo" onerror="this.remove()"></span><div class="kick2">Pit stop 01 <span>· until 2023</span></div></div>
-        <h3>Delhi Technological University</h3>
-        <div class="role">BA (Hons) Economics</div>
-        <p class="why">Every system runs on incentives. I start by asking who gains and who pays.</p>
-        <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b data-to="84.6" data-suf="%" data-dec="1">84.6%</b><span>final score</span></div></div>
-        <div class="lab2">Upgrades fitted</div>
-        <div class="ups"><span class="up">Economic reasoning</span><span class="up">Research</span><span class="up">Data analysis</span></div>
-      </div></div>
-    </article>
+<aside class="panel glassy" id="panel" role="dialog" aria-modal="false" aria-labelledby="ptitle" aria-hidden="true">
+  <div class="grab" aria-hidden="true"></div>
+  <button class="close" type="button" aria-label="Close"><i data-lucide="x" class="ic"></i></button>
+  <div class="scroll"></div>
+  <div class="more" hidden></div>
+</aside>
 
-    <article class="chap" data-i="1" style="--acc:#FFC23D">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">02</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="bus"></svg><img src="images/logos/himanshu-travel-line.png" alt="Himanshu Travel Line logo" onerror="this.remove()"></span><div class="kick2">Pit stop 02 <span>· 2023–25</span></div></div>
-        <h3>Himanshu Travel Line</h3>
-        <div class="role">Operations, growth &amp; key accounts</div>
-        <p class="why">Customers don't buy the cheapest seat. They buy the bus that shows up.</p>
-        <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b data-to="2.5" data-pre="₹" data-suf=" Cr" data-dec="1">₹2.5 Cr</b><span>new B2B business</span></div><div class="met"><b data-to="26" data-pre="+" data-suf="%">+26%</b><span>more buses ready to run</span></div><div class="met"><b data-to="7">7</b><span>contracts won or grown</span></div></div>
-        <div class="lab2">Upgrades fitted</div>
-        <div class="ups"><span class="up">B2B sales</span><span class="up">Key accounts</span><span class="up">Fleet operations</span><span class="up">Pricing</span></div>
-      </div></div>
-    </article>
-
-    <article class="chap" data-i="2" style="--acc:#6BE675">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">03</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="badge-check"></svg><img src="images/logos/lean-six-sigma.png" alt="Lean Six Sigma Green Belt badge" onerror="this.remove()"></span><div class="kick2">Pit stop 03 <span>· certified</span></div></div>
-        <h3>Lean Six Sigma Green Belt</h3>
-        <div class="role">Process improvement</div>
-        <p class="why">Measure the leak, fix the cause, then make the fix stick.</p>
-        <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b>Green Belt</b><span>certified</span></div></div>
-        <div class="lab2">Upgrades fitted</div>
-        <div class="ups"><span class="up">DMAIC</span><span class="up">Root-cause analysis</span><span class="up">Process mapping</span><span class="up">Statistical control</span></div>
-      </div></div>
-    </article>
-
-    <article class="chap" data-i="3" style="--acc:#FF4F7B">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">04</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="landmark"></svg><img src="images/logos/bitsom.png" alt="BITS School of Management logo" onerror="this.remove()"></span><div class="kick2">Pit stop 04 <span>· 2025–27</span></div></div>
-        <h3>BITS School of Management</h3>
-        <div class="role">MBA · Mumbai</div>
-        <p class="why">A strategy is only as good as the plan that carries it out.</p>
-        <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b data-to="2" data-suf="×">2×</b><span>Flipkart WiRED semi-finalist</span></div><div class="met"><b>Top 30</b><span>team, Tata Imagination finals</span></div><div class="met"><b data-to="12" data-pre="₹" data-suf=" L">₹12 L</b><span>sponsorship raised</span></div></div>
-        <div class="lab2">Upgrades fitted</div>
-        <div class="ups"><span class="up">Strategy</span><span class="up">Marketing</span><span class="up">E-commerce</span><span class="up">Negotiation</span></div>
-      </div></div>
-    </article>
-
-    <article class="chap" data-i="4" style="--acc:#9B7BFF">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">05</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="warehouse"></svg><img src="images/logos/bigbasket.png" alt="BigBasket logo" onerror="this.remove()"></span><div class="kick2">Pit stop 05 <span>· Apr–Jun 2026</span></div></div>
-        <h3>BigBasket</h3>
-        <div class="role">Strategic Initiatives Intern</div>
-        <p class="why">Stock was leaking through returns nobody tracked. Now they are.</p>
-        <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b data-to="20" data-pre="~₹" data-suf=" L">~₹20 L</b><span>saved</span></div><div class="met"><b data-to="27" data-pre="−" data-suf="%">−27%</b><span>stock written off</span></div><div class="met"><b>Same day</b><span>to spot a loss, was 2 days</span></div></div>
-        <div class="lab2">Upgrades fitted</div>
-        <div class="ups"><span class="up">Inventory control</span><span class="up">Loss analysis</span><span class="up">Process design</span><span class="up">Stakeholder alignment</span></div>
-      </div></div>
-    </article>
-
-    <article class="chap" data-i="5" style="--acc:#3DA9FF">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">06</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="cpu"></svg></span><div class="kick2">Pit stop 06 <span>· now</span></div></div>
-        <h3>Building with AI</h3>
-        <div class="role">Product builder</div>
-        <p class="why">I used to hand the fix to someone else. Now I build it myself.</p>
-        <div class="lab2">Result</div>
-        <div class="mets"><div class="met"><b data-to="4">4</b><span>products built</span></div><div class="met"><b data-to="1">1</b><span>live and public</span></div></div>
-        <div class="lab2">Upgrades fitted</div>
-        <div class="ups"><span class="up">Product thinking</span><span class="up">Rapid prototyping</span><span class="up">LLMs &amp; RAG</span><span class="up">UX</span></div>
-        <a class="btn solid magnet" href="portfolio.html">Open the garage <i data-lucide="arrow-up-right" class="ic"></i></a>
-      </div></div>
-    </article>
-
-    <article class="chap" data-i="6" style="--acc:#2EF2C3">
-      <div class="wrap"><div class="ct">
-        <span class="bignum" aria-hidden="true">07</span>
-        <div class="brandrow"><span class="logo"><svg class="ic" data-lucide="flag"></svg></span><div class="kick2">Next pit stop</div></div>
-        <h3>Your team.</h3>
-        <div class="role">Strategy, marketing &amp; operations</div>
-        <p class="why">Bring the messy problem. I'll find the friction.</p>
-        <a class="btn solid magnet biz-card-trigger" href="javascript:void(0)">Let's connect <i data-lucide="arrow-up-right" class="ic"></i></a>
-      </div></div>
-    </article>
-
-    <div class="hud" aria-hidden="false">
-      <div class="hl"><b id="hudn">01<span> / 07</span></b><small id="hudname">Delhi</small></div>
-      <div class="mini"><svg id="minimap" viewBox="0 0 190 190" role="img" aria-label="Route map, click a stop to jump there"></svg></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CASE COMPETITIONS ============ -->
-<section class="sec" id="cases">
-  <div class="wrap">
-    <div class="shead">
-      <div>
-        <div class="eyebrow mono">Industry problem solving</div>
-        <h2 class="stitle split"><span class="ln"><span>Real briefs.</span></span><span class="ln"><span>Real rankings.</span></span></h2>
-        <p class="slead reveal">Case competitions where a company hands over a real problem and ranks the answers.</p>
-      </div>
-    </div>
-    <div class="board">
-      <div class="bhead"><span>Result</span><span></span><span>Competition</span><span style="text-align:right">Field</span></div>
-      <div class="brow" style="--acc:#FFC23D">
-        <div class="pos">Top 30<small>Team</small></div>
-        <span class="logo"><svg class="ic" data-lucide="lightbulb"></svg><img src="images/logos/tata-imagination.png" alt="Tata Imagination Challenge logo" onerror="this.remove()"></span>
-        <div class="info"><h4>Tata Imagination Challenge</h4><div class="org">Tata Group</div></div>
-        <div class="sc"><b>Finals</b>one of the top 30 teams</div>
-      </div>
-      <div class="brow" style="--acc:#3DA9FF">
-        <div class="pos">SF ×2<small>Semi-finalist</small></div>
-        <span class="logo"><svg class="ic" data-lucide="shopping-cart"></svg><img src="images/logos/flipkart.png" alt="Flipkart logo" onerror="this.remove()"></span>
-        <div class="info"><h4>Flipkart WiRED 9 &amp; 10</h4><div class="org">Flipkart</div></div>
-        <div class="sc"><b>35,000+</b>registered, two years running</div>
-      </div>
-      <div class="brow" style="--acc:#FF8A3D">
-        <div class="pos">Top 13<small>National</small></div>
-        <span class="logo"><svg class="ic" data-lucide="package"></svg><img src="images/logos/tcpl.png" alt="Tata Consumer Products logo" onerror="this.remove()"></span>
-        <div class="info"><h4>TCPL Grow Beyond Better</h4><div class="org">Tata Consumer Products</div></div>
-        <div class="sc"><b>14,000+</b>entries</div>
-      </div>
-      <div class="brow" style="--acc:#FF4F7B">
-        <div class="pos">Finalist<small>Final round</small></div>
-        <span class="logo"><svg class="ic" data-lucide="flag"></svg><img src="images/logos/bits-goa.png" alt="BITS Pilani Goa logo" onerror="this.remove()"></span>
-        <div class="info"><h4>Case Consilium</h4><div class="org">BITS Pilani, Goa campus</div></div>
-        <div class="sc"><b>1st</b>in the semi-finals</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LEADERSHIP ============ -->
-<section class="lead-sec" id="leadership">
-  <div class="wrap shead">
-    <div>
-      <div class="eyebrow mono">Leadership</div>
-      <h2 class="stitle split"><span class="ln"><span>People follow</span></span><span class="ln"><span class="grad">clarity.</span></span></h2>
-    </div>
-    <div class="hint mono reveal"><svg class="ic" data-lucide="move-horizontal"></svg> Scroll to move</div>
-  </div>
-  <div class="hwrap" id="hwrap">
-    <div class="htrack" id="htrack">
-      <article class="fr" style="--acc:#FF8A3D">
-        <div class="frame" data-mono="R&amp;C"><span class="idx">01</span><img src="roar-event.jpg" alt="Pratham on stage at BITSoM Roar" style="object-position:50% 92%" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Sponsorship Head</div>
-        <h3>Roar &amp; Conclave</h3>
-        <p>BITSoM's flagship event. Ran a ₹25 L budget across 10 teams and raised ₹12 L, with SBI as title sponsor.</p>
-      </article>
-      <article class="fr" style="--acc:#FFC23D">
-        <div class="frame" data-mono="AIDC"><span class="idx">02</span><img src="images/leadership/deans-conference.jpg" alt="All India Deans Conference" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Organising team</div>
-        <h3>All India Deans Conference</h3>
-        <p>Part of the team that brought deans from across India to BITSoM.</p>
-      </article>
-      <article class="fr" style="--acc:#FF4F7B">
-        <div class="frame" data-mono="M&amp;O"><span class="idx">03</span><img src="images/leadership/marketing-ops.jpg" alt="Marketing and Operations Committee, BITSoM" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Committee member</div>
-        <h3>Marketing &amp; Operations Committee</h3>
-        <p>BITSoM's marketing and ops committee. Ran club marketing and negotiated stall contracts.</p>
-      </article>
-      <article class="fr" style="--acc:#9B7BFF">
-        <div class="frame" data-mono="PQ"><span class="idx">04</span><img src="images/leadership/preql.jpg" alt="PreQL, BITSoM AI and Analytics Club" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Senior member</div>
-        <h3>PreQL</h3>
-        <p>BITSoM's AI &amp; Analytics Club. Built an AI campaign tracker; run sessions that help classmates crack cases faster.</p>
-      </article>
-      <article class="fr" style="--acc:#3DA9FF">
-        <div class="frame" data-mono="TH"><span class="idx">05</span><img src="images/leadership/theomi.jpg" alt="Theomi mentoring" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Mentor</div>
-        <h3>Theomi</h3>
-        <p>Mentoring MBA aspirants on their way to business school.</p>
-      </article>
-      <article class="fr" style="--acc:#6BE675">
-        <div class="frame" data-mono="TSW"><span class="idx">06</span><img src="images/leadership/techstars.jpg" alt="Techstars Startup Weekend" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Award winner</div>
-        <h3>Techstars Startup Weekend</h3>
-        <div class="award"><svg class="ic" data-lucide="award"></svg>Outstanding Professional Development Award</div>
-      </article>
-      <article class="fr" style="--acc:#2EF2C3">
-        <div class="frame" data-mono="RC"><span class="idx">07</span><img src="images/leadership/rotaract.jpg" alt="Rotaract Club of USME" loading="lazy" onerror="this.remove()"></div>
-        <div class="role">Vice President · 2023</div>
-        <h3>Rotaract Club of USME</h3>
-        <p>Led a club of 200+ members through 10+ events.</p>
-        <!-- Rotaract award: add an <div class="award">…</div> line here -->
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STILL CURIOUS ============ -->
-<section class="sec" id="offclock">
-  <div class="wrap">
-    <div class="shead"><div><div class="eyebrow mono">Off the clock</div><h2 class="stitle split"><span class="ln"><span>Still curious.</span></span></h2></div></div>
-    <div class="curious">
-      <article class="fr reveal" style="--acc:#FF8A3D"><div class="frame" data-mono="01"><img src="images/curious/music.jpg" alt="Music and singing" loading="lazy" onerror="this.remove()"></div><h3>Music &amp; singing</h3><p>A different kind of expression.</p></article>
-      <article class="fr reveal" style="--acc:#2EF2C3"><div class="frame" data-mono="02"><img src="images/curious/pool.jpg" alt="Pool" loading="lazy" onerror="this.remove()"></div><h3>Pool</h3><p>Angles, patience and a good game.</p></article>
-      <article class="fr reveal" style="--acc:#FFC23D"><div class="frame" data-mono="03"><img src="images/curious/cuisines.jpg" alt="Trying new cuisines" loading="lazy" onerror="this.remove()"></div><h3>New cuisines</h3><p>Always chasing a new flavour.</p></article>
-      <article class="fr reveal" style="--acc:#9B7BFF"><div class="frame" data-mono="04"><img src="images/curious/travel.jpg" alt="Travel" loading="lazy" onerror="this.remove()"></div><h3>Travel</h3><p>New places, fresh perspective.</p></article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="eyebrow mono">Next stop</div>
-    <h2 class="split"><span class="ln"><span>Your team.</span></span></h2>
-    <p class="reveal">Got a messy problem in strategy, marketing or operations? Email is fastest.</p>
-    <a class="orb magnet biz-card-trigger" href="javascript:void(0)"><span><svg class="ic" data-lucide="arrow-up-right"></svg>Let's<br>connect</span></a>
-    <div class="clinks reveal">
-      <a href="mailto:prathamg329@gmail.com"><svg class="ic" data-lucide="mail"></svg>prathamg329@gmail.com</a>
-      <a href="tel:+918076878652"><svg class="ic" data-lucide="phone"></svg>+91 80768 78652</a>
-      <a href="https://www.linkedin.com/in/pgupta05" target="_blank" rel="noopener"><svg class="ic" data-lucide="linkedin"></svg>LinkedIn</a>
-      <button type="button" data-copy="prathamg329@gmail.com"><svg class="ic" data-lucide="copy"></svg>Copy email</button>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer><div class="wrap"><span>© 2026 Pratham Gupta</span><span>MBA 2027 · BITSoM · Strategy, marketing &amp; operations</span></div></footer>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<div class="biz-overlay" id="biz-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-card-title" aria-hidden="true">
-  <div class="biz-card-wrapper">
-    <div class="biz-card" id="biz-card" data-lenis-prevent>
-      <button class="biz-close" id="biz-close" aria-label="Close">&times;</button>
-      <div class="biz-content">
-        <div class="biz-header">
-          <div class="biz-logo">PG / PRATHAM GUPTA</div>
-          <div class="biz-sku">MBA 2027 · BITSOM</div>
-        </div>
-        <div class="biz-body">
-          <span class="biz-eyebrow">Open to opportunities</span>
-          <h2 class="biz-name" id="contact-card-title">Strategy, marketing<br>&amp; operations.</h2>
-          <p class="biz-tagline">I find the friction in messy systems, then fix it for good.</p>
-        </div>
-        <div class="biz-details">
-          <a href="mailto:prathamg329@gmail.com" class="biz-link">EMAIL</a>
-          <a href="tel:+918076878652" class="biz-link">PHONE</a>
-          <a href="https://www.linkedin.com/in/pgupta05" target="_blank" rel="noopener" class="biz-link">LINKEDIN</a>
-        </div>
-      </div>
-    </div>
+<div class="map" id="map" role="dialog" aria-modal="true" aria-labelledby="maptitle" aria-hidden="true">
+  <div class="card">
+    <button class="close" type="button" aria-label="Close map"><i data-lucide="x" class="ic"></i></button>
+    <div><h2 id="maptitle">Pratham's Town</h2><p class="sub">Pick a place to go straight there.</p><div class="mapart" style="margin-top:16px"></div></div>
+    <div><div class="places"></div><p class="foot">Prefer reading? <button type="button" data-list>Open the list view</button></p></div>
   </div>
 </div>
 
-<script type="module" src="route.js"></script>
+<div class="joy" id="joy" aria-hidden="true"><i></i></div>
+<div class="toast glassy" id="toast" role="status" aria-live="polite"></div>
+
+<div class="listview" id="listview" role="dialog" aria-modal="true" aria-label="Pratham's story as a list">
+  <div class="wrap">
+    <div class="lhead"><h2 style="font-size:34px;font-weight:800;letter-spacing:-.04em">Pratham Gupta</h2><button class="btn lclose" type="button" id="lclose"><i data-lucide="x" class="ic"></i>Back to town</button></div>
+    <p class="lnote" id="lnote" hidden style="margin-top:6px;color:#6B7280">Your browser couldn't start the 3D town, so here is the same story as a list.</p>
+    <div class="items"></div>
+  </div>
+</div>
+
+<div class="loader" id="loader">
+  <div class="box">
+    <div class="eyebrow">Pratham Gupta · MBA 2027</div>
+    <div class="lt" role="heading" aria-level="2">Pratham's Town</div>
+    <p>A small town built from my career. Walk around it: every building opens a chapter.</p>
+    <div class="bar" aria-hidden="true"><i id="lbar"></i></div>
+    <div class="stage" id="lstage" aria-live="polite">Loading the town</div>
+    <button class="enter" id="enter" type="button">Enter the town <i data-lucide="arrow-right" class="ic"></i></button>
+    <div class="alt">In a hurry? <button type="button" id="lquick">Read it as a list</button></div>
+  </div>
+</div>
+
+<noscript><div style="position:fixed;inset:0;z-index:200;background:#fff;padding:32px;font:16px/1.5 system-ui"><h2>Pratham Gupta</h2><p>MBA 2027 at BITS School of Management. Strategy, marketing and operations. ₹2.5 Cr of B2B business won at Himanshu Travel Line; ~₹20 L of losses stopped at BigBasket; Top 30 team, Tata Imagination Challenge finals. Email <a href="mailto:prathamg329@gmail.com">prathamg329@gmail.com</a> · <a href="https://www.linkedin.com/in/pgupta05">LinkedIn</a>. Turn on JavaScript to walk around the 3D town.</p></div></noscript>
+
+<script>
+(function () {
+  var loader = document.getElementById('loader'), bar = document.getElementById('lbar'), stage = document.getElementById('lstage'), enter = document.getElementById('enter');
+  var list = document.getElementById('listview');
+  addEventListener('world:progress', function (e) { bar.style.width = Math.round(e.detail.p * 100) + '%'; if (e.detail.label) stage.textContent = e.detail.label; });
+  // list view: shared by the loader, the map and the no-WebGL fallback
+  var listOpener = null, lclose = document.getElementById('lclose');
+  function openList(note) {
+    listOpener = document.activeElement;
+    import('./world/ui.js').then(function (m) { list.querySelector('.items').innerHTML = m.listHTML(); if (window.lucide) lucide.createIcons(); });
+    list.classList.add('on'); document.body.classList.add('list-open'); document.getElementById('lnote').hidden = !note;
+    setTimeout(function () { (lclose.hidden ? list.querySelector('h2') : lclose).focus({ preventScroll: true }); }, 30);
+  }
+  function closeList() {
+    if (!list.classList.contains('on') || lclose.hidden) return;
+    list.classList.remove('on'); document.body.classList.remove('list-open');
+    if (listOpener && listOpener.focus && document.contains(listOpener)) listOpener.focus({ preventScroll: true });
+  }
+  window.__openList = openList; window.__closeList = closeList;
+  lclose.addEventListener('click', closeList);
+  list.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.stopPropagation(); closeList(); }
+    else if (e.key === 'Tab') {
+      var f = Array.prototype.slice.call(list.querySelectorAll('a[href],button:not([hidden])')); if (!f.length) return;
+      var i = f.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  document.getElementById('lquick').addEventListener('click', function () { openList(false); });
+  addEventListener('world:fail', function () { loader.classList.add('out'); openList(true); document.getElementById('lclose').hidden = true; });
+  addEventListener('world:ready', function () {
+    stage.textContent = 'Ready'; loader.classList.add('ready');
+    if (/[?&](cam|noui|spot)\b/.test(location.search)) { go(); return; }
+    setTimeout(function () { enter.focus({ preventScroll: true }); }, 50);
+  });
+  function go() {
+    loader.classList.add('out'); document.body.classList.add('entered');
+    if (!/[?&](cam|noui|spot)\b/.test(location.search)) dispatchEvent(new CustomEvent('world:enter'));
+    var W = window.__world, p = W && W.player;
+    if (p && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // swoop down from above the town to Pratham
+      var d0 = 170, d1 = p.cam.distT, pi0 = 72, pi1 = p.cam.pitchT, t0 = performance.now(), T = 2600;
+      p.cam.dist = d0; p.cam.pitch = pi0;
+      (function step(now) { var k = Math.min(1, (now - t0) / T), e = 1 - Math.pow(1 - k, 3); p.cam.distT = d0 + (d1 - d0) * e; p.cam.pitchT = pi0 + (pi1 - pi0) * e; if (k < 1) requestAnimationFrame(step); })(t0);
+    }
+    setTimeout(function () { document.getElementById('world').focus({ preventScroll: true }); }, 100);
+  }
+  enter.addEventListener('click', go);
+  if (window.lucide) lucide.createIcons(); else addEventListener('load', function () { window.lucide && lucide.createIcons(); });
+})();
+</script>
+<script type="module" src="world/main.js"></script>
 </body>
 </html>

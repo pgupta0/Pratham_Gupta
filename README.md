@@ -1,104 +1,49 @@
-# Pratham Gupta — Portfolio
+# Pratham Gupta: Pratham's Town
 
-Personal portfolio site. Single static HTML file, no build step, no dependencies.
+Personal portfolio as a small, sunny 3D town. Visitors walk Pratham around an island
+where every building is a chapter of his career, and open each chapter at a glowing marker.
 
 **Live:** https://prathamgupta.vercel.app
 
----
+Static site: plain HTML + ES modules, no build step. three.js 0.170 and Lucide icons load from
+the jsDelivr CDN. Hosted on Vercel; every push to `main` redeploys.
 
-## Deploying to Vercel via GitHub
+## Where things are
 
-### 1. Create the GitHub repository
+| Path | What it is |
+|---|---|
+| `index.html` | The page: loader, top bar, panels, map, list view, joystick |
+| `world/content.js` | **All text and numbers.** Edit this to change what the town says |
+| `world/layout.js` | Town plan: plot positions, ring road, spawn point |
+| `world/main.js` | Boot, quality tiers (phone vs desktop), render loop |
+| `world/env.js` | Sky, sun, sea, island, roads, town square |
+| `world/kit.js` | Shared materials and builders (buildings, signs, vehicles, people, trees) |
+| `world/player.js` | Walking, collisions, the follow camera |
+| `world/ui.js` + `world/world.css` | Markers, panels, map, prompts, list view |
+| `world/districts/*.js` | One file per place: `htl` bus depot, `bb` BigBasket store, `dtu`, `lss` Six Sigma, `bitsom`, `lead` leadership square, `ailab` products, `curious` park, `team` contact tower |
+| `world/life.js` | Traffic, people walking, trees, beach, birds, clouds |
+| `world/assets/vendor/` | Free (CC0) 3D assets, see `ASSETS.md` there for sources and licences |
+| `images/` | Portrait, product previews; optional photos in `images/curious/` |
+| `transit-one-app.html`, `crave-command-center.html`, `chhatri.html` | Product pages linked from the AI Lab |
 
-On [github.com/new](https://github.com/new), create a repository named `portfolio`. Leave it empty — no README, no `.gitignore` (this repo already has them).
+## Common edits
 
-### 2. Push these files
+- **Change a number or sentence:** edit `world/content.js`. Each place has `spots`; each spot is one
+  marker in the town.
+- **Add a product:** add it to `PRODUCTS` and a spot under the `ailab` place in `world/content.js`,
+  then give it a kiosk and marker in `world/districts/ailab.js`.
+- **Add photos for "Still curious":** drop `music.jpg`, `pool.jpg`, `cuisines.jpg`, `travel.jpg`
+  into `images/curious/` (they appear in the panels automatically).
 
-From the folder containing these files:
+## Testing locally
+
+Serve the folder (modules don't run from `file://`):
 
 ```bash
-git init
-git add .
-git commit -m "Portfolio site"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/portfolio.git
-git push -u origin main
+python3 -m http.server 8000
 ```
 
-### 3. Import into Vercel
+Open http://localhost:8000. Useful URL options: `?quality=low` (phone tier), `?spot=htl.fuel`
+(open a chapter directly), `?only=htl` (build one place), `?cam=x,z,dist,yaw,pitch` (fixed camera).
 
-1. Go to [vercel.com/new](https://vercel.com/new) and sign in with GitHub.
-2. Click **Import** next to your `portfolio` repository.
-3. Leave every field at its default:
-   - **Framework Preset:** Other
-   - **Build Command:** *(empty)*
-   - **Output Directory:** *(empty)*
-   - **Install Command:** *(empty)*
-4. Click **Deploy**.
-
-It's a static site, so there is nothing to build — the deploy takes a few seconds. Every push to `main` redeploys automatically.
-
-### 4. Set your URL
-
-Vercel assigns something like `portfolio-abc123.vercel.app`. To get a cleaner one:
-
-**Project → Settings → Domains → Edit** the `.vercel.app` domain and change it to `prathamgupta.vercel.app` (if free).
-
-Then **find and replace `prathamgupta.vercel.app` with your real domain** in these three files:
-
-- `index.html` — canonical link, Open Graph tags, Twitter tags, JSON-LD
-- `robots.txt` — sitemap line
-- `sitemap.xml` — the `<loc>` value
-
-Commit and push. If you skip this, the site still works, but LinkedIn and WhatsApp previews will point at the wrong URL.
-
----
-
-## Files
-
-| File | Purpose |
-|---|---|
-| `index.html` | The entire site. Photo is embedded as base64, so it works standalone. |
-| `og-image.png` | 1200×630 social preview shown when the link is shared. |
-| `favicon.svg` | Browser tab icon — the shelf tag and barcode mark. |
-| `vercel.json` | Security headers plus cache rules (images cached a year, HTML never). |
-| `robots.txt` | Allows all crawlers, points to the sitemap. |
-| `sitemap.xml` | Single-page sitemap for search engines. |
-| `headshot.jpg` | Source photo, kept for regenerating the OG image later. |
-
----
-
-## Editing
-
-Open `index.html` in any text editor. Everything is in one file — CSS in `<style>` at the top, content in the body, the small amount of JavaScript at the bottom.
-
-Common edits:
-
-- **Contact details** — search for `prathamg329` and `pgupta05`
-- **Ledger figures** — the `<div class="ldg">` block; each row is one line
-- **Percentage chips** — the `<div class="pct">` block
-- **Work tabs** — four `<div class="panel">` blocks; keep the `id` and `aria-controls` pairs matching
-- **Colours** — the `:root` variables at the very top of the `<style>` block
-
-After changing any content, regenerate `og-image.png` if the headline or the four hero stats changed, otherwise the shared preview will be out of date.
-
-## Adding a résumé download
-
-1. Drop `resume.pdf` into this folder.
-2. In `index.html`, find the hero buttons and add:
-
-```html
-<a class="btn" href="/resume.pdf" target="_blank" rel="noopener">Résumé</a>
-```
-
-3. Commit and push.
-
----
-
-## Checks before sharing
-
-- [ ] Domain replaced in `index.html`, `robots.txt`, `sitemap.xml`
-- [ ] Link preview tested at [opengraph.xyz](https://www.opengraph.xyz)
-- [ ] Email, phone and LinkedIn links all open correctly
-- [ ] Opened on a phone as well as a laptop
-- [ ] Certificate names match your actual certificates
+Old URLs `/portfolio`, `/clean`, `/drive` and `/jump` redirect to the town (see `vercel.json`).
